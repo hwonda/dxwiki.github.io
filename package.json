@@ -1,0 +1,44 @@
+{
+  "name": "diki",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://dxwiki.github.io/",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "prebuild": "rimraf .next",
+    "build": "next build",
+    "preexport": "rimraf out",
+    "export": "next export",
+    "touch": "touch out/.nojekyll",
+    "posttouch": "touch out/_next/.nojekyll",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "eslint --fix ./src",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.2.13"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.13",
+    "@stylistic/eslint-plugin": "^2.6.4",
+    "@stylistic/eslint-plugin-js": "^2.6.4",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "lucide-react": "^0.436.0"
+  }
+}
