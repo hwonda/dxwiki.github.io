@@ -207,5 +207,17 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# console
+# data
+/data
+
+# local data
 *.txt
+*.ipynb
+
+# test
+tests.*
+
+# console
+env.local
+secret_key.json
+service-account.json
