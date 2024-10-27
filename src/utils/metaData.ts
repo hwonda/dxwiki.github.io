@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
 import readingTime from 'reading-time';
+import { FetchTermData } from '@/types';
 
 const formatDate = (date: string): string => {
   return dayjs(date).format('YY.MM.DD');
 };
 
-const getReadingTime = (term: any) => {
+const getReadingTime = (term: FetchTermData) => {
   const allTextContent = `
     ${ term.description.full }
     ${ term.difficulty.description }
@@ -14,10 +15,10 @@ const getReadingTime = (term: any) => {
     ${ term.relevance.scientist.description }
     ${ term.usecase.example }
     ${ term.usecase.description }
-    ${ term.references.tutorials.map((t: any) => t.title).join(' ') }
-    ${ term.references.books.map((b: any) => b.title).join(' ') }
-    ${ term.references.academic.map((a: any) => a.title).join(' ') }
-    ${ term.references.opensource.map((o: any) => o.name).join(' ') }
+    ${ term.references.tutorials.map((t) => t.title).join(' ') }
+    ${ term.references.books.map((b) => b.title).join(' ') }
+    ${ term.references.academic.map((a) => a.title).join(' ') }
+    ${ term.references.opensource.map((o) => o.name).join(' ') }
   `;
 
   const stats = readingTime(allTextContent);
