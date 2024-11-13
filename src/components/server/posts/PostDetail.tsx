@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { formatDate, getReadingTime } from '@/utils/metaData';
 import { Clock3 } from 'lucide-react';
 import MarkdownContent from './MarkdownContent';
+import RadarChart from '@/components/client/GLRadarChart';
 import Stars from '@/components/server/ui/Stars';
 
 interface Props {
@@ -48,7 +49,7 @@ const PostDetail = async ({ slug }: Props) => {
           <span className=''>{'수정: '}{formatDate(term.metadata.updated_at)}</span>
         </div>
       </div>
-      <div className='block md:grid grid-cols-[5fr_1fr] gap-2 md:mr-5'>
+      <div>
         <div className='sm:ml-5'>
           <section className="group">
             <h2 className="relative flex">
@@ -64,7 +65,6 @@ const PostDetail = async ({ slug }: Props) => {
               {'난이도'}
             </h2>
             <Stars rating={term.difficulty.level} />
-            <p>{term.difficulty.level}{' stars'}</p>
             <p>{term.difficulty.description}</p>
           </section>
 
@@ -73,29 +73,26 @@ const PostDetail = async ({ slug }: Props) => {
               <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
               {'관련성'}
             </h2>
-            <div className='block sm:flex justify-center md:justify-between'>
-              <div className='w-[100vw-8px] sm:w-[300px] flex justify-center items-center border-light border mb-4 sm:mb-0 sm:mr-2'>{'삼각형'}</div>
-              <div className='grid grid-cols-[1fr_5fr] lg:grid-cols-[3fr_1fr_10fr]'>
+            <div className='block sm:flex items-center gap-10'>
+              <div className='w-[100vw-8px] sm:w-[300px] flex justify-center items-center mb-4 sm:mb-0 sm:mr-2'>
+                <RadarChart
+                  className="mt-6"
+                  targetData={[term.relevance.analyst.score,term.relevance.engineer.score,term.relevance.scientist.score]}
+                  labelData={['Analyst', 'Engineer', 'Scientist']}
+                  init
+                />
+              </div>
+              <div className='grid grid-cols-[1fr_3fr] h-full'>
                 <span className="text-main text-center sm:m-0">{'직무'}</span>
-                <span className="hidden lg:block text-main text-center sm:m-0">{'관련도'}</span>
                 <span className="text-main pl-4 sm:m-0">{'설명'}</span>
 
                 <div className="pr-2 grid grid-rows-3">
-                  {/* <span className="text-center self-center">{'직무'}</span> */}
                   <h3 className="text-center self-center m-0 p-1">{'Data Analyst'}</h3>
                   <h3 className="text-center self-center m-0 p-1">{'Data Engineer'}</h3>
                   <h3 className="text-center self-center m-0 p-1">{'Data Scientist'}</h3>
                 </div>
 
-                <div className="px-2 border-x border-light hidden lg:grid grid-rows-3">
-                  {/* <span className="text-center self-center m-0 p-1">{'관련도'}</span> */}
-                  <span className='text-center self-center m-0 p-1'><Stars rating={term.relevance.analyst.score} size={12} /></span>
-                  <span className='text-center self-center m-0 p-1'><Stars rating={term.relevance.engineer.score} size={12} /></span>
-                  <span className='text-center self-center m-0 p-1'><Stars rating={term.relevance.scientist.score} size={12} /></span>
-                </div>
-
-                <div className="pl-3 grid grid-rows-3 border-l border-light lg:border-0">
-                  {/* <span className="self-center">{'설명'}</span> */}
+                <div className="pl-3 grid grid-rows-3">
                   <span className="self-center p-1">{term.relevance.analyst.description}</span>
                   <span className="self-center p-1">{term.relevance.engineer.description}</span>
                   <span className="self-center p-1">{term.relevance.scientist.description}</span>
@@ -230,9 +227,9 @@ const PostDetail = async ({ slug }: Props) => {
             <p>{term.publish ? 'Published' : 'Not Published'}</p>
           </section> */}
         </div>
-        <div className='sticky mt-24 top-[150px] h-32 border border-light hidden md:block'>
+        {/* <div className='sticky mt-24 top-[150px] h-32 border border-light hidden md:block'>
           {'TOC'}
-        </div>
+        </div> */}
       </div>
     </div>
   );
