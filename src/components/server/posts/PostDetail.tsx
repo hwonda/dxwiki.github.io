@@ -137,9 +137,7 @@ const PostDetail = async ({ slug }: Props) => {
 
             <section className="group">
               <h2>
-                <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                  {'#'}
-                </span>
+                <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
                 {'레퍼런스'}
               </h2>
               {Object.entries({
@@ -147,27 +145,21 @@ const PostDetail = async ({ slug }: Props) => {
                 Books: term.references.books,
                 Academic: term.references.academic,
                 OpenSource: term.references.opensource,
-              } as Record<string, unknown[]>)
-                .filter(([, data]) => Array.isArray(data) && data.length > 0)
+              })
+                .filter(([, data]) => data.length > 0) // 빈 데이터 필터링
                 .map(([title, data], index) => (
                   <div key={index}>
                     <h3>{`${ index + 1 }. ${ title }`}</h3>
                     <ul>
-                      {(data as Array<any>).map((item, idx) => (
+                      {data.map((item, idx) => (
                         <li key={idx}>
-                          <a href={item.link} target="_blank" rel="noopener noreferrer">
-                            {item.title || item.name}
-                          </a>
-                          {'platform' in item && <div>{item.platform}</div>}
-                          {'authors' in item && (
-                            <div>
-                              {`by ${ item.authors.join(', ') } (${ item.year }${ item.publisher ? ',' + item.publisher : '' })`}
-                            </div>
-                          )}
-                          {'isbn' in item && <div>{`ISBN: ${ item.isbn }`}</div>}
-                          {'doi' in item && <div>{`DOI: ${ item.doi }`}</div>}
-                          {'description' in item && <div>{item.description}</div>}
-                          {'license' in item && <div>{`(License: ${ item.license })`}</div>}
+                          <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title || item.name}</a>
+                          {item.platform && <div>{item.platform}</div>}
+                          {item.authors && <div>{`by ${ item.authors.join(', ') } (${ item.year }, ${ item.publisher })`}</div>}
+                          {item.isbn && <div>{`ISBN: ${ item.isbn }`}</div>}
+                          {item.doi && <div>{`DOI: ${ item.doi }`}</div>}
+                          {item.description && <div>{item.description}</div>}
+                          {item.license && <div>{`(License: ${ item.license })`}</div>}
                         </li>
                       ))}
                     </ul>
