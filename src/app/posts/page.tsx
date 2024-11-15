@@ -14,7 +14,7 @@ export default async function PostsPage() {
 
   return (
     <>
-      <h1 className='flex items-center gap-2 mt-20 mb-5 text-sub'>
+      <h1 className='flex items-center gap-2 mt-20 mb-5 text-sub border-b border-background-secondary'>
         {'검색결과'}
         <span className='text-primary text-lg'>{termsData.length}</span>
         {'/ '}{termsData.length}{' 개'}

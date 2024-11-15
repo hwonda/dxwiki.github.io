@@ -1,7 +1,6 @@
 import { getTermData } from '@/utils/termsData';
 import { notFound } from 'next/navigation';
-import { formatDate, getReadingTime } from '@/utils/metaData';
-import { Clock3 } from 'lucide-react';
+import { formatDate } from '@/utils/metaData';
 import MarkdownContent from './MarkdownContent';
 import TableOfContents from '@/components/client/common/TableOfContents';
 import RadarChart from '@/components/client/GLRadarChart';
@@ -24,20 +23,15 @@ const PostDetail = async ({ slug }: Props) => {
         <TableOfContents title={term.title.ko} />
       </div>
       <div className='md:mr-40'>
-        <div className='flex items-end mt-32 border-b border-light'>
-          <div className='flex flex-col mb-2'>
+        <div className='flex justify-center sm:justify-start mt-32 border-b border-light'>
+          <div className='flex flex-col items-center sm:items-start mb-2'>
             <h1 className="text-3xl font-bold text-main">{term.title.ko}</h1>
             <span className="text-xl font-bold text-sub mb-8 font-noto">{term.title.en}</span>
             <p>{term.description.short}</p>
           </div>
         </div>
-        <div className='flex flex-col sm:flex-row sm:justify-start items-end sm:items-center mt-5 gap-2'>
-          <div className="flex items-center gap-1">
-            <span className=''>{'by '}{term.metadata.authors}</span>
-            <span className="text-gray-400">{'•'}</span>
-            <Clock3 className="size-4 text-sub" />
-            <span className=''>{getReadingTime(term)}</span>
-          </div>
+        <div className='flex flex-col sm:flex-row justify-start items-end mt-5 gap-2'>
+          <span className=''>{'by '}{term.metadata.authors}</span>
           <span className="text-gray-400 hidden sm:block">{'•'}</span>
           <div className='flex gap-2 items-center'>
             <span className=''>{formatDate(term.metadata.created_at)}{' 발행'}</span>
@@ -48,7 +42,7 @@ const PostDetail = async ({ slug }: Props) => {
         <div>
           <div className='sm:ml-5'>
             <section className="group">
-              <h2 className="relative flex">
+              <h2 className="relative flex items-center">
                 <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
                 {'개념'}
               </h2>
@@ -56,11 +50,14 @@ const PostDetail = async ({ slug }: Props) => {
             </section>
 
             <section className="group">
-              <h2>
+              <h2 className='flex items-center'>
                 <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
                 {'난이도'}
+                <span className='ml-4'>
+                  <Stars rating={term.difficulty.level} />
+                </span>
               </h2>
-              <Stars rating={term.difficulty.level} />
+              <div className='mb-2' />
               <MarkdownContent content={term.difficulty.description} />
             </section>
 
@@ -73,8 +70,8 @@ const PostDetail = async ({ slug }: Props) => {
                 <div className='w-[100vw-8px] sm:w-[300px] flex justify-center items-center sm:mb-0 sm:mr-2'>
                   <RadarChart
                     className="mt-6"
-                    targetData={[term.relevance.analyst.score,term.relevance.engineer.score,term.relevance.scientist.score]}
-                    labelData={['Analyst', 'Engineer', 'Scientist']}
+                    targetData={[term.relevance.analyst.score,term.relevance.scientist.score,term.relevance.engineer.score]}
+                    labelData={['Analyst', 'Scientist', 'Engineer']}
                     init
                   />
                 </div>
@@ -105,7 +102,7 @@ const PostDetail = async ({ slug }: Props) => {
               </h2>
               <ul>
                 {term.terms.map((item, index) => (
-                  <li key={index} className='flex items-center gap-3 mb-4'>
+                  <li key={index} className='flex items-center gap-3 mb-2'>
                     <a
                       href={item.link}
                       target="_blank"
@@ -140,63 +137,48 @@ const PostDetail = async ({ slug }: Props) => {
 
             <section className="group">
               <h2>
-                <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
+                <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                  {'#'}
+                </span>
                 {'레퍼런스'}
               </h2>
-              <div>
-                <h3>{'1. Tutorials'}</h3>
-                <ul>
-                  {term.references.tutorials.map((tutorial, index) => (
-                    <li key={index}>
-                      <a href={tutorial.link} target="_blank" rel="noopener noreferrer">{tutorial.title}</a>
-                      <div className=''>{tutorial.platform}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3>{'2. Books'}</h3>
-                <ul>
-                  {term.references.books.map((book, index) => (
-                    <li key={index}>
-                      <div>
-                        <a href={book.link} target="_blank" rel="noopener noreferrer">{book.title}</a>
-                      </div>
-                      <div className=''>{' by '}{book.authors.join(', ')}{'('}{book.year}{', '}{book.publisher}{')'}</div>
-                      <div className=''>{'ISBN: '}{book.isbn}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3>{'3. Academic'}</h3>
-                <ul>
-                  {term.references.academic.map((paper, index) => (
-                    <li key={index}>
-                      <a href={paper.link} target="_blank" rel="noopener noreferrer">{paper.title}</a>
-                      <div className=''>{paper.authors.join(', ')}{' ('}{paper.year}{') '}</div>
-                      <div className=''>{'DOI: '}{paper.doi}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3>{'4. Open Source'}</h3>
-                <ul>
-                  {term.references.opensource.map((project, index) => (
-                    <li key={index}>
-                      <a href={project.link} target="_blank" rel="noopener noreferrer">{project.name}</a>
-                      <div className=''>{project.description}</div>
-                      <div className=''>{'(License: '}{project.license}{')'}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {Object.entries({
+                Tutorials: term.references.tutorials,
+                Books: term.references.books,
+                Academic: term.references.academic,
+                OpenSource: term.references.opensource,
+              } as Record<string, unknown[]>)
+                .filter(([, data]) => Array.isArray(data) && data.length > 0)
+                .map(([title, data], index) => (
+                  <div key={index}>
+                    <h3>{`${ index + 1 }. ${ title }`}</h3>
+                    <ul>
+                      {(data as Array<any>).map((item, idx) => (
+                        <li key={idx}>
+                          <a href={item.link} target="_blank" rel="noopener noreferrer">
+                            {item.title || item.name}
+                          </a>
+                          {'platform' in item && <div>{item.platform}</div>}
+                          {'authors' in item && (
+                            <div>
+                              {`by ${ item.authors.join(', ') } (${ item.year }${ item.publisher ? ',' + item.publisher : '' })`}
+                            </div>
+                          )}
+                          {'isbn' in item && <div>{`ISBN: ${ item.isbn }`}</div>}
+                          {'doi' in item && <div>{`DOI: ${ item.doi }`}</div>}
+                          {'description' in item && <div>{item.description}</div>}
+                          {'license' in item && <div>{`(License: ${ item.license })`}</div>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
             </section>
+
             <section className="group">
               <h2>
                 <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
-                {'tags'}
+                {'태그'}
               </h2>
               <div className="flex flex-wrap gap-1">
                 {term.tags.map((tag, index) => (
@@ -210,34 +192,6 @@ const PostDetail = async ({ slug }: Props) => {
               </div>
             </section>
           </div>
-          {/* <section className="group">
-            <h2>
-              <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
-              {'Tags'}
-            </h2>
-            <div className="flex flex-wrap gap-1">
-              {term.tags.map((tag, index) => (
-                <button
-                  key={index}
-                  className="px-3 py-1 rounded-3xl text-white tag-button"
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </section> */}
-
-          {/* <section className="my-10">
-            <h2>{'Metadata'}</h2>
-            <p><strong>{'Contributors:'}</strong> {term.metadata.contributors}</p>
-            <p><strong>{'Authors:'}</strong> {term.metadata.authors}</p>
-            <p><strong>{'Last reviewed:'}</strong> {term.metadata.last_reviewed}</p>
-          </section>
-
-          <section className="my-10">
-            <h2>{'Publish Status'}</h2>
-            <p>{term.publish ? 'Published' : 'Not Published'}</p>
-          </section> */}
         </div>
       </div>
     </div>

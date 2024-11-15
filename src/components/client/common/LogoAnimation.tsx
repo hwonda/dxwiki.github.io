@@ -59,7 +59,7 @@ const LogoAnimation = () => {
           </span>
         )}
       </div>
-      <span className='h-8'>{'iki'}</span>
+      <span>{'iki'}</span>
 
       <style jsx>{`
         @keyframes slideDownOut {
