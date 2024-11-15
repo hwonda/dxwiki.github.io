@@ -140,31 +140,55 @@ const PostDetail = async ({ slug }: Props) => {
                 <span className="text-primary sm:ml-[-20px] mr-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
                 {'레퍼런스'}
               </h2>
-              {Object.entries({
-                Tutorials: term.references.tutorials,
-                Books: term.references.books,
-                Academic: term.references.academic,
-                OpenSource: term.references.opensource,
-              })
-                .filter(([, data]) => data.length > 0) // 빈 데이터 필터링
-                .map(([title, data], index) => (
-                  <div key={index}>
-                    <h3>{`${ index + 1 }. ${ title }`}</h3>
-                    <ul>
-                      {data.map((item, idx) => (
-                        <li key={idx}>
-                          <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title || item.name}</a>
-                          {item.platform && <div>{item.platform}</div>}
-                          {item.authors && <div>{`by ${ item.authors.join(', ') } (${ item.year }, ${ item.publisher })`}</div>}
-                          {item.isbn && <div>{`ISBN: ${ item.isbn }`}</div>}
-                          {item.doi && <div>{`DOI: ${ item.doi }`}</div>}
-                          {item.description && <div>{item.description}</div>}
-                          {item.license && <div>{`(License: ${ item.license })`}</div>}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              <div>
+                <h3>{'1. Tutorials'}</h3>
+                <ul>
+                  {term.references.tutorials.map((tutorial, index) => (
+                    <li key={index}>
+                      <a href={tutorial.link} target="_blank" rel="noopener noreferrer">{tutorial.title}</a>
+                      <div className=''>{tutorial.platform}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>{'2. Books'}</h3>
+                <ul>
+                  {term.references.books.map((book, index) => (
+                    <li key={index}>
+                      <div>
+                        <a href={book.link} target="_blank" rel="noopener noreferrer">{book.title}</a>
+                      </div>
+                      <div className=''>{' by '}{book.authors.join(', ')}{'('}{book.year}{', '}{book.publisher}{')'}</div>
+                      <div className=''>{'ISBN: '}{book.isbn}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>{'3. Academic'}</h3>
+                <ul>
+                  {term.references.academic.map((paper, index) => (
+                    <li key={index}>
+                      <a href={paper.link} target="_blank" rel="noopener noreferrer">{paper.title}</a>
+                      <div className=''>{paper.authors.join(', ')}{' ('}{paper.year}{') '}</div>
+                      <div className=''>{'DOI: '}{paper.doi}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>{'4. Open Source'}</h3>
+                <ul>
+                  {term.references.opensource.map((project, index) => (
+                    <li key={index}>
+                      <a href={project.link} target="_blank" rel="noopener noreferrer">{project.name}</a>
+                      <div className=''>{project.description}</div>
+                      <div className=''>{'(License: '}{project.license}{')'}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </section>
 
             <section className="group">
