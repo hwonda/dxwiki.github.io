@@ -67,7 +67,7 @@ const SearchInput = ({ suggestions }: SearchInputProps) => {
         </span>
         <span className="flex flex-wrap items-center gap-2 sm:gap-3 ml-6">
           <span className="flex items-center gap-1">
-            <span className="border border-light px-3 py-0.5 rounded-md">{'ctrl'}</span>
+            <span className="border border-light px-3 py-0.5 rounded-md">{'Ctrl'}</span>
             <span className="font-semibold">{'+'}</span>
             <span className="border border-light px-2.5 py-0.5 rounded-md">{'K'}</span>
           </span>
