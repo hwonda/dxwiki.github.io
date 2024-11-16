@@ -18,12 +18,32 @@ const config: Config = {
         'main': 'var(--text)',
         'sub': 'var(--text-secondary)',
         'light': 'var(--border)',
+        'extreme-light': 'var(--extreme-light)',
       },
       fontFamily: {
         nanum: ['var(--font-nanum)', ...fontFamily.sans],
         coding: ['var(--font-coding)', ...fontFamily.mono],
         noto: ['var(--font-noto)', ...fontFamily.sans],
         pretendard: ['var(--font-pretendard)', ...fontFamily.sans],
+      },
+      keyframes: {
+        slideDown: {
+          '0%': { transform: 'translateY(-10%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDownIn: {
+          '0%': { transform: 'translateY(-100%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDownOut: {
+          '0%': { transform: 'translateY(0)', opacity: '1' },
+          '100%': { transform: 'translateY(100%)', opacity: '0' },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 0.3s ease-in-out',
+        slideDownOut: 'slideDownOut 400ms ease-in-out forwards',
+        slideDownIn: 'slideDownIn 400ms ease-in-out forwards',
       },
       typography: {
         DEFAULT: {
