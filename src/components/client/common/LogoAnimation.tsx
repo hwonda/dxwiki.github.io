@@ -41,7 +41,7 @@ const LogoAnimation = ({ fontSize = '2rem' }: LogoAnimationProps) => {
 
   return (
     <h1 className="flex font-bold text-main" style={{ fontSize }}>
-      <div className="relative flex justify-end overflow-hidden w-[5ch]">
+      <div className="relative flex justify-end overflow-hidden w-[6ch]">
         {/* 현재 텍스트 */}
         <span
           className={`absolute flex justify-end top-0 right-0 w-full text-primary ${
