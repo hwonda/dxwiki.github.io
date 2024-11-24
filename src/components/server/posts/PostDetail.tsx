@@ -5,6 +5,7 @@ import MarkdownContent from './MarkdownContent';
 import TableOfContents from '@/components/client/common/TableOfContents';
 import RadarChart from '@/components/client/GLRadarChart';
 import Stars from '@/components/server/ui/Stars';
+import Link from 'next/link';
 
 interface Props {
   slug: string
@@ -25,29 +26,28 @@ const PostDetail = async ({ slug }: Props) => {
           <TableOfContents title={term.title.ko} />
         </div>
       </div>
-      <div className='md:mr-40'>
+      <div className='md:mr-40 text-justify'>
         <div className='sm:ml-5'>
           <div className='flex justify-center sm:justify-start mt-32'>
-            <div className='flex flex-col sm:flex-row justify-center items-center'>
-              <h1 className="text-3xl font-bold text-main mb-0">{term.title.ko}</h1>
-              <span className="text-xl text-main font-noto">{'('}{term.title.en}{')'}</span>
+            <div className='flex flex-col sm:flex-row justify-center items-center sm:items-end'>
+              <h1 className="text-3xl font-bold text-main mb-0">{term.title.ko}{'('}{term.title.en}{')'}</h1>
             </div>
           </div>
-          <p className='mt-2 mb-5'>{term.description.short}</p>
-          <div className="flex justify-start items-center flex-wrap mt-2">
+          <p className='my-1'>{term.description.short}</p>
+          <div className="flex justify-start items-center flex-wrap mt-1 mb-2">
             {term.tags.map((tag, index) => (
               <button
                 key={index}
                 className="tag-button rounded-3xl text-sm"
               >
-                {tag}
+                {tag.name} {tag.internal_link && <a href={tag.internal_link}>{'🔗'}</a>}
               </button>
             ))}
           </div>
-          <div className='flex flex-col sm:flex-row justify-start items-end gap-2 border-t border-light mt-5 pt-3'>
-            <span>{'by '}{term.metadata.authors}</span>
+          <div className='flex flex-col sm:flex-row justify-start items-end gap-1 border-t border-light py-2 text-xs'>
+            <span>{term.metadata.authors}</span>
             <span className="text-light hidden sm:block">{'•'}</span>
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-1 items-center'>
               <span>{formatDate(term.metadata.created_at)}{' 발행'}</span>
               <span className="text-light">{'•'}</span>
               <span>{formatDate(term.metadata.updated_at)}{' 수정'}</span>
@@ -55,7 +55,7 @@ const PostDetail = async ({ slug }: Props) => {
           </div>
         </div>
         <div className='sm:ml-5'>
-          <div className='mt-4'>
+          <div className='mt-2'>
             <MarkdownContent content={term.description.full} />
           </div>
 
@@ -112,14 +112,10 @@ const PostDetail = async ({ slug }: Props) => {
             <ul>
               {term.terms.map((item, index) => (
                 <li key={index} className='flex items-center gap-3 mb-2'>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.term}
-                  </a>
-                  {item.description}
+                  <span >
+                    {item.term} {item.internal_link && <a href={item.internal_link}>{'🔗'}</a>}
+                  </span>
+                  <span>{item.description}</span>
                 </li>
               ))}
             </ul>
@@ -136,7 +132,7 @@ const PostDetail = async ({ slug }: Props) => {
                   key={index}
                   className="tag-button"
                 >
-                  {tag}
+                  {tag.name}
                 </button>
               ))}
             </div>
@@ -154,7 +150,7 @@ const PostDetail = async ({ slug }: Props) => {
               <ul>
                 {term.references.tutorials.map((tutorial, index) => (
                   <li key={index}>
-                    <a href={tutorial.link} target="_blank" rel="noopener noreferrer">{tutorial.title}</a>
+                    <Link href={tutorial.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{tutorial.title}</Link>
                     <div className=''>{tutorial.platform}</div>
                   </li>
                 ))}
@@ -166,7 +162,7 @@ const PostDetail = async ({ slug }: Props) => {
                 {term.references.books.map((book, index) => (
                   <li key={index}>
                     <div>
-                      <a href={book.link} target="_blank" rel="noopener noreferrer">{book.title}</a>
+                      <Link href={book.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{book.title}</Link>
                     </div>
                     <div className=''>{' by '}{book.authors.join(', ')}{'('}{book.year}{', '}{book.publisher}{')'}</div>
                     <div className=''>{'ISBN: '}{book.isbn}</div>
@@ -179,7 +175,7 @@ const PostDetail = async ({ slug }: Props) => {
               <ul>
                 {term.references.academic.map((paper, index) => (
                   <li key={index}>
-                    <a href={paper.link} target="_blank" rel="noopener noreferrer">{paper.title}</a>
+                    <Link href={paper.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{paper.title}</Link>
                     <div className=''>{paper.authors.join(', ')}{' ('}{paper.year}{') '}</div>
                     <div className=''>{'DOI: '}{paper.doi}</div>
                   </li>
@@ -191,7 +187,7 @@ const PostDetail = async ({ slug }: Props) => {
               <ul>
                 {term.references.opensource.map((project, index) => (
                   <li key={index}>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">{project.name}</a>
+                    <Link href={project.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{project.name}</Link>
                     <div className=''>{project.description}</div>
                     <div className=''>{'(License: '}{project.license}{')'}</div>
                   </li>
