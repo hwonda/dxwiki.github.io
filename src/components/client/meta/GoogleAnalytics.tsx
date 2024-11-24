@@ -1,12 +1,10 @@
-import React from 'react';
+'use client';
 
-interface GoogleAnalyticsProps {
-  trackingId: string;
-}
+const GoogleAnalytics = () => {
+  const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
 
-const GoogleAnalytics = ({ trackingId }: GoogleAnalyticsProps) => {
-  if (!trackingId) {
-    console.warn('Google Analytics Tracking ID is missing');
+  if (!googleAnalyticsId) {
+    console.log('Google Analytics Tracking ID가 설정되지 않았습니다.');
     return null;
   }
 
@@ -14,7 +12,7 @@ const GoogleAnalytics = ({ trackingId }: GoogleAnalyticsProps) => {
     <>
       <script
         async
-        src={`https://www.googletagmanager.com/gtag/js?id=${ trackingId }`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${ googleAnalyticsId }`}
       />
       <script
         dangerouslySetInnerHTML={{
@@ -22,7 +20,7 @@ const GoogleAnalytics = ({ trackingId }: GoogleAnalyticsProps) => {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${ trackingId }');
+            gtag('config', '${ googleAnalyticsId }');
           `,
         }}
       />
