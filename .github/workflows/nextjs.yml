@@ -41,6 +41,7 @@ jobs:
           echo "FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}" >> $GITHUB_ENV
           echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_GOOGLE_ADSENSE_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ADSENSE_ID }}" >> $GITHUB_ENV
       - name: Detect package manager
         id: detect-package-manager
         run: |
