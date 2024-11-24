@@ -3,6 +3,7 @@ import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/server/common/Header';
+import GoogleAdSense from '@/components/client/meta/GoogleAdSense';
 import GoogleAnalytics from '@/components/client/meta/GoogleAnalytics';
 
 interface RootLayoutProps {
@@ -15,11 +16,10 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: RootLayoutProps) => {
-  const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || '';
-
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <GoogleAdSense />
         <GoogleAnalytics />
       </head>
       <body
