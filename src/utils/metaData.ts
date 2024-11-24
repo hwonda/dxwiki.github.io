@@ -3,7 +3,7 @@ import readingTime from 'reading-time';
 import { FetchTermData } from '@/types';
 
 const formatDate = (date: string): string => {
-  return dayjs(date).format('YY.MM.DD');
+  return dayjs(date).format('YYYY년 MM월 DD일');
 };
 
 const getReadingTime = (term: FetchTermData) => {
