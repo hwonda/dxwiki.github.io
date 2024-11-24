@@ -3,6 +3,7 @@ import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/server/common/Header';
+import GoogleAnalytics from '@/components/server/meta/GoogleAnalytics';
 
 interface RootLayoutProps {
   readonly children: React.ReactNode;
@@ -14,8 +15,13 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: RootLayoutProps) => {
+  const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || '';
+
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        <GoogleAnalytics trackingId={googleAnalyticsId} />
+      </head>
       <body
         className={`
         ${ fontNanum.variable } 
