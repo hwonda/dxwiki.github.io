@@ -3,7 +3,7 @@ import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/server/common/Header';
-import GoogleAnalytics from '@/components/server/meta/GoogleAnalytics';
+import GoogleAnalytics from '@/components/client/meta/GoogleAnalytics';
 
 interface RootLayoutProps {
   readonly children: React.ReactNode;
@@ -20,7 +20,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <GoogleAnalytics trackingId={googleAnalyticsId} />
+        <GoogleAnalytics />
       </head>
       <body
         className={`
