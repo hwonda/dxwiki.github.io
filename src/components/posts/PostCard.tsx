@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import Stars from '@/components/server/ui/Stars';
+import Stars from '@/components/ui/Stars';
 import { TermData } from '@/types';
 import { ChevronRight } from 'lucide-react';
 import { getReadingTime } from '@/utils/metaData';

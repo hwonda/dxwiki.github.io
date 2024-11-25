@@ -4,7 +4,7 @@ import { useContext, ReactNode, useRef, useEffect } from 'react';
 import {
   DropdownContext,
   DropdownProvider,
-} from '@/components/client/ui/DropdownProvider';
+} from '@/components/ui/DropdownProvider';
 
 const Dropdown = ({ children }: { children: ReactNode }) => {
   return <DropdownProvider>{children}</DropdownProvider>;

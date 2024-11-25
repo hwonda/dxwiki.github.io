@@ -6,7 +6,7 @@ import vert from './default.vert';
 import { initializeGL, render, createClipPathCSS, createAbsoluteLabelsCSS } from './utils';
 import { RadarChartStyle, RadarLoadingStyle } from './types';
 import { useTheme } from 'next-themes';
-import Stars from '@/components/server/ui/Stars';
+import Stars from '@/components/ui/Stars';
 
 export interface RadarChartProps {
   targetData?: number[]; // 1~5 범위의 자연수 배열

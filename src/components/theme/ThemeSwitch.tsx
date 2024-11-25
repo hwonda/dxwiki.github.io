@@ -7,7 +7,7 @@ import {
   DropdownList,
   DropdownItem,
   DropdownTrigger,
-} from '@/components/client/ui/Dropdown';
+} from '@/components/ui/Dropdown';
 import { LucideIcon, Dot, Monitor, Moon, Sun } from 'lucide-react';
 
 interface DropdownItemProps {

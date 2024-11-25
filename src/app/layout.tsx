@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
-import Header from '@/components/server/common/Header';
-import GoogleAdSense from '@/components/client/meta/GoogleAdSense';
-import GoogleAnalytics from '@/components/client/meta/GoogleAnalytics';
+import Header from '@/components/common/Header';
+import GoogleAdSense from '@/components/meta/GoogleAdSense';
+import GoogleAnalytics from '@/components/meta/GoogleAnalytics';
 
 interface RootLayoutProps {
   readonly children: React.ReactNode;

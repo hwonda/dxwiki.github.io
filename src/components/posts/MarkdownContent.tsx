@@ -1,3 +1,5 @@
+'use client';
+
 import ReactMarkdown from 'react-markdown';
 
 const MarkdownContent = ({ content }: { content: string }) => {

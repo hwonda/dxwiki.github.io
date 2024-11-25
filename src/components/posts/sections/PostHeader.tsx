@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { TermData } from '@/types';
 import { formatDate } from '@/utils/filters';

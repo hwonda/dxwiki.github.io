@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TermData } from '@/types';
-import PostCard from '@/components/server/posts/PostCard';
+import PostCard from '@/components/posts/PostCard';
 import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
 
 interface PaginationProps {

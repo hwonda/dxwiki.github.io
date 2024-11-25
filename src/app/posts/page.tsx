@@ -1,5 +1,5 @@
 import { fetchTermsData } from '@/utils/termsData';
-import Pagination from '@/components/client/posts/Pagination';
+import Pagination from '@/components/posts/Pagination';
 import { TermData } from '@/types';
 
 export default async function PostsPage() {

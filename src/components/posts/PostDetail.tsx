@@ -1,9 +1,9 @@
 import { getTermData } from '@/utils/termsData';
 import { notFound } from 'next/navigation';
 import MarkdownContent from './MarkdownContent';
-import TableOfContents from '@/components/client/common/TableOfContents';
-import RadarChart from '@/components/client/GLRadarChart';
-import Stars from '@/components/server/ui/Stars';
+import TableOfContents from '@/components/common/TableOfContents';
+import RadarChart from '@/components/GLRadarChart';
+import Stars from '@/components/ui/Stars';
 import Link from 'next/link';
 import PostHeader from './sections/PostHeader';
 

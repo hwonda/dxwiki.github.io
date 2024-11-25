@@ -3,8 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import ScrollDirectionHandler from '@/components/client/common/ScrollDirectionHandler';
-import ThemeSwitch from '@/components/client/theme/ThemeSwitch';
+import ScrollDirectionHandler from '@/components/common/ScrollDirectionHandler';
+import ThemeSwitch from '@/components/theme/ThemeSwitch';
 
 const Header = () => {
   const pathname = usePathname();

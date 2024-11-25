@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import LogoAnimation from '@/components/client/common/LogoAnimation';
-import SearchInput from '@/components/client/common/SearchInput';
+import LogoAnimation from '@/components/common/LogoAnimation';
+import SearchInput from '@/components/common/SearchInput';
 
 export default function Home() {
   return (

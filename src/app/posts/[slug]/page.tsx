@@ -1,5 +1,5 @@
 // /post/[slug]/page.tsx
-import PostDetail from '@/components/server/posts/PostDetail';
+import PostDetail from '@/components/posts/PostDetail';
 import { fetchTermsData } from '@/utils/termsData';
 
 interface Props {
