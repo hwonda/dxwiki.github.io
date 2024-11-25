@@ -100,14 +100,13 @@ const config: Config = {
             '.prose :where(ul > li):not(:where([class~="not-prose"],[class~="not-prose"] *))::marker':{
               color: 'var(--background)',
             },
-            '.prose .tag-button': {
+            '.prose .tag-button, .tag-button-no-link': {
               color: 'var(--text-secondary)',
               border: '1px solid var(--border)',
               padding: '3px 7px 1px 8px',
               borderRadius: '0.5rem',
               fontSize: '1rem',
               fontWeight: '600',
-              cursor: 'pointer',
               marginRight: '0.25rem',
             },
             '.prose .tag-button:hover': {

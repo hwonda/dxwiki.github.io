@@ -1,5 +1,6 @@
 import { firestore } from '@/lib/firebaseAdmin';
 import { TermData } from '@/types';
+import { transformToSlug } from '@/utils/filters';
 
 let cachedTermsData: TermData[] | null = null;
 
@@ -12,7 +13,7 @@ const fetchTermsData = async (): Promise<TermData[]> => {
     const termsCollection = await firestore.collection('terms').get();
     cachedTermsData = termsCollection.docs.map((doc) => {
       const data = doc.data();
-      const urlPath = data.title.en.toLowerCase().replace(/\s+/g, '_');
+      const urlPath = transformToSlug(data.title.en);
       return {
         url: `/posts/${ urlPath }`,
         id: data.id,
@@ -39,7 +40,7 @@ const fetchTermsData = async (): Promise<TermData[]> => {
 const getTermData = async (slug: string): Promise<TermData | undefined> => {
   const termsDataList = await fetchTermsData();
   return termsDataList.find((term) =>
-    term.title.en.toLowerCase().replace(/\s+/g, '_') === slug
+    transformToSlug(term.title.en) === slug
   );
 };
 

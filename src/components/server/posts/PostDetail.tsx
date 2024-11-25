@@ -1,11 +1,11 @@
 import { getTermData } from '@/utils/termsData';
 import { notFound } from 'next/navigation';
-import { formatDate } from '@/utils/metaData';
 import MarkdownContent from './MarkdownContent';
 import TableOfContents from '@/components/client/common/TableOfContents';
 import RadarChart from '@/components/client/GLRadarChart';
 import Stars from '@/components/server/ui/Stars';
 import Link from 'next/link';
+import PostHeader from './sections/PostHeader';
 
 interface Props {
   slug: string
@@ -28,34 +28,10 @@ const PostDetail = async ({ slug }: Props) => {
       </div>
       <div className='md:mr-40 text-justify'>
         <div className='sm:ml-5'>
-          <div className='flex justify-center sm:justify-start mt-32'>
-            <div className='flex flex-col sm:flex-row justify-center items-center sm:items-end'>
-              <h1 className="text-3xl font-bold text-main mb-0">{term.title.ko}{'('}{term.title.en}{')'}</h1>
-            </div>
-          </div>
-          <p className='my-1'>{term.description.short}</p>
-          <div className="flex justify-start items-center flex-wrap mt-1 mb-2">
-            {term.tags.map((tag, index) => (
-              <button
-                key={index}
-                className="tag-button rounded-3xl text-sm"
-              >
-                {tag.name} {tag.internal_link && <a href={tag.internal_link}>{'🔗'}</a>}
-              </button>
-            ))}
-          </div>
-          <div className='flex flex-col sm:flex-row justify-start items-end gap-1 border-t border-light py-2 text-xs'>
-            <span>{term.metadata.authors}</span>
-            <span className="text-light hidden sm:block">{'•'}</span>
-            <div className='flex gap-1 items-center'>
-              <span>{formatDate(term.metadata.created_at)}{' 발행'}</span>
-              <span className="text-light">{'•'}</span>
-              <span>{formatDate(term.metadata.updated_at)}{' 수정'}</span>
-            </div>
-          </div>
+          <PostHeader term={term} slug={slug} />
         </div>
         <div className='sm:ml-5'>
-          <div className='mt-2'>
+          <div className='mt-5'>
             <MarkdownContent content={term.description.full} />
           </div>
 
@@ -128,12 +104,12 @@ const PostDetail = async ({ slug }: Props) => {
             </h2>
             <div className="flex flex-wrap gap-1 mb-4">
               {term.usecase.industries.map((tag, index) => (
-                <button
+                <span
                   key={index}
-                  className="tag-button"
+                  className="tag-button-no-link"
                 >
-                  {tag.name}
-                </button>
+                  {tag}
+                </span>
               ))}
             </div>
             <p>{term.usecase.example}</p>

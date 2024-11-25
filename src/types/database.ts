@@ -3,10 +3,7 @@ export interface FetchTermData {
   usecase: {
     example: string;
     description: string;
-    industries: Array<{
-      internal_link: string | null;
-      name: string;
-    }>;
+    industries: string[];
   };
   relevance: {
     analyst: {
