@@ -24,7 +24,8 @@ const config: Config = {
         nanum: ['var(--font-nanum)', ...fontFamily.sans],
         coding: ['var(--font-coding)', ...fontFamily.mono],
         noto: ['var(--font-noto)', ...fontFamily.sans],
-        pretendard: ['var(--font-pretendard)', ...fontFamily.sans],
+        // pretendard: ['var(--font-pretendard)', ...fontFamily.sans],
+        pretendard: ['Pretendard Variable', 'sans'],
       },
       keyframes: {
         slideDown: {
@@ -103,7 +104,7 @@ const config: Config = {
             '.prose .tag-button, .tag-button-no-link': {
               color: 'var(--text-secondary)',
               border: '1px solid var(--border)',
-              padding: '3px 7px 1px 8px',
+              padding: '2px 7px 3px 8px',
               borderRadius: '0.5rem',
               fontSize: '1rem',
               fontWeight: '600',
