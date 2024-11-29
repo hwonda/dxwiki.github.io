@@ -19,7 +19,7 @@ const Header = () => {
             {!isHomePage && (
               <>
                 <Link href='/'>
-                  <span className='h-full flex items-center mt-1 text-3xl font-bold'>
+                  <span className='h-full flex items-center text-3xl font-bold'>
                     <span className='text-primary'>{'D'}</span>
                     {'iki'}
                   </span>

@@ -106,14 +106,14 @@ const PostDetail = async ({ slug }: Props) => {
               {term.usecase.industries.map((tag, index) => (
                 <span
                   key={index}
-                  className="tag-button-no-link"
+                  className="tag-button-no-link bg-extreme-light text-sm"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-            <p>{term.usecase.example}</p>
-            <p>{term.usecase.description}</p>
+            <MarkdownContent content={term.usecase.example} />
+            <MarkdownContent content={term.usecase.description} />
           </section>
 
           <section className="group">

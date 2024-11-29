@@ -23,7 +23,7 @@ const PostHeader = ({ term, slug }: PostHeaderProps) => {
         </div>
       </div>
       <p className='my-1'>{term.description.short}</p>
-      <div className='flex justify-start gap-1 my-2 text-xs'>
+      <div className='flex justify-start gap-1 text-xs'>
         <span className='text-main'>{term.metadata.authors}</span>
         <span className="text-light">{'•'}</span>
         <div className='flex gap-1 items-center'>
@@ -32,7 +32,7 @@ const PostHeader = ({ term, slug }: PostHeaderProps) => {
           <span>{formatDate(term.metadata.updated_at)}{' 수정'}</span>
         </div>
       </div>
-      <div className="flex justify-start items-center flex-wrap mt-1">
+      <div className="flex justify-start items-center flex-wrap mt-2.5">
         {term.tags.map((tag, index) => (
           tag.internal_link ? (
             <Link href={transformToSlug(tag.internal_link)} key={index} className='group flex gap-1 items-center tag-button rounded-3xl text-sm mb-2 hover:no-underline'>
@@ -40,7 +40,7 @@ const PostHeader = ({ term, slug }: PostHeaderProps) => {
               {transformToSlug(tag.internal_link) === slug ? <span className='sm:hidden group-hover:block text-sub'>{'• 현재글'}</span> : <LinkIcon size={16} />}
             </Link>
           ) : (
-            <span key={index} className='tag-button-no-link rounded-3xl text-sm mb-2'>
+            <span key={index} className='tag-button-no-link rounded-3xl text-sm mb-2 bg-background-secondary'>
               {tag.name}
             </span>
           )

@@ -112,7 +112,7 @@ const config: Config = {
             },
             '.prose .tag-button:hover': {
               color: 'var(--text)',
-              backgroundColor: 'var(--border)',
+              backgroundColor: 'var(--background-secondary)',
               transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
             },
           },
