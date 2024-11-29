@@ -3,6 +3,7 @@ import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/common/Header';
+import GoogleVerification from '@/components/meta/GoogleVerification';
 import GoogleAdSense from '@/components/meta/GoogleAdSense';
 import GoogleAnalytics from '@/components/meta/GoogleAnalytics';
 
@@ -19,6 +20,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <GoogleVerification />
         <GoogleAdSense />
         <GoogleAnalytics />
       </head>
