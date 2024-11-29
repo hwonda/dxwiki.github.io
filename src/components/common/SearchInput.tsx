@@ -68,9 +68,9 @@ const SearchInput = ({ suggestions }: SearchInputProps) => {
         <div className='hidden sm:block'>
           <span className="flex flex-wrap items-center gap-1 sm:gap-1 ml-6">
             <span className="flex items-center gap-1">
-              <span className="border border-light pt-[5px] pr-2.5 pb-0.5 pl-[9px] rounded-md">{'Ctrl'}</span>
+              <span className="border border-light p-[4px_8px_2px_7px] rounded-md">{'Ctrl'}</span>
               <span className="font-semibold">{'+'}</span>
-              <span className="border border-light px-2.5 py-0.5 pt-[5px] rounded-md">{'K'}</span>
+              <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
             </span>
             <span className="text-sub sm:mx-1">{'또는'}</span>
             <span className="flex items-center gap-1">
@@ -78,7 +78,7 @@ const SearchInput = ({ suggestions }: SearchInputProps) => {
                 <Command className="size-5" />
               </span>
               <span className="font-semibold">{'+'}</span>
-              <span className="border border-light px-2.5 py-0.5 pt-[5px] rounded-md">{'K'}</span>
+              <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
             </span>
             <span className="block mt-2 sm:mt-0 text-sub">
               {'를 눌러 검색창에 직접 이동할 수 있습니다.'}
