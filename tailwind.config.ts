@@ -40,11 +40,17 @@ const config: Config = {
           '0%': { transform: 'translateY(0)', opacity: '1' },
           '100%': { transform: 'translateY(100%)', opacity: '0' },
         },
+        intro: {
+          '0%': { transform: 'translateY(5px)', opacity: '0' },
+          '100%': { transform: 'none', opacity: '1' },
+        },
       },
       animation: {
         slideDown: 'slideDown 0.3s ease-in-out',
         slideDownOut: 'slideDownOut 400ms ease-in-out forwards',
         slideDownIn: 'slideDownIn 400ms ease-in-out forwards',
+        intro: 'intro 500ms ease-in-out both',
+        introSecond: 'intro 1100ms ease-in-out both',
       },
       typography: {
         DEFAULT: {
@@ -55,12 +61,6 @@ const config: Config = {
             },
             'p, span, li': {
               color: 'var(--text-secondary)',
-            },
-            'ul, li': {
-              paddingLeft: '0.5rem',
-            },
-            'ul > li': {
-              borderLeft: '1px solid var(--background-secondary)',
             },
             p: {
               marginTop: '0',
@@ -114,6 +114,9 @@ const config: Config = {
               color: 'var(--text)',
               backgroundColor: 'var(--background-secondary)',
               transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
+            },
+            '.markdown-text-sub p': {
+              marginBottom: '0',
             },
           },
         },
