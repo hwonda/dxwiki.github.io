@@ -51,9 +51,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
           <div className='flex flex-col'>
             <strong className='ml-2'>{'Tutorials'}</strong>
             {references.tutorials.map((tutorial, index) => (
-              <div key={index} className={`flex flex-col border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
+              <div key={index} className={`flex flex-col gap-1 border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
                 <Link href={tutorial.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{tutorial.title}</Link>
-                <span>{tutorial.platform}</span>
+                <span className='text-sm'>{tutorial.platform}</span>
               </div>
             ))}
           </div>
@@ -62,10 +62,10 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
           <div className='flex flex-col'>
             <strong className='ml-2'>{'Books'}</strong>
             {references.books.map((book, index) => (
-              <div key={index} className={`flex flex-col border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
+              <div key={index} className={`flex flex-col gap-1 border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
                 <Link href={book.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{book.title}</Link>
-                <span>{book.authors.join(', ')}{' ('}{book.year}{', '}{book.publisher}{')'}</span>
-                <span>{'ISBN: '}{book.isbn}</span>
+                <span className='text-sm'>{book.authors.join(', ')}{' ('}{book.year}{', '}{book.publisher}{')'}</span>
+                <span className='text-sm'>{'ISBN: '}{book.isbn}</span>
               </div>
             ))}
           </div>
@@ -74,10 +74,10 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
           <div className='flex flex-col'>
             <strong className='ml-2'>{'Academic'}</strong>
             {references.academic.map((paper, index) => (
-              <div key={index} className={`flex flex-col border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
+              <div key={index} className={`flex flex-col gap-1 border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
                 <Link href={paper.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{paper.title}</Link>
-                <span>{paper.authors.join(', ')}{' ('}{paper.year}{') '}</span>
-                {paper.doi && <span>{'DOI: '}{paper.doi}</span>}
+                <span className='text-sm'>{paper.authors.join(', ')}{' ('}{paper.year}{') '}</span>
+                {paper.doi && <span className='text-sm'>{'DOI: '}{paper.doi}</span>}
               </div>
             ))}
           </div>
@@ -86,10 +86,10 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
           <div className='flex flex-col'>
             <strong className='ml-2'>{'Open Source'}</strong>
             {references.opensource.map((project, index) => (
-              <div key={index} className={`flex flex-col border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
+              <div key={index} className={`flex flex-col gap-1 border border-extreme-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-xl hover:bg-background-secondary ${ index > 0 ? 'mt-2' : '' }`}>
                 <Link href={project.external_link ?? '#'} target="_blank" rel="noopener noreferrer">{project.name}</Link>
-                <span>{project.description}</span>
-                <span>{'(License: '}{project.license}{')'}</span>
+                <span className='text-sm'>{project.description}</span>
+                <span className='text-sm'>{'(License: '}{project.license}{')'}</span>
               </div>
             ))}
           </div>
