@@ -6,7 +6,7 @@ import vert from './default.vert';
 import { initializeGL, render, createClipPathCSS, createAbsoluteLabelsCSS } from './utils';
 import { RadarChartStyle, RadarLoadingStyle } from './types';
 import { useTheme } from 'next-themes';
-import Stars from '@/components/ui/Stars';
+// import Stars from '@/components/ui/Stars';
 
 export interface RadarChartProps {
   targetData?: number[]; // 1~5 범위의 자연수 배열
@@ -51,7 +51,7 @@ const lightLoadingStyle: RadarLoadingStyle = {
 
 function GLRadarChart(props: RadarChartProps) {
   const { resolvedTheme } = useTheme();
-  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
+  // const [setHoveredIndex] = React.useState<number | null>(null);
 
   const {
     targetData = [1, 1, 1],
@@ -145,8 +145,6 @@ function GLRadarChart(props: RadarChartProps) {
             'group absolute w-20 h-6 text-sm transition-all text-main hover:font-bold'
             + (loaded ? ' opacity-100' : ' opacity-0 translate-y-1')
           }
-          onMouseEnter={() => setHoveredIndex(i)}
-          onMouseLeave={() => setHoveredIndex(null)}
         >
           {/* <span
             className={`absolute left-0 top-[-16px] transition-opacity ${
