@@ -1,4 +1,4 @@
-import { firestore } from '@/lib/firebaseAdmin';
+import { firestore } from '@/libs/firebaseAdmin';
 import { TermData } from '@/types';
 import { transformToSlug } from '@/utils/filters';
 

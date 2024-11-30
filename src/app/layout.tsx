@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/lib/fonts';
+import { fontNanum, fontCoding, fontNoto, fontPretendard } from '@/libs/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/common/Header';
