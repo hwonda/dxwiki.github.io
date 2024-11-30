@@ -19,11 +19,11 @@ interface RelevanceSectionProps {
 const RelevanceElement = ({ title, score, description }: { title: string, score: number, description: string }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center bg-background-secondary rounded-[16px_16px_0_0] px-3 py-1 lg:px-4 lg:py-1 ">
+      <div className="flex justify-between items-center bg-background-secondary rounded-[8px_8px_0_0] px-3.5 py-1">
         <strong className='font-bold'>{title}</strong>
         <Stars rating={score} size={12} />
       </div>
-      <span className="border border-extreme-light rounded-[0_0_16px_16px] px-3 py-1 lg:px-3.5 lg:py-2 flex-1">{description}</span>
+      <span className="border border-extreme-light rounded-[0_0_8px_8px] px-3.5 py-1 lg:py-2.5 flex-1">{description}</span>
     </div>
   );
 };
