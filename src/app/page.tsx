@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import LogoAnimation from '@/components/common/LogoAnimation';
 import SearchInput from '@/components/common/SearchInput';
-import CarouselWrapper from '@/components/common/CarouselWrapper';
+// import CarouselWrapper from '@/components/common/CarouselWrapper';
 import { fetchTermsData } from '@/utils/termsData';
 import { ChevronRight } from 'lucide-react';
-import { MoveUpRight } from 'lucide-react';
+// import { MoveUpRight } from 'lucide-react';
 
 export default async function Home() {
   const terms = await fetchTermsData();
@@ -21,7 +21,7 @@ export default async function Home() {
         </Link>
       </div>
       <SearchInput />
-      <div className='w-full'>
+      {/* <div className='w-full'>
         <CarouselWrapper itemCount={terms.length}>
           {terms.map((term, index) => (
             <div key={index} className='flex justify-center items-center shrink-0'>
@@ -34,7 +34,7 @@ export default async function Home() {
             </div>
           ))}
         </CarouselWrapper>
-      </div>
+      </div> */}
     </div>
   );
 }
