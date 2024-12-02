@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Search, Lightbulb, Command } from 'lucide-react';
+import { Search, Lightbulb } from 'lucide-react';
 
 interface SearchInputProps {
   suggestions?: string[];
+  tip?: boolean;
 }
 
-const SearchInput = ({ suggestions }: SearchInputProps) => {
+const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ const SearchInput = ({ suggestions }: SearchInputProps) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full z-[1]">
       <div className="flex items-center border border-light rounded-md focus-within:border-accent bg-background">
         <Search className="ml-3 text-main" />
         <input
@@ -60,44 +61,46 @@ const SearchInput = ({ suggestions }: SearchInputProps) => {
           className="w-full p-2 pl-3 bg-background outline-none text-main rounded-md"
         />
       </div>
-      <div className="w-full flex flex-col bg-extreme-light text-sub rounded-xl mt-4 p-4 gap-3">
-        <span className="flex text-main gap-2">
-          <Lightbulb className="size-5" />
-          {'검색 팁'}
-        </span>
-        <div className='hidden sm:block'>
-          <span className="flex flex-wrap items-center gap-1 sm:gap-1 ml-6">
-            <span className="flex items-center gap-1">
-              <span className="border border-light p-[4px_8px_2px_7px] rounded-md">{'Ctrl'}</span>
-              <span className="font-semibold">{'+'}</span>
-              <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
-            </span>
-            <span className="text-sub sm:mx-1">{'또는'}</span>
-            <span className="flex items-center gap-1">
-              <span className="border border-light px-2.5 py-[5px] rounded-md">
-                <Command className="size-5" />
-              </span>
-              <span className="font-semibold">{'+'}</span>
-              <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
-            </span>
-            <span className="block mt-2 sm:mt-0 text-sub">
-              {'를 눌러 검색창에 직접 이동할 수 있습니다.'}
-            </span>
+      {tip && (
+        <div className="w-full flex flex-col bg-extreme-light text-sub rounded-xl mt-4 p-4 gap-3">
+          <span className="flex items-center text-main gap-2">
+            <Lightbulb className="size-5" />
+            {'검색 팁'}
           </span>
-        </div>
+          <div className='hidden sm:block'>
+            <span className="flex flex-wrap items-center gap-1 sm:gap-1 ml-6">
+              <span className="flex items-center gap-1">
+                <span className="border border-light p-[3px_8px_2px_7px] rounded-md">{'Ctrl'}</span>
+                <span className="font-semibold">{'+'}</span>
+                <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
+              </span>
+              <span className="text-sub sm:mx-1">{'또는'}</span>
+              <span className="flex items-center gap-1">
+                <span className="border border-light px-3.5 pt-0.5 rounded-md text-sub text-[18px]">
+                  {'⌘'}
+                </span>
+                <span className="font-semibold">{'+'}</span>
+                <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
+              </span>
+              <span className="block mt-2 sm:mt-0 text-sub">
+                {'를 눌러 검색창에 직접 이동할 수 있습니다.'}
+              </span>
+            </span>
+          </div>
 
-        <div className='ml-6'>
-          <span className="text-main font-semibold">{'용어'}</span>
-          <span>{'나 '}</span>
-          <span className="text-main font-semibold">{'설명'}</span>
-          <span className="ml-1">{'외에도 '}</span>
-          <span className="text-main font-semibold">{'사용 사례, 관련 자료'}</span>
-          <span className="ml-1">{' 또한 검색할 수 있습니다.'}</span>
+          <div className='ml-6'>
+            <strong>{'용어'}</strong>
+            {'나 '}
+            <strong>{'설명'}</strong>
+            {' 외에도'}
+            <strong>{'사용 사례, 관련 자료'}</strong>
+            {' 또한 검색할 수 있습니다.'}
+          </div>
         </div>
-      </div>
+      )}
       {isModalOpen && (
         <div
-          className="absolute top-12 mt-2 w-full bg-white border border-light rounded-md shadow-lg max-h-60 overflow-y-auto suggestions-modal animate-slideDown"
+          className="absolute top-12 mt-2 w-full border border-light rounded-md shadow-lg max-h-60 overflow-y-auto suggestions-modal animate-slideDown bg-background opacity-100"
         >
           {filteredSuggestions && filteredSuggestions.length > 0 ? (
             filteredSuggestions.map((suggestion, index) => (
