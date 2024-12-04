@@ -112,15 +112,15 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
   };
 
   return (
-    <section className="references-section">
+    <section className="references-section break-all">
       <h2>
         <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 references-section-hover:opacity-100 transition-opacity">{'#'}</span>
         {'레퍼런스'}
       </h2>
-      <div className='grid lg:grid-cols-2 gap-4'>
+      <div className='grid lg:grid-cols-2 gap-4 sm:mt-[-4px]'>
         {references.tutorials.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-2'>{'Tutorials'}</strong>
+            <strong className='ml-2 mb-1.5'>{'Tutorials'}</strong>
             {references.tutorials.map((tutorial, index) => (
               <Link
                 {...getLinkProps(tutorial.external_link)}
@@ -139,7 +139,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.books.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-2'>{'Books'}</strong>
+            <strong className='ml-2 mb-1.5'>{'Books'}</strong>
             {references.books.map((book, index) => (
               <Link
                 {...getLinkProps(book.external_link)}
@@ -156,7 +156,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.academic.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-2'>{'Academic'}</strong>
+            <strong className='ml-2 mb-1.5'>{'Academic'}</strong>
             {references.academic.map((paper, index) => (
               <Link
                 {...getLinkProps(paper.external_link)}
@@ -173,7 +173,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.opensource.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-2'>{'Open Source'}</strong>
+            <strong className='ml-2 mb-1.5'>{'Open Source'}</strong>
             {references.opensource.map((project, index) => (
               <Link
                 {...getLinkProps(project.external_link)}

@@ -23,7 +23,7 @@ const RelevanceElement = ({ title, score, description }: { title: string, score:
         <strong className='font-bold text-sm py-1'>{title}</strong>
         <Stars rating={score} size={12} />
       </div>
-      <span className="border border-light border-t-0 rounded-[0_0_8px_8px] px-3.5 py-1 lg:py-2.5 flex-1">{description}</span>
+      <span className="border border-extreme-light border-t-0 rounded-[0_0_8px_8px] px-3.5 py-1 lg:py-2.5 flex-1 break-all">{description}</span>
     </div>
   );
 };
