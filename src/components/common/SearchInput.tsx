@@ -83,7 +83,7 @@ const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
                 <span className="border border-light px-2.5 py-0.5 pt-[3px] rounded-md">{'K'}</span>
               </span>
               <span className="block mt-2 sm:mt-0 text-sub">
-                {'를 눌러 검색창에 직접 이동할 수 있습니다.'}
+                {' 를 눌러 검색창에 직접 이동할 수 있습니다.'}
               </span>
             </span>
           </div>
@@ -93,7 +93,7 @@ const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
             {'나 '}
             <strong>{'설명'}</strong>
             {' 외에도'}
-            <strong>{'사용 사례, 관련 자료'}</strong>
+            <strong>{' 사용 사례, 관련 자료'}</strong>
             {' 또한 검색할 수 있습니다.'}
           </div>
         </div>
