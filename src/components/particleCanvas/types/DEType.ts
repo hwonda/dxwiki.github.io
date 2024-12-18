@@ -10,6 +10,7 @@ export interface DENodeType {
   angleX: number;
   angleY: number;
   moveSpeed: number;
+  theme: string;
 }
 
 export interface DEWaveType {
@@ -20,6 +21,7 @@ export interface DEWaveType {
   color: string;
   lineWidth: number;
   startX: number;
+  theme: string;
 }
 
 export interface DEPoint2D {

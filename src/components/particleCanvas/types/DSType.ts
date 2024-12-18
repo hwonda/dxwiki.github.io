@@ -14,6 +14,7 @@ export interface DSParticleType {
   connectionOffset: number;
   isFlashing: boolean;
   flashProgress: number;
+  theme: string;
 }
 
 export interface DSTransform {

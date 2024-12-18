@@ -3,18 +3,18 @@ import { DSParticleType, DSTransform } from '@/components/particleCanvas/types/i
 
 export const CONSTANTS = {
   FADE_DURATION: 2,
-  SPIRAL_TIGHTNESS: 0.2,
-  MAX_RADIUS: 150,
-  MIN_RADIUS: 10,
-  BASE_ANGULAR_SPEED: 0.002,
-  PERSPECTIVE_ANGLE: Math.PI * 0.15,
-  VERTICAL_SQUEEZE: 0.4,
+  SPIRAL_TIGHTNESS: 0.4,
+  MAX_RADIUS: 500,
+  MIN_RADIUS: 5,
+  BASE_ANGULAR_SPEED: 0.001,
+  PERSPECTIVE_ANGLE: Math.PI * 0.65,
+  VERTICAL_SQUEEZE: 0.8,
 };
 
 export function apply3DTransform(x: number, y: number, radius: number): DSTransform {
   const tiltedY = y * Math.cos(CONSTANTS.PERSPECTIVE_ANGLE) * CONSTANTS.VERTICAL_SQUEEZE;
   const z = y * Math.sin(CONSTANTS.PERSPECTIVE_ANGLE);
-  const scale = 1 + (z / 500);
+  const scale = 1 + (z / 5000);
 
   return {
     x: x * scale,
@@ -39,6 +39,7 @@ export class Particle implements DSParticleType {
   connectionOffset!: number;
   isFlashing!: boolean;
   flashProgress!: number;
+  theme!: string;
 
   constructor() {
     this.reset();
@@ -47,16 +48,16 @@ export class Particle implements DSParticleType {
   reset(): void {
     this.radius = CONSTANTS.MAX_RADIUS;
     this.angle = Math.random() * Math.PI * 2;
-    this.angularSpeed = CONSTANTS.BASE_ANGULAR_SPEED * (0.8 + (Math.random() * 0.4));
-    this.radialSpeed = 0.01 + (Math.random() * 0.02);
+    this.angularSpeed = CONSTANTS.BASE_ANGULAR_SPEED * (0.6 + (Math.random() * 0.8));
+    this.radialSpeed = (Math.random() * 0.0001);
 
     this.opacity = 0;
     this.fadeState = 'fadingIn';
     this.fadeProgress = 0;
 
-    this.baseSize = 1.5 + ( Math.random() * 1);
+    this.baseSize = 3 + (Math.random() * 1.5);
     this.pulsePhase = Math.random() * Math.PI * 2;
-    this.pulseSpeed = 0.01 + (Math.random() * 0.001);
+    this.pulseSpeed = 0.01 + (Math.random() * 0.01);
     this.color = this.getRandomColor();
     this.originalColor = this.color;
     this.connectionOffset = Math.random() * Math.PI * 10;
@@ -66,11 +67,17 @@ export class Particle implements DSParticleType {
   }
 
   private getRandomColor(): string {
-    const colors = [
+    const isDark = this.theme === 'dark';
+    const colors = isDark ? [
       'rgba(255, 0, 0, ',
       'rgba(255, 69, 0, ',
+      'rgba(188, 34, 34, ',
+      'rgba(159, 0, 0, ',
+    ] : [
+      'rgba(240, 20, 60, ',
       'rgba(178, 34, 34, ',
-      'rgba(139, 0, 0, ',
+      'rgba(189, 0, 0, ',
+      'rgba(255, 0, 0, ',
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
@@ -100,12 +107,19 @@ export class Particle implements DSParticleType {
         this.flashProgress = 0;
         this.color = this.originalColor;
       } else {
-        this.color = 'rgba(255, 255, 255, ';
+        if(this.theme === 'dark') {
+          this.color = 'rgba(255, 255, 255, ';
+        } else {
+          this.color = 'rgba(80, 0, 0, ';
+        }
       }
     }
 
+    const radiusFactor = this.radius / CONSTANTS.MAX_RADIUS;
+    this.angularSpeed = CONSTANTS.BASE_ANGULAR_SPEED * (2 - radiusFactor) * 0.3;
+
     this.angle += this.angularSpeed;
-    this.radius -= this.radialSpeed;
+    this.radius -= this.radialSpeed * (2 - radiusFactor);
 
     if (this.radius <= CONSTANTS.MIN_RADIUS) {
       this.reset();
@@ -158,14 +172,16 @@ export class Particle implements DSParticleType {
       if (distance < maxDistance) {
         const baseAlpha = (1 - (distance / maxDistance));
         const pulsingAlpha = (Math.sin(connectionPhase + this.connectionOffset + p.connectionOffset) + 1) * 0.5;
-        const finalAlpha = baseAlpha * pulsingAlpha * 0.4 * distanceScale
+        const finalAlpha = baseAlpha * pulsingAlpha * 0.6 * distanceScale
                           * Math.min(this.opacity, p.opacity) * scale;
 
         ctx.beginPath();
         ctx.moveTo(x2d, y2d);
         ctx.lineTo(px, py);
-        ctx.strokeStyle = `rgba(255, 0, 0, ${ finalAlpha })`;
-        ctx.lineWidth = distanceScale * scale;
+        ctx.strokeStyle = this.theme === 'dark'
+          ? `rgba(225, 20, 60, ${ finalAlpha })`
+          : `rgba(220, 20, 60, ${ finalAlpha })`; // Crimson 색상 사용
+        ctx.lineWidth = distanceScale * scale * 1.5;
         ctx.stroke();
       }
     });

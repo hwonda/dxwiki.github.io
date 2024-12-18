@@ -16,15 +16,23 @@ export class Node implements DENodeType {
   angleX!: number;
   angleY!: number;
   moveSpeed!: number;
+  theme!: string;
   private canvasWidth!: number;
   private canvasHeight!: number;
   private MAX_DEPTH!: number;
+  opacity!: number;
+  fadeState!: 'fadingIn' | 'visible';
+  fadeProgress!: number;
+  private static readonly FADE_DURATION = 2;
 
   constructor(canvasWidth: number, canvasHeight: number, maxDepth: number) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.MAX_DEPTH = maxDepth;
     this.reset();
+    this.opacity = 0;
+    this.fadeState = 'fadingIn';
+    this.fadeProgress = 0;
   }
 
   reset(): void {
@@ -42,16 +50,31 @@ export class Node implements DENodeType {
   }
 
   private getRandomColor(): string {
-    const colors = [
+    const isDark = this.theme === 'dark';
+    const colors = isDark ? [
       'rgba(255, 255, 0, ',
       'rgba(255, 215, 0, ',
       'rgba(255, 200, 0, ',
       'rgba(255, 180, 0, ',
+    ] : [
+      'rgba(255, 193, 7, ', // Amber
+      'rgba(255, 167, 38, ', // Orange
+      'rgba(251, 192, 45, ', // Golden Yellow
+      'rgba(255, 234, 0, ', // Golden
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
   update(ctx: CanvasRenderingContext2D): void {
+    if (this.fadeState === 'fadingIn') {
+      this.fadeProgress += (1 / 60) / Node.FADE_DURATION;
+      if (this.fadeProgress >= 1) {
+        this.fadeProgress = 1;
+        this.fadeState = 'visible';
+      }
+    }
+    this.opacity = Math.max(0, Math.min(1, this.fadeProgress));
+
     this.x += Math.cos(this.angleX) * this.moveSpeed;
     this.y += Math.sin(this.angleY) * this.moveSpeed;
     this.z -= this.speed;
@@ -80,7 +103,7 @@ export class Node implements DENodeType {
       return;
     }
 
-    const alpha = (1 - (this.z / this.MAX_DEPTH)) * 0.8;
+    const alpha = (1 - (this.z / this.MAX_DEPTH)) * 0.8 * this.opacity;
 
     ctx.beginPath();
     ctx.arc(x2d, y2d, r, 0, Math.PI * 2);
@@ -97,13 +120,21 @@ export class Wave implements DEWaveType {
   color!: string;
   lineWidth!: number;
   startX!: number;
+  theme!: string;
   private canvasWidth!: number;
   private canvasHeight: number;
+  opacity!: number;
+  fadeState!: 'fadingIn' | 'visible';
+  fadeProgress!: number;
+  private static readonly FADE_DURATION = 2;
 
   constructor(canvasWidth: number, canvasHeight: number) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.reset();
+    this.opacity = 0;
+    this.fadeState = 'fadingIn';
+    this.fadeProgress = 0;
   }
 
   reset(): void {
@@ -117,15 +148,29 @@ export class Wave implements DEWaveType {
   }
 
   private getRandomColor(): string {
-    const colors = [
+    const isDark = this.theme === 'dark';
+    const colors = isDark ? [
       'rgba(255, 255, 0, ',
       'rgba(255, 215, 0, ',
       'rgba(255, 200, 0, ',
+    ] : [
+      'rgba(255, 193, 7, ', // Amber
+      'rgba(251, 192, 45, ', // Golden Yellow
+      'rgba(255, 234, 0, ', // Golden
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
   update(ctx: CanvasRenderingContext2D): void {
+    if (this.fadeState === 'fadingIn') {
+      this.fadeProgress += (1 / 60) / Wave.FADE_DURATION;
+      if (this.fadeProgress >= 1) {
+        this.fadeProgress = 1;
+        this.fadeState = 'visible';
+      }
+    }
+    this.opacity = Math.max(0, Math.min(1, this.fadeProgress));
+
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
 
@@ -145,7 +190,7 @@ export class Wave implements DEWaveType {
       }
     }
 
-    ctx.strokeStyle = this.color + '0.3)';
+    ctx.strokeStyle = this.color + (0.3 * this.opacity) + ')';
     ctx.stroke();
 
     this.startX += this.speed;

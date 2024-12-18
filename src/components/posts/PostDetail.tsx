@@ -18,7 +18,7 @@ const PostDetail = async ({ term, slug }: Props) => {
   return (
     <div className='prose block md:grid md:grid-cols-[1fr_5fr]'>
       <TableOfContents title={term.title?.ko ?? ''} />
-      <div className='md:mr-40 text-justify'>
+      <div className='lg:mr-40 text-justify'>
         <PostHeader term={term} slug={slug} />
         <div className='animate-introSecond sm:ml-5'>
           <DifficultyLevel

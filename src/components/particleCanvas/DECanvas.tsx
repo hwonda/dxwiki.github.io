@@ -68,20 +68,24 @@ export default function DECanvas(props: DEParticleStreamProps) {
   return (
     <div className="relative w-full min-h-[300px] rounded-2xl overflow-hidden
       shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
-      border-2 border-black/5 dark:border-white/10
-      bg-white/30 dark:bg-black/30 backdrop-blur-md
+      border-2 border-yellow-400 dark:border-yellow-400
+      bg-white/30 dark:bg-black/20 backdrop-blur-md
       before:absolute before:inset-0 before:z-0
-      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/10"
+      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/5"
     >
-      <div className="absolute top-2 right-2 text-sub backdrop-blur-sm rounded px-2">
-        {'DA | L'}
-        <span className='text-yellow-400'>{score}</span>
+      <div className="absolute top-2 right-2 text-main backdrop-blur-md rounded px-2 z-20">
+        {'DE | L'}
+        <span className='text-amber-600 dark:text-amber-400'>{score}</span>
       </div>
-      <div className='absolute bottom-2 left-2 mr-2 min-h-[100px] space-y-1'>
-        <div className='text-yellow-400 text-lg font-bold inline-block bg-background/20 dark:bg-background/80 backdrop-blur-sm rounded px-2'>
+      <div className='absolute w-full bottom-0 left-0 p-2 z-20
+        bg-amber-500/5 min-h-[100px] flex flex-col justify-start
+        before:absolute before:inset-0 before:-z-10
+        before:backdrop-blur-3xl before:bg-amber-500/5'
+      >
+        <div className='text-amber-600 dark:text-amber-400 text-lg font-bold mb-1'>
           {title}
         </div>
-        <div className='text-sub inline-block bg-background/20 dark:bg-background/80 backdrop-blur-sm rounded-lg px-2'>
+        <div className='text-main text-sm'>
           {description}
         </div>
       </div>

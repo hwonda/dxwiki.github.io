@@ -6,6 +6,7 @@ export interface DAParticleType {
   color: string;
   speed: number;
   isFlashing?: boolean;
+  theme?: string;
 }
 
 export interface DAPoint2D {

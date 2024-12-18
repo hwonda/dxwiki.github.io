@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Particle, CONSTANTS } from '@/libs/DSParticleSystem';
+import { useTheme } from 'next-themes';
 
 interface DSParticleStreamProps {
   width?: number;
@@ -20,6 +21,7 @@ export default function DSParticleStream(props: DSParticleStreamProps) {
   const lastTimeRef = useRef<number>(0);
   const lastFlashTimeRef = useRef<number>(0);
   const currentFlashIntervalRef = useRef<number>(Math.random());
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,25 +82,29 @@ export default function DSParticleStream(props: DSParticleStreamProps) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [width, height]);
+  }, [width, height, theme]);
 
   return (
     <div className="relative w-full min-h-[300px] rounded-2xl overflow-hidden
       shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
-      border-2 border-black/5 dark:border-white/10
-      bg-white/30 dark:bg-black/30 backdrop-blur-md
+      border-2 border-red-600 dark:border-red-500
+      bg-white/30 dark:bg-black/20 backdrop-blur-md
       before:absolute before:inset-0 before:z-0
-      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/10"
+      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/5"
     >
-      <div className="absolute top-2 right-2 text-sub backdrop-blur-sm rounded px-2">
-        {'DA | L'}
-        <span className='text-red-600'>{score}</span>
+      <div className="absolute top-2 right-2 text-main backdrop-blur-md rounded px-2 z-20">
+        {'DS | L'}
+        <span className='text-red-700 dark:text-red-500'>{score}</span>
       </div>
-      <div className='absolute bottom-2 left-2 mr-2 min-h-[100px] space-y-1'>
-        <div className='text-red-600 text-lg font-bold inline-block bg-background/20 dark:bg-background/80 backdrop-blur-sm rounded px-2'>
+      <div className='absolute w-full bottom-0 left-0 p-2 z-20
+        bg-red-500/5 min-h-[100px] flex flex-col justify-start
+        before:absolute before:inset-0 before:-z-10
+        before:backdrop-blur-3xl before:bg-red-500/5'
+      >
+        <div className='text-red-700 dark:text-red-500 text-lg font-bold mb-1'>
           {title}
         </div>
-        <div className='text-sub inline-block bg-background/20 dark:bg-background/80 backdrop-blur-sm rounded-lg px-2'>
+        <div className='text-main text-sm'>
           {description}
         </div>
       </div>

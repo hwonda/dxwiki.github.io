@@ -35,7 +35,7 @@ export default function DACanvas(props: ParticleStreamProps) {
     // Theme-aware particle initialization
     particlesRef.current = Array.from(
       { length: PARTICLE_COUNT },
-      () => new Particle(width, height, MAX_DEPTH)
+      () => new Particle(width, height, MAX_DEPTH, theme || 'light')
     );
 
     function animate() {
@@ -60,20 +60,24 @@ export default function DACanvas(props: ParticleStreamProps) {
   return (
     <div className="relative w-full min-h-[300px] rounded-2xl overflow-hidden
       shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
-      border-2 border-black/5 dark:border-white/10
-      bg-white/30 dark:bg-black/30 backdrop-blur-md
+      border-2 border-green-500 dark:border-green-400
+      bg-white/30 dark:bg-black/20 backdrop-blur-md
       before:absolute before:inset-0 before:z-0
-      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/10"
+      before:bg-gradient-to-b before:from-transparent before:to-white/5 dark:before:to-white/5"
     >
-      <div className="absolute top-2 right-2 text-sub backdrop-blur-md rounded px-2">
+      <div className="absolute top-2 right-2 text-main backdrop-blur-md rounded px-2 z-20">
         {'DA | L'}
-        <span className='text-green-400'>{score}</span>
+        <span className='text-green-700 dark:text-green-500'>{score}</span>
       </div>
-      <div className='absolute bottom-2 left-2 mr-2 min-h-[100px] space-y-1'>
-        <div className='text-green-400 text-lg font-bold inline-block bg-background/20 dark:bg-background/80 backdrop-blur-md rounded px-2'>
+      <div className='absolute w-full bottom-0 left-0 p-2 z-20
+        bg-green-500/5 min-h-[100px] flex flex-col justify-start
+        before:absolute before:inset-0 before:-z-10
+        before:backdrop-blur-3xl before:bg-green-500/5'
+      >
+        <div className='text-green-700 dark:text-green-500 text-lg font-bold mb-1'>
           {title}
         </div>
-        <div className='text-sub inline-block bg-background/20 dark:bg-background/80 backdrop-blur-md rounded-lg px-2'>
+        <div className='text-main text-sm'>
           {description}
         </div>
       </div>
