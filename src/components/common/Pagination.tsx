@@ -12,8 +12,8 @@ const Pagination = ({ currentPage, totalPages, pageNumbers, setCurrentPage }: Pa
     <div className="relative flex gap-2 mt-10 justify-center">
       <button
         onClick={() => setCurrentPage(1)}
-        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-sub ${
-          currentPage === 1 ? 'opacity-50 hover:bg-transparent pointer-events-none' : ''
+        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-gray1 hover:text-main ${
+          currentPage === 1 ? 'opacity-0 pointer-events-none' : ''
         }`}
       >
         <ChevronsLeft className='size-4' />
@@ -21,8 +21,8 @@ const Pagination = ({ currentPage, totalPages, pageNumbers, setCurrentPage }: Pa
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-sub ${
-          currentPage === 1 ? 'opacity-50 hover:bg-transparent pointer-events-none' : ''
+        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-gray1 hover:text-main ${
+          currentPage === 1 ? 'opacity-0 pointer-events-none' : ''
         }`}
       >
         <ChevronLeft className='size-4' />
@@ -32,8 +32,8 @@ const Pagination = ({ currentPage, totalPages, pageNumbers, setCurrentPage }: Pa
         <button
           key={pageNumber}
           onClick={() => setCurrentPage(pageNumber)}
-          className={`w-8 y-8 py-1 rounded-md text-sub hover:bg-accent hover:text-white ${
-            pageNumber === currentPage ? 'bg-accent text-white pointer-events-none' : ''
+          className={`size-8 py-1 rounded-md text-sub border border-transparent hover:border-primary hover:text-main ${
+            pageNumber === currentPage ? 'border !border-primary !text-primary pointer-events-none' : ''
           }`}
         >
           {pageNumber}
@@ -43,16 +43,16 @@ const Pagination = ({ currentPage, totalPages, pageNumbers, setCurrentPage }: Pa
       <button
         onClick={() => setCurrentPage(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-sub ${
-          currentPage === totalPages ? 'opacity-50 hover:bg-transparent pointer-events-none' : ''
+        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-gray1 hover:text-main ${
+          currentPage === totalPages ? 'opacity-0 pointer-events-none' : ''
         }`}
       >
         <ChevronRight className='size-4' />
       </button>
       <button
         onClick={() => setCurrentPage(totalPages)}
-        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-sub ${
-          currentPage === totalPages ? 'opacity-50 hover:bg-transparent pointer-events-none' : ''
+        className={`px-2 py-1 rounded-md hover:bg-background-secondary text-gray1 hover:text-main ${
+          currentPage === totalPages ? 'opacity-0 pointer-events-none' : ''
         }`}
       >
         <ChevronsRight className='size-4' />
