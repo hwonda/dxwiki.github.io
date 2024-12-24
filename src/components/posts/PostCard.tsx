@@ -28,27 +28,27 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
             <Stars rating={term.difficulty?.level ?? 0} size={12} className='py-0.5' />
           </div>
         );
-      case 'DA':
-        return (
-          <span className={sortTagStyle}>
-            {'DA | L'}
-            <span className='text-primary'>{term.relevance?.analyst?.score}</span>
-          </span>
-        );
-      case 'DE':
-        return (
-          <span className={sortTagStyle}>
-            {'DE | L'}
-            <span className='text-primary'>{term.relevance?.engineer?.score}</span>
-          </span>
-        );
-      case 'DS':
-        return (
-          <span className={sortTagStyle}>
-            {'DS | L'}
-            <span className='text-primary'>{term.relevance?.scientist?.score}</span>
-          </span>
-        );
+      // case 'DA':
+      //   return (
+      //     <span className={sortTagStyle}>
+      //       {'DA | L'}
+      //       <span className='text-primary'>{term.relevance?.analyst?.score}</span>
+      //     </span>
+      //   );
+      // case 'DE':
+      //   return (
+      //     <span className={sortTagStyle}>
+      //       {'DE | L'}
+      //       <span className='text-primary'>{term.relevance?.engineer?.score}</span>
+      //     </span>
+      //   );
+      // case 'DS':
+      //   return (
+      //     <span className={sortTagStyle}>
+      //       {'DS | L'}
+      //       <span className='text-primary'>{term.relevance?.scientist?.score}</span>
+      //     </span>
+      //   );
       default:
         return <span className={sortTagStyle}>{formatDate(term.metadata?.updated_at || '')}</span>;
     }
@@ -88,7 +88,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
           <ChevronRight className="size-5 text-light group-hover:text-sub block sm:hidden" />
         </div>
         <span className="hidden sm:block text-main truncate">{term.title?.en}</span>
-        <span className="text-gray1 group-hover:text-sub line-clamp-1 sm:line-clamp-3 sm:mt-2 text-sm sm:text-base">
+        <span className="text-gray1 group-hover:text-sub line-clamp-1 sm:line-clamp-2 sm:mt-2 text-sm sm:text-base">
           {term.description?.short}
         </span>
       </div>

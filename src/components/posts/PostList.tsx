@@ -45,12 +45,12 @@ const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
       case 'updated':
         return multiplier * ((new Date(a.metadata?.updated_at || 0)).getTime()
                            - (new Date(b.metadata?.updated_at || 0)).getTime());
-      case 'DA':
-        return multiplier * ((a.relevance?.analyst?.score || 0) - (b.relevance?.analyst?.score || 0));
-      case 'DE':
-        return multiplier * ((a.relevance?.engineer?.score || 0) - (b.relevance?.engineer?.score || 0));
-      case 'DS':
-        return multiplier * ((a.relevance?.scientist?.score || 0) - (b.relevance?.scientist?.score || 0));
+      // case 'DA':
+      //   return multiplier * ((a.relevance?.analyst?.score || 0) - (b.relevance?.analyst?.score || 0));
+      // case 'DE':
+      //   return multiplier * ((a.relevance?.engineer?.score || 0) - (b.relevance?.engineer?.score || 0));
+      // case 'DS':
+      //   return multiplier * ((a.relevance?.scientist?.score || 0) - (b.relevance?.scientist?.score || 0));
       default:
         return 0;
     }
@@ -83,13 +83,13 @@ const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
           onSortMobile={handleSortMobile}
         />
       </div>
-      <div className='sm:min-h-[884px] lg:min-h-[658px]'>
+      <div className='sm:min-h-[804px] lg:min-h-[598px]'>
         {TermsPerPage.length > 0 ? (
           <ul className="grid sm:grid-cols-3 lg:grid-cols-4 gap-5">
             {TermsPerPage.map((term: TermData) => (
               <li
                 key={term.id}
-                className="transition-transform duration-300 hover:-translate-y-2 sm:min-h-[206px]"
+                className="transition-transform duration-300 hover:-translate-y-2 sm:min-h-[186px]"
               >
                 <PostCard sortType={sortType} term={term} />
               </li>

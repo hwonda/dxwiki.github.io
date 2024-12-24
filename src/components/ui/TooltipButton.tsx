@@ -10,7 +10,7 @@ interface TooltipButtonProps {
 }
 
 const TooltipButton = ({ onClick, tooltip, children, isLink = false, href }: TooltipButtonProps) => {
-  const buttonClasses = 'p-2 border border-extreme-light rounded-md hover:bg-light text-gray1 hover:text-sub block';
+  const buttonClasses = 'p-2 border border-extreme-light rounded-md hover:bg-extreme-light text-gray1 hover:text-sub block';
 
   return (
     <div className="relative group">
@@ -25,10 +25,10 @@ const TooltipButton = ({ onClick, tooltip, children, isLink = false, href }: Too
       )}
       <div
         className="animate-slideDown absolute -bottom-8 hidden group-hover:block
-          bg-light text-main text-xs py-1.5 px-2.5 rounded whitespace-nowrap
+          bg-extreme-light text-main text-xs py-1.5 px-2.5 rounded whitespace-nowrap
           z-50 before:content-[''] before:absolute before:top-[-4px] before:left-[10px]
           before:size-0 before:border-x-4 before:border-x-transparent before:border-b-4
-          before:border-b-light"
+          before:border-b-extreme-light"
       >
         {tooltip}
       </div>

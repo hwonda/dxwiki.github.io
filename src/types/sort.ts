@@ -1,2 +1,2 @@
-export type SortType = 'updated' | 'difficulty' | 'DA' | 'DE' | 'DS';
+export type SortType = 'updated' | 'difficulty';
 export type SortDirection = 'asc' | 'desc';
