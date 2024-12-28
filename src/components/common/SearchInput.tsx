@@ -92,8 +92,8 @@ const SearchInput = ({ suggestions, tip = true, filter = false, termsLength, goB
             <ChevronLeft className='size-4' />
           </TooltipButton>
         )}
-        <div className="w-full flex items-center border border-light rounded-full focus-within:border-accent bg-background">
-          <Search className="ml-3 text-main" />
+        <div className="w-full px-3 flex items-center border border-light rounded-full focus-within:border-accent bg-background">
+          <Search className="text-main size-4" />
           <input
             type="text"
             ref={inputRef}
@@ -103,11 +103,11 @@ const SearchInput = ({ suggestions, tip = true, filter = false, termsLength, goB
             onFocus={() => setIsModalOpen(true)}
             onBlur={handleBlur}
             onKeyDown={(e) => redirect(e, searchTerm)}
-            className="w-[calc(100%_-_64px)] p-2 pl-3 bg-background outline-none text-main rounded-md"
+            className="w-full p-2 mr-2 bg-background outline-none text-main rounded-md"
           />
           {tip && (
             <button
-              className={`${ showTip ? 'text-primary' : 'text-light' } group flex items-center mr-3 hover:text-accent p-2`}
+              className={`${ showTip ? 'text-primary' : 'text-light' } group flex items-center hover:text-accent`}
               onClick={handleTipClick}
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
