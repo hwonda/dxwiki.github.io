@@ -105,9 +105,6 @@ const config: Config = {
               textDecorationColor: 'var(--accent)',
               textUnderlineOffset: '4px',
             },
-            '.prose :where(ul > li):not(:where([class~="not-prose"],[class~="not-prose"] *))::marker':{
-              color: 'var(--background)',
-            },
             '.prose .tag-button, .tag-button-no-link': {
               color: 'var(--text-secondary)',
               border: '1px solid var(--border)',
@@ -124,6 +121,29 @@ const config: Config = {
             },
             '.markdown-text-sub p': {
               marginBottom: '0',
+            },
+            '.prose code': {
+              padding: '0.2rem 0.3rem',
+              borderRadius: '0.25rem',
+              color: 'var(--primary)',
+              backgroundColor: 'var(--extreme-light)',
+              fontFamily: 'var(--font-pretendard)',
+            },
+            '.prose code::before': {
+              display: 'none',
+            },
+            '.prose code::after': {
+              display: 'none',
+            },
+            '.prose ol, .prose ul': {
+              margin: '0.4rem 0',
+            },
+            '.prose :where(ol > li)::marker, .prose :where(ul > li)::marker': {
+              color: 'var(--gray1)',
+            },
+            '.prose .list-decimal, .prose .list-disc': {
+              margin: '0.2rem 0',
+              paddingLeft: '0.2rem'
             },
           },
         },
