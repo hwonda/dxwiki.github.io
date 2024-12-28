@@ -94,7 +94,7 @@ const SortButtons = ({ sortType, sortDirection, onSortChange, onSortMobile }: So
         {sortTypes.map((type, index) => (
           <div key={type} className='flex items-center gap-0.5'>
             {renderSortButton(type)}
-            {index !== sortTypes.length - 1 && <span className='text-gray1'>{'•'}</span>}
+            {index !== sortTypes.length - 1 && <span className='text-light'>{'•'}</span>}
           </div>
       ))}
       </div>
