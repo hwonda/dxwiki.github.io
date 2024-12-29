@@ -8,7 +8,7 @@ import UsecaseSection from './sections/UsecaseSection';
 import ReferencesSection from './sections/ReferencesSection';
 import RecommendationSection from './sections/RecommendationSection';
 import { TermData } from '@/types';
-
+import AdContainer from '@/components/common/AdContainer';
 interface Props {
   term: TermData
   slug: string
@@ -32,20 +32,16 @@ const PostDetail = async ({ term, slug }: Props) => {
         />
         <UsecaseSection usecase={term.usecase ?? { industries: [], example: '', description: '' }} />
         <ReferencesSection references={term.references ?? { tutorials: [], books: [], academic: [], opensource: [] }} />
-        <ins
-          className="adsbygoogle block w-full h-[160px]"
-          data-ad-client="ca-pub-1278038564950020"
-          data-ad-slot="5709016505"
-          data-auto-format="mcrspv"
-          data-full-width-responsive="true"
+        <AdContainer
+          slot="5709016505"
+          format="mcrspv"
+          className="w-full h-[160px]"
         />
         <RecommendationSection />
-        <ins
-          className="adsbygoogle block w-full h-[200px]"
-          data-ad-client="ca-pub-1278038564950020"
-          data-ad-slot="6880591392"
-          data-auto-format="rspv"
-          data-full-width-responsive="true"
+        <AdContainer
+          slot="6880591392"
+          format="auto"
+          className="w-full h-[200px]"
         />
       </div>
     </PostDetailClient>

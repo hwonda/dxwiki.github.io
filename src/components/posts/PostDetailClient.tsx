@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import TableOfContents from '@/components/common/TableOfContents';
 import ShareModal from '@/components/common/ShareModal';
+import AdContainer from '@/components/common/AdContainer';
 
 interface Props {
   title: string;
@@ -26,13 +27,12 @@ const PostDetailClient = ({ title, children }: Props) => {
         <div className='text-justify'>
           {children}
         </div>
-        <div>
-          <ins
-            className="adsbygoogle block sticky top-28 ml-4 w-40 h-[600px]"
-            data-ad-client="ca-pub-1278038564950020"
-            data-ad-slot="5547328424"
-            data-auto-format="mcrspv"
-            data-full-width=""
+        <div className='flex flex-col ml-4'>
+          <div className='w-full h-[425px]' />
+          <AdContainer
+            slot="5547328424"
+            format="mcrspv"
+            className="sticky top-[140px] w-40 h-[600px]"
           />
         </div>
       </div>

@@ -59,7 +59,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
           strategy="afterInteractive"
         />
-        <Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" />
+        <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" />
       </head>
       <body
         className={`

@@ -4,6 +4,7 @@ import RecommendTerms from '@/components/posts/RecommendTerms';
 import { fetchTermsData } from '@/utils/termsData';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import AdContainer from '@/components/common/AdContainer';
 
 export default async function Home() {
   const terms = await fetchTermsData();
@@ -26,12 +27,10 @@ export default async function Home() {
         <div className='relative z-10'>
           <RecommendTerms terms={terms} />
         </div>
-        <ins
-          className="adsbygoogle block w-full h-[200px] mt-10"
-          data-ad-client="ca-pub-1278038564950020"
-          data-ad-slot="6880591392"
-          data-auto-format="rspv"
-          data-full-width=""
+        <AdContainer
+          slot="6880591392"
+          format="rspv"
+          className="w-full h-[200px] mt-10"
         />
       </div>
     </>
