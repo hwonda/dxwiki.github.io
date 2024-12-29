@@ -19,6 +19,7 @@ const AdContainer = ({ slot, format, className }: AdContainerProps) => {
         data-ad-client="ca-pub-1278038564950020"
         data-ad-slot={slot}
         data-auto-format={format}
+        data-full-width-responsive="true"
       />
       <Script id="ads-init" strategy="afterInteractive">
         {'(adsbygoogle = window.adsbygoogle || []).push({});'}
