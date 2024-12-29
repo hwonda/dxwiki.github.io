@@ -35,13 +35,13 @@ const PostDetail = async ({ term, slug }: Props) => {
         <AdContainer
           slot="5709016505"
           format="mcrspv"
-          className="w-full h-[160px]"
+          className="w-full min-h-[160px]"
         />
         <RecommendationSection />
         <AdContainer
           slot="6880591392"
-          format="auto"
-          className="w-full h-[200px]"
+          format="rspv"
+          className="w-full min-h-[200px]"
         />
       </div>
     </PostDetailClient>

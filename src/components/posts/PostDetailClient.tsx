@@ -27,12 +27,12 @@ const PostDetailClient = ({ title, children }: Props) => {
         <div className='text-justify'>
           {children}
         </div>
-        <div className='flex flex-col ml-4'>
+        <div className='hidden md:flex flex-col ml-4'>
           <div className='w-full h-[425px]' />
           <AdContainer
             slot="5547328424"
             format="mcrspv"
-            className="sticky top-[140px] w-40 h-[600px]"
+            className="sticky top-[140px] w-40 min-h-[600px]"
           />
         </div>
       </div>
