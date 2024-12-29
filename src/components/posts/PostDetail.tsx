@@ -32,25 +32,21 @@ const PostDetail = async ({ term, slug }: Props) => {
         />
         <UsecaseSection usecase={term.usecase ?? { industries: [], example: '', description: '' }} />
         <ReferencesSection references={term.references ?? { tutorials: [], books: [], academic: [], opensource: [] }} />
-        <amp-ad width="100vw" height="280"
-          type="adsense"
+        <ins
+          className="adsbygoogle block w-full h-[160px]"
           data-ad-client="ca-pub-1278038564950020"
           data-ad-slot="5709016505"
           data-auto-format="mcrspv"
-          data-full-width=""
-        >
-          <div overflow="" />
-        </amp-ad>
+          data-full-width-responsive="true"
+        />
         <RecommendationSection />
-        <amp-ad width="100vw" height="280"
-          type="adsense"
+        <ins
+          className="adsbygoogle block w-full h-[200px]"
           data-ad-client="ca-pub-1278038564950020"
           data-ad-slot="6880591392"
           data-auto-format="rspv"
-          data-full-width=""
-        >
-          <div overflow="" />
-        </amp-ad>
+          data-full-width-responsive="true"
+        />
       </div>
     </PostDetailClient>
   );

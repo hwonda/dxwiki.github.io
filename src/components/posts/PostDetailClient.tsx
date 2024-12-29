@@ -27,15 +27,13 @@ const PostDetailClient = ({ title, children }: Props) => {
           {children}
         </div>
         <div>
-          <amp-ad width="100vw" height="600"
-            type="adsense"
+          <ins
+            className="adsbygoogle block sticky top-28 ml-4 w-40 h-[600px]"
             data-ad-client="ca-pub-1278038564950020"
             data-ad-slot="5547328424"
-            data-auto-format="rspv"
+            data-auto-format="mcrspv"
             data-full-width=""
-          >
-            <div overflow="" />
-          </amp-ad>
+          />
         </div>
       </div>
 

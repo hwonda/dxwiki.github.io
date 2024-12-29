@@ -26,16 +26,14 @@ export default async function Home() {
         <div className='relative z-10'>
           <RecommendTerms terms={terms} />
         </div>
+        <ins
+          className="adsbygoogle block w-full h-[200px] mt-10"
+          data-ad-client="ca-pub-1278038564950020"
+          data-ad-slot="6880591392"
+          data-auto-format="rspv"
+          data-full-width=""
+        />
       </div>
-      <amp-ad width="100vw" height="320"
-        type="adsense"
-        data-ad-client="ca-pub-1278038564950020"
-        data-ad-slot="6880591392"
-        data-auto-format="rspv"
-        data-full-width=""
-      >
-        <div overflow="" />
-      </amp-ad>
     </>
   );
 }
