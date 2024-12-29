@@ -1,4 +1,14 @@
+'use client';
+
 import Script from 'next/script';
+import { useEffect } from 'react';
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    adsbygoogle: any;
+  }
+}
 
 interface AdContainerProps {
   slot: string;
@@ -7,6 +17,10 @@ interface AdContainerProps {
 }
 
 const AdContainer = ({ slot, format, className }: AdContainerProps) => {
+  useEffect(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }, []);
+
   return (
     <div className="googleAd-container">
       <Script
@@ -21,9 +35,6 @@ const AdContainer = ({ slot, format, className }: AdContainerProps) => {
         data-auto-format={format}
         data-full-width-responsive="true"
       />
-      <Script id="ads-init" strategy="afterInteractive">
-        {'(adsbygoogle = window.adsbygoogle || []).push({});'}
-      </Script>
     </div>
   );
 };
