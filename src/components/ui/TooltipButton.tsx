@@ -11,16 +11,14 @@ interface TooltipButtonProps {
 }
 
 const TooltipButton = ({ onClick, tooltip, children, isLink = false, href, className }: TooltipButtonProps) => {
-  const buttonClasses = 'border border-extreme-light rounded-md hover:bg-extreme-light text-gray1 hover:text-sub block';
-
   return (
     <div className="relative group">
       {isLink ? (
-        <Link href={href!} className={`${ buttonClasses } ${ className }`}>
+        <Link href={href!} className={`${ className }`}>
           {children}
         </Link>
       ) : (
-        <button onClick={onClick} className={`${ buttonClasses } ${ className }`}>
+        <button onClick={onClick} className={`${ className }`}>
           {children}
         </button>
       )}

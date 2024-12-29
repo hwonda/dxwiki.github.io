@@ -98,14 +98,14 @@ const TableOfContents = ({ title, onShare }: Props) => {
       <div className='h-[425px] hidden md:block' />
       <div className='sticky top-[132px] hidden md:block'>
         <nav className="space-y-2 text-sm min-w-32">
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-1.5'>
             <span className='text-main text-base font-bold'>{title}</span>
             <TooltipButton
               onClick={handleShareClick}
               tooltip="공유하기"
-              className='p-1'
+              className='group text-gray1 hover:text-primary flex items-center'
             >
-              <Share className='size-3' />
+              <Share className='size-4' />
             </TooltipButton>
           </div>
           {sections.map((section) => (

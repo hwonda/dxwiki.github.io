@@ -16,6 +16,7 @@ interface KakaoShare {
       };
     };
   })=> void;
+  isKakaoTalkSharingAvailable: ()=> boolean;
 }
 
 interface KakaoStatic {
@@ -38,10 +39,14 @@ interface ShareModalProps {
 const ShareModal = ({ isOpen, onClose }: ShareModalProps) => {
   useEffect(() => {
     if (isOpen) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
       document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${ scrollbarWidth }px`;
     }
     return () => {
       document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
     };
   }, [isOpen]);
 
@@ -68,11 +73,13 @@ const ShareModal = ({ isOpen, onClose }: ShareModalProps) => {
       window.Kakao.init(KAKAO_KEY);
     }
 
+    // 카카오톡 링크 공유
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: document.title,
-        description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
+        description:
+            document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
         imageUrl: 'https://dxwiki.github.io/thumbnail.png',
         link: {
           mobileWebUrl: window.location.href,
