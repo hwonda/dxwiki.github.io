@@ -27,6 +27,15 @@ export default async function Home() {
           <RecommendTerms terms={terms} />
         </div>
       </div>
+      <amp-ad width="100vw" height="320"
+        type="adsense"
+        data-ad-client="ca-pub-1278038564950020"
+        data-ad-slot="6880591392"
+        data-auto-format="rspv"
+        data-full-width=""
+      >
+        <div overflow="" />
+      </amp-ad>
     </>
   );
 }

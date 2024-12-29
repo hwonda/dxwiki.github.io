@@ -22,8 +22,21 @@ const PostDetailClient = ({ title, children }: Props) => {
         title={title}
         onShare={handleShare}
       />
-      <div className='lg:mr-40 text-justify'>
-        {children}
+      <div className='md:grid md:grid-cols-[1fr_160px]'>
+        <div className='text-justify'>
+          {children}
+        </div>
+        <div>
+          <amp-ad width="100vw" height="600"
+            type="adsense"
+            data-ad-client="ca-pub-1278038564950020"
+            data-ad-slot="5547328424"
+            data-auto-format="rspv"
+            data-full-width=""
+          >
+            <div overflow="" />
+          </amp-ad>
+        </div>
       </div>
 
       <ShareModal
