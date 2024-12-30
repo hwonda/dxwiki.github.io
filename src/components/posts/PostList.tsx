@@ -109,7 +109,7 @@ const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
       <AdContainer
         slot="5709016505"
         format="mcrspv"
-        className="w-full"
+        className="w-full h-[160px]"
       />
     </>
   );

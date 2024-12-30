@@ -30,7 +30,7 @@ export default async function Home() {
         <AdContainer
           slot="6880591392"
           format="rspv"
-          className="w-full mt-10"
+          className="w-full mt-10 h-[100px]"
         />
       </div>
     </>
