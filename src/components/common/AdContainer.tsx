@@ -38,7 +38,7 @@ const AdContainer = ({ slot, format, className }: AdContainerProps) => {
         strategy="afterInteractive"
       />
       <ins
-        className={`adsbygoogle block min-h-[100px] ${ className }`}
+        className={`adsbygoogle block ${ className }`}
         data-ad-client="ca-pub-1278038564950020"
         data-ad-slot={slot}
         data-auto-format={format}
