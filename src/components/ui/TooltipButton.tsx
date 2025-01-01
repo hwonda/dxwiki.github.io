@@ -12,7 +12,7 @@ interface TooltipButtonProps {
 
 const TooltipButton = ({ onClick, tooltip, children, isLink = false, href, className }: TooltipButtonProps) => {
   return (
-    <div className="relative group">
+    <div className="relative group flex items-end">
       {isLink ? (
         <Link href={href!} className={`${ className }`}>
           {children}

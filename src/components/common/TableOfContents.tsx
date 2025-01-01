@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
-import { Share } from 'lucide-react';
-import TooltipButton from '@/components/ui/TooltipButton';
 import { TermData, Tags } from '@/types';
 import { transformToSlug } from '@/utils/filters';
 
@@ -14,7 +12,7 @@ interface Section {
 
 interface Props {
   title: string;
-  onShare: ()=> void;
+  // onShare: ()=> void;
   term: TermData;
   slug: string;
 }
@@ -22,7 +20,7 @@ interface Props {
 const HEADER_HEIGHT = 64;
 const Threshold = 10;
 
-const TableOfContents = ({ title, onShare, term, slug }: Props) => {
+const TableOfContents = ({ title, term }: Props) => {
   const [activeSection, setActiveSection] = useState<string>('');
   const [sections, setSections] = useState<Section[]>([]);
 
@@ -94,25 +92,12 @@ const TableOfContents = ({ title, onShare, term, slug }: Props) => {
     }
   }, []);
 
-  const handleShareClick = useCallback((): void => {
-    onShare();
-  }, [onShare]);
-
   return (
     <div className='animate-introSecond flex flex-col'>
       <div className='h-[332px] hidden md:block' />
       <div className='sticky top-[132px] hidden md:block'>
         <nav className="space-y-2 text-sm min-w-32">
-          <div className='flex items-center gap-1.5'>
-            <span className='text-main text-base font-bold'>{title}</span>
-            <TooltipButton
-              onClick={handleShareClick}
-              tooltip="공유하기"
-              className='group text-gray1 hover:text-primary flex items-center'
-            >
-              <Share className='size-4' />
-            </TooltipButton>
-          </div>
+          <span className='text-main text-base font-bold'>{title}</span>
           {sections.map((section) => (
             <div
               key={section.id}
@@ -136,13 +121,17 @@ const TableOfContents = ({ title, onShare, term, slug }: Props) => {
         <div className="flex flex-col flex-wrap mt-10 gap-2">
           <span className='text-main text-base font-bold'>{'관련 용어'}</span>
           {term.tags?.map((tag: Tags, index: number) => (
-            tag.internal_link && transformToSlug(tag.internal_link) !== slug ? (
-              <Link href={transformToSlug(tag.internal_link)} key={index} className='font-normal text-sm text-main cursor-pointer transition-colors underline underline-offset-4 decoration-light hover:text-accent hover:decoration-accent'>
+            tag.internal_link ? (
+              <Link
+                key={index}
+                href={transformToSlug(tag.internal_link)}
+                className='font-normal text-sm text-main cursor-pointer transition-colors underline underline-offset-4 decoration-light hover:text-accent hover:decoration-accent'
+              >
                 {tag.name}
               </Link>
             ) : (
               <span key={index} className='font-normal text-sm'>
-                <span className='border-b border-light pb-px'>{tag.name}</span>
+                <span className='border-b border-light pb-px text-gray1'>{tag.name}</span>
               </span>
             )
           ))}

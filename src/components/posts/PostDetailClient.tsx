@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import TableOfContents from '@/components/common/TableOfContents';
 import ShareModal from '@/components/common/ShareModal';
 import AdContainer from '@/components/common/AdContainer';
+import PostHeader from './sections/PostHeader';
 import { TermData } from '@/types';
 
 interface Props {
@@ -24,13 +25,15 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
     <div className='prose block md:grid md:grid-cols-[1fr_5fr]'>
       <TableOfContents
         title={title}
-        onShare={handleShare}
         term={term}
         slug={slug}
       />
       <div className='md:grid md:grid-cols-[minmax(0,788px)_minmax(0,1fr)]'>
         <div className='text-justify'>
-          {children}
+          <PostHeader term={term} onShare={handleShare} />
+          <div className='animate-introSecond sm:ml-5'>
+            {children}
+          </div>
         </div>
         <div className='hidden md:flex flex-col ml-4'>
           <div className='w-full h-[135px]' />
