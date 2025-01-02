@@ -1,9 +1,10 @@
+import { getProfileData } from '@/utils/profilesData';
+import ContactClient from '@/components/common/ContactClient';
 
-const ContactPage = () => {
+const ContactPage = async () => {
+  const profile = await getProfileData();
   return (
-    <div className="h-screen">
-      <h1>{'Contact'}</h1>
-    </div>
+    <ContactClient profile={profile} />
   );
 };
 
