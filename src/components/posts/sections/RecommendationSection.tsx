@@ -11,8 +11,11 @@ const RecommendationSection = async () => {
   if(recentTerms.length < 6) return null;
 
   return (
-    <section className='flex flex-col gap-2'>
-      <h2 className='text-sub text-lg font-bold'>{'추천 포스트'}</h2>
+    <section className='group flex flex-col gap-2'>
+      <h2 className='flex items-center'>
+        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
+        {'추천 포스트'}
+      </h2>
       <div className="flex justify-center">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {recentTerms.map((term) => (

@@ -94,9 +94,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
   };
 
   return (
-    <section className="references-section break-all">
+    <section className="group break-all">
       <h2>
-        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 references-section-hover:opacity-100 transition-opacity">{'#'}</span>
+        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
         {'참고 자료'}
       </h2>
       <div className='grid lg:grid-cols-2 gap-4 sm:mt-[-4px]'>
@@ -107,9 +107,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
               <Link
                 {...getLinkProps(tutorial.external_link ?? null)}
                 key={index}
-                className={`ml-1 group flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !tutorial.external_link ? 'cursor-default' : '' }`}
+                className={`ml-1 flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !tutorial.external_link ? 'cursor-default' : '' }`}
               >
-                <span className='text-primary group-hover:underline'>{tutorial.title}</span>
+                <span className='text-primary'>{tutorial.title}</span>
                 {formatTutorialDetails(tutorial) && (
                   <span className='text-sm font-medium'>
                     {formatTutorialDetails(tutorial)}
@@ -126,9 +126,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
               <Link
                 {...getLinkProps(book.external_link ?? null)}
                 key={index}
-                className={`ml-1 group flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !book.external_link ? 'cursor-default' : '' }`}
+                className={`ml-1 flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !book.external_link ? 'cursor-default' : '' }`}
               >
-                <span className='text-primary group-hover:underline'>{book.title}</span>
+                <span className='text-primary'>{book.title}</span>
                 {formatBookDetails(book).map((detail, i) => (
                   <span key={i} className='text-sm font-medium'>{detail}</span>
                 ))}
@@ -143,9 +143,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
               <Link
                 {...getLinkProps(paper.external_link ?? null)}
                 key={index}
-                className={`ml-1 group flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !paper.external_link ? 'cursor-default' : '' }`}
+                className={`ml-1 flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !paper.external_link ? 'cursor-default' : '' }`}
               >
-                <span className='text-primary group-hover:underline'>{paper.title}</span>
+                <span className='text-primary'>{paper.title}</span>
                 {formatAcademicDetails(paper).map((detail, i) => (
                   <span key={i} className='text-sm font-medium'>{detail}</span>
                 ))}
@@ -160,9 +160,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
               <Link
                 {...getLinkProps(project.external_link ?? null)}
                 key={index}
-                className={`ml-1 group flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !project.external_link ? 'cursor-default' : '' }`}
+                className={`ml-1 flex flex-col justify-center gap-1 border border-light flex-1 px-2.5 py-1 lg:px-3 lg:py-2 rounded-lg hover:bg-background-secondary no-underline ${ index > 0 ? 'mt-2' : '' } ${ !project.external_link ? 'cursor-default' : '' }`}
               >
-                <span className='text-primary group-hover:underline'>{project.name}</span>
+                <span className='text-primary'>{project.name}</span>
                 {formatOpenSourceDetails(project).map((detail, i) => (
                   <span key={i} className='text-sm font-medium'>{detail}</span>
                 ))}
