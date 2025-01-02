@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 interface TooltipButtonProps {
   onClick?: ()=> void;
-  tooltip: string;
+  tooltip?: string;
   children: React.ReactNode;
   isLink?: boolean;
   href?: string;

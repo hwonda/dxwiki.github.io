@@ -6,7 +6,7 @@ import { formatDate } from '@/utils/filters';
 import DifficultyLevel from './DifficultyLevel';
 import Level from '@/components/ui/Level';
 import TooltipButton from '@/components/ui/TooltipButton';
-import { Share } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 interface PostHeaderProps {
   term: TermData
   onShare: ()=> void;
@@ -20,30 +20,31 @@ const PostHeader = ({ term, onShare }: PostHeaderProps) => {
   return (
     <div className='animate-intro sm:ml-5'>
       <div className='mt-10 sm:mt-32'>
-        <h1 className="flex flex-wrap overflow-x-auto sm:items-end text-3xl font-bold mb-0">
-          <span className='text-main whitespace-nowrap'>{term.title?.ko}</span>
+        <div className="flex items-end">
+          <h1 className="flex flex-wrap overflow-x-auto items-center text-3xl font-bold mb-0 overflow-y-visible">
+            <span className='text-main'>{term.title?.ko}</span>
+            <TooltipButton
+              onClick={handleShareClick}
+              className='block sm:hidden text-gray1 hover:text-primary ml-1.5'
+            >
+              <Share2 className='size-6' />
+            </TooltipButton>
+            <div className="flex">
+              {
+                term.title?.en && (
+                  <span className='text-main break-all'>{'('}{term.title.en}{')'}</span>
+                )
+              }
+            </div>
+          </h1>
           <TooltipButton
             onClick={handleShareClick}
             tooltip="공유하기"
-            className='block sm:hidden text-gray1 hover:text-primary ml-1.5 mb-1 whitespace-nowrap'
+            className='hidden sm:block text-gray1 hover:text-primary ml-1.5 mb-1'
           >
-            <Share className='size-6' />
+            <Share2 className='size-6' />
           </TooltipButton>
-          <div className="flex">
-            {
-              term.title?.en && (
-                <span className='text-main break-all'>{'('}{term.title.en}{')'}</span>
-              )
-            }
-            <TooltipButton
-              onClick={handleShareClick}
-              tooltip="공유하기"
-              className='hidden sm:block text-gray1 hover:text-primary ml-1.5 mb-1 whitespace-nowrap'
-            >
-              <Share className='size-6' />
-            </TooltipButton>
-          </div>
-        </h1>
+        </div>
       </div>
       <div className='flex justify-start gap-1 text-xs my-2'>
         <span className='text-main'>{term.metadata?.authors ?? '작가 확인 안됨'}</span>
