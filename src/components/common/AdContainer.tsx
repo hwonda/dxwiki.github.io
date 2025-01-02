@@ -17,17 +17,10 @@ interface AdContainerProps {
 }
 
 const AdContainer = ({ slot, format, className }: AdContainerProps) => {
-  // useEffect(() => {
-  //   if (!window.adsbygoogle) {
-  //     window.adsbygoogle = [];
-  //   }
-  //   // 광고가 이미 로드된 경우 push 호출을 하지 않음
-  //   if (!document.querySelector(`.adsbygoogle[data-ad-slot="${ slot }"]`)) {
-  //     window.adsbygoogle.push({});
-  //   }
-  // }, [slot]);
   useEffect(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
+    if(process.env.NODE_ENV === 'production') {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
   }, []);
 
   return (
