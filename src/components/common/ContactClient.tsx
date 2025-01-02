@@ -50,14 +50,14 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 className="p-2 border border-light rounded-md"
               >
                 <Image
-                  src="/github-mark.png"
+                  src="https://dxwiki.github.io/github-mark.png"
                   alt="github"
                   width={20}
                   height={20}
                   className="block dark:hidden"
                 />
                 <Image
-                  src="/github-mark-white.png"
+                  src="https://dxwiki.github.io/github-mark-white.png"
                   alt="github"
                   width={20}
                   height={20}
@@ -70,7 +70,7 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 href={`https://linkedin.com/in/${ p.social.linkedin }`}
                 className="p-2 border border-light rounded-md"
               >
-                <Image src="/linkedin-logo.jpg" alt="linkedin" width={20} height={20} className="rounded-sm" />
+                <Image src="https://dxwiki.github.io/linkedin-logo.jpg" alt="linkedin" width={20} height={20} className="rounded-sm" />
               </TooltipButton>
             </div>
           </div>
