@@ -14,9 +14,6 @@ const nextConfig = {
     )
     return config
   },
-  images: {
-    domains: ['dxwiki.github.io']
-  }
 };
 
 module.exports = nextConfig;

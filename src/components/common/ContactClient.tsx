@@ -4,6 +4,9 @@ import { Profile } from '@/types';
 import { Mail } from 'lucide-react';
 import TooltipButton from '@/components/ui/TooltipButton';
 import Image from 'next/image';
+import githubLight from '@/assets/images/github-mark.png';
+import githubDark from '@/assets/images/github-mark-white.png';
+import linkedin from '@/assets/images/linkedin.jpeg';
 
 interface ContactClientProps {
   profile: Profile[];
@@ -50,14 +53,14 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 className="p-2 border border-light rounded-md"
               >
                 <Image
-                  src="https://dxwiki.github.io/github-mark.png"
+                  src={githubLight}
                   alt="github"
                   width={20}
                   height={20}
                   className="block dark:hidden"
                 />
                 <Image
-                  src="https://dxwiki.github.io/github-mark-white.png"
+                  src={githubDark}
                   alt="github"
                   width={20}
                   height={20}
@@ -70,7 +73,13 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 href={`https://linkedin.com/in/${ p.social.linkedin }`}
                 className="p-2 border border-light rounded-md"
               >
-                <Image src="https://dxwiki.github.io/linkedin-logo.jpg" alt="linkedin" width={20} height={20} className="rounded-sm" />
+                <Image
+                  src={linkedin}
+                  alt="linkedin"
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
               </TooltipButton>
             </div>
           </div>
