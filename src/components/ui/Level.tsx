@@ -53,7 +53,7 @@ const Level = ({ level = 0 }: LevelProps) => {
       {/* Outermost border */}
       <div className={`p-[1.3px] bg-gradient-to-br ${ gradientColors[0] } ${ gradientColors[1] } rounded-2xl`}>
         {/* Middle spacing */}
-        <div className={`p-px ${ bgColor } rounded-2xl`}>
+        <div className={`mac:p-px windows:p-[1.6px] ${ bgColor } rounded-2xl`}>
           {/* Inner border */}
           <div className={`p-[1.3px] bg-gradient-to-br ${ gradientColors[0] } ${ gradientColors[1] } rounded-xl`}>
             {/* Content */}
