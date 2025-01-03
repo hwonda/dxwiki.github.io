@@ -16,7 +16,7 @@ interface PaginationProps {
 
 const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSortType] = useState<SortType>('updated');
+  const [sortType, setSortType] = useState<SortType>('created');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const handleSort = (type: SortType) => {
@@ -41,17 +41,20 @@ const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
     const multiplier = sortDirection === 'asc' ? 1 : -1;
 
     switch (sortType) {
-      case 'difficulty':
-        return multiplier * ((a.difficulty?.level || 0) - (b.difficulty?.level || 0));
-      case 'updated':
-        return multiplier * ((new Date(a.metadata?.updated_at || 0)).getTime()
+      case 'difficulty': {
+        const difficultyCompare = multiplier * ((a.difficulty?.level || 0) - (b.difficulty?.level || 0));
+        return difficultyCompare === 0 ? multiplier * ((a.id || 0) - (b.id || 0)) : difficultyCompare;
+      }
+      case 'updated': {
+        const dateCompare = multiplier * ((new Date(a.metadata?.updated_at || 0)).getTime()
                            - (new Date(b.metadata?.updated_at || 0)).getTime());
-      // case 'DA':
-      //   return multiplier * ((a.relevance?.analyst?.score || 0) - (b.relevance?.analyst?.score || 0));
-      // case 'DE':
-      //   return multiplier * ((a.relevance?.engineer?.score || 0) - (b.relevance?.engineer?.score || 0));
-      // case 'DS':
-      //   return multiplier * ((a.relevance?.scientist?.score || 0) - (b.relevance?.scientist?.score || 0));
+        return dateCompare === 0 ? multiplier * ((a.id || 0) - (b.id || 0)) : dateCompare;
+      }
+      case 'created': {
+        const dateCompare = multiplier * ((new Date(a.metadata?.created_at || 0)).getTime()
+                           - (new Date(b.metadata?.created_at || 0)).getTime());
+        return dateCompare === 0 ? multiplier * ((a.id || 0) - (b.id || 0)) : dateCompare;
+      }
       default:
         return 0;
     }

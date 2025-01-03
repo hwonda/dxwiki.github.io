@@ -10,7 +10,8 @@ interface SortButtonsProps {
 }
 
 const sortTypeLabel = {
-  updated: { label: '날짜', desc: '최신순', asc: '과거순' },
+  created: { label: '발행일', desc: '최신순', asc: '과거순' },
+  updated: { label: '수정일', desc: '최신순', asc: '과거순' },
   difficulty: { label: '난이도', desc: '높은순', asc: '낮은순' },
   // DA: { label: 'DA 관련', desc: '높은순', asc: '낮은순' },
   // DE: { label: 'DE 관련', desc: '높은순', asc: '낮은순' },
@@ -42,7 +43,7 @@ const SortButtons = ({ sortType, sortDirection, onSortChange, onSortMobile }: So
     </button>
   );
 
-  const sortTypes: SortType[] = ['updated', 'difficulty'];
+  const sortTypes: SortType[] = ['created', 'updated', 'difficulty'];
 
   const getMobileDropdownItems = () => {
     return sortTypes.flatMap((type) => [

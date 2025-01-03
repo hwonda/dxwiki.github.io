@@ -26,7 +26,17 @@ export default function RecommendTerms({ terms }: RecommendTermsProps) {
       const itemWidth = Math.floor((containerWidth - ((maxItems - 1) * gap)) / maxItems);
 
       setVisibleItems((prev) => {
-        const newItems = recentTerms.slice(0, maxItems);
+        const newItems = recentTerms
+          .slice(0, maxItems)
+          .sort((a, b) => {
+            const dateA = new Date(a.metadata?.created_at ?? '').getTime();
+            const dateB = new Date(b.metadata?.created_at ?? '').getTime();
+            if (dateA === dateB) {
+              return (b.id ?? 0) - (a.id ?? 0);
+            }
+            return 0;
+          });
+
         if (prev.length !== newItems.length) return newItems;
         const hasChanged = newItems.some((item, index) => item.url !== prev[index].url);
         return hasChanged ? newItems : prev;

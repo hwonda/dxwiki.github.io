@@ -82,7 +82,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
           <div className="flex items-center">
             <span className="text-lg sm:text-2xl text-primary font-semibold">{term.title?.ko}</span>
             <div className="block sm:hidden min-h-[28px]">
-              {sortType ? getSortData(sortType) : <span className={sortTagStyle}>{formatDate(term.metadata?.updated_at || '')}</span>}
+              {sortType ? getSortData(sortType) : <span className={sortTagStyle}>{formatDate(term.metadata?.created_at || '')}</span>}
             </div>
           </div>
           <ChevronRight className="size-5 text-light group-hover:text-sub block sm:hidden" />
@@ -93,7 +93,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
         </span>
       </div>
       <div className="hidden sm:flex justify-end sm:justify-between items-center">
-        {sortType ? getSortData(sortType) : <span className={sortTagStyle}>{formatDate(term.metadata?.updated_at || '')}</span>}
+        {sortType ? getSortData(sortType) : <span className={sortTagStyle}>{formatDate(term.metadata?.created_at || '')}</span>}
         <div className="flex gap-0 md:gap-1 items-center">
           <span
             className="text-sub text-sm sm:opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0"
