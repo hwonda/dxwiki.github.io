@@ -3,10 +3,6 @@
 import { Profile } from '@/types';
 import { Mail } from 'lucide-react';
 import TooltipButton from '@/components/ui/TooltipButton';
-import Image from 'next/image';
-import githubLight from '@/assets/images/github-mark.png';
-import githubDark from '@/assets/images/github-mark-white.png';
-import linkedin from '@/assets/images/linkedin.jpeg';
 
 interface ContactClientProps {
   profile: Profile[];
@@ -52,15 +48,15 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 href={`https://github.com/${ p.social.github }`}
                 className="p-2 border border-light rounded-md"
               >
-                <Image
-                  src={githubLight}
+                <img
+                  src="/images/github-mark.png"
                   alt="github"
                   width={20}
                   height={20}
                   className="block dark:hidden"
                 />
-                <Image
-                  src={githubDark}
+                <img
+                  src="/images/github-mark-white.png"
                   alt="github"
                   width={20}
                   height={20}
@@ -73,8 +69,8 @@ const ContactClient = ({ profile }: ContactClientProps) => {
                 href={`https://linkedin.com/in/${ p.social.linkedin }`}
                 className="p-2 border border-light rounded-md"
               >
-                <Image
-                  src={linkedin}
+                <img
+                  src="/images/linkedin.jpeg"
                   alt="linkedin"
                   width={20}
                   height={20}
