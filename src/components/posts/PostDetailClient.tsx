@@ -14,6 +14,8 @@ interface Props {
   slug: string;
 }
 
+const adSlots = ['5547328424', '2422471637', '7215138470', '7150455642'];
+
 const PostDetailClient = ({ title, children, term, slug }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
@@ -37,16 +39,16 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
         </div>
         <div className='hidden md:flex flex-col ml-4'>
           <div className='w-full h-[135px]' />
-          <AdContainer
-            slot="5547328424"
-            format="mcrspv"
-            className="w-40 min-h-[600px]"
-          />
-          <AdContainer
-            slot="2422471637"
-            format="mcrspv"
-            className="w-40 min-h-[600px]"
-          />
+          <div className='flex flex-col gap-4'>
+            {adSlots.map((slot) => (
+              <AdContainer
+                key={slot}
+                slot={slot}
+                format="mcrspv"
+                className="w-[122px] min-h-[600px]"
+              />
+            ))}
+          </div>
         </div>
       </div>
 
