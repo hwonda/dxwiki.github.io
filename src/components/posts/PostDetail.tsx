@@ -11,9 +11,10 @@ import PrevNextSection from './sections/PrevNextSection';
 interface Props {
   term: TermData
   slug: string
+  lastTermId: number
 }
 
-const PostDetail = async ({ term, slug }: Props) => {
+const PostDetail = async ({ term, slug, lastTermId }: Props) => {
   return (
     <PostDetailClient
       title={term.title?.ko ?? ''}
@@ -29,7 +30,7 @@ const PostDetail = async ({ term, slug }: Props) => {
       />
       <UsecaseSection usecase={term.usecase ?? { industries: [], example: '', description: '' }} />
       <ReferencesSection references={term.references ?? { tutorials: [], books: [], academic: [], opensource: [] }} />
-      {term.id && <PrevNextSection id={term.id} />}
+      {term.id && <PrevNextSection id={term.id} lastTermId={lastTermId} />}
       <RecommendationSection />
       <AdContainer
         slot="6880591392"
