@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Link as LinkIcon } from 'lucide-react';
+// import { Link as LinkIcon } from 'lucide-react';
 import { transformToSlug } from '@/utils/filters';
 import { Fragment } from 'react';
 import { Terms } from '@/types';
