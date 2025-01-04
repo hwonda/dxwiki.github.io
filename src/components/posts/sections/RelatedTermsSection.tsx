@@ -13,9 +13,9 @@ interface RelatedTerm {
 const RelatedTermsSection = ({ terms }: RelatedTerm) => {
   if(terms.length === 0) return null;
   return(
-    <section className="group">
+    <section className="group-section">
       <h2>
-        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
+        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-section-title transition-opacity">{'#'}</span>
         {'관련 용어'}
       </h2>
       <div className="grid grid-cols-[auto_1fr] items-start gap-x-1.5">

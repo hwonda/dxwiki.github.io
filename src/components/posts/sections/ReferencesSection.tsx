@@ -94,9 +94,9 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
   };
 
   return (
-    <section className="group break-all">
+    <section className="group-section break-all">
       <h2>
-        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-hover:opacity-100 transition-opacity">{'#'}</span>
+        <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-section-title transition-opacity">{'#'}</span>
         {'참고 자료'}
       </h2>
       <div className='grid lg:grid-cols-2 gap-4 sm:mt-[-4px]'>

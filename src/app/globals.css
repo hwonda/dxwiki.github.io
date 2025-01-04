@@ -81,3 +81,7 @@ body {
     display: none;
   }
 }
+
+.group-section:hover .group-section-title {
+  opacity: 1;
+}
