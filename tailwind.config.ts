@@ -117,7 +117,7 @@ const config: Config = {
             '.prose .tag-button:hover': {
               color: 'var(--text)',
               backgroundColor: 'var(--background-secondary)',
-              transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
+              // transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
             },
             '.markdown-text-sub p': {
               marginBottom: '0',
@@ -143,7 +143,7 @@ const config: Config = {
             },
             '.prose .list-decimal, .prose .list-disc': {
               margin: '0.2rem 0',
-              paddingLeft: '0.2rem'
+              paddingLeft: '0.2rem',
             },
           },
         },
