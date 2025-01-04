@@ -119,7 +119,7 @@ const TableOfContents = ({ title, term }: Props) => {
           ))}
         </nav>
         <div className="flex flex-col flex-wrap mt-10 gap-2">
-          <span className='text-main text-base font-bold'>{'관련 용어'}</span>
+          <span className='text-main text-base font-bold'>{'관련 포스트'}</span>
           {term.tags?.map((tag: Tags, index: number) => (
             tag.internal_link ? (
               <Link
