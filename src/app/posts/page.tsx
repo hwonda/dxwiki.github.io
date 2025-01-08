@@ -15,7 +15,7 @@ export default async function PostsPage() {
   return (
     <div className="relative">
       <div className='animate-intro relative z-20'>
-        <SearchDetailInput filter={true} goBack={true} termsLength={terms.length} />
+        <SearchDetailInput filter={true} goBack={true} />
       </div>
       <div className='animate-introSecond mt-5 z-10'>
         <PostList termsData={terms} totalPages={totalPages} itemsPerPage={itemsPerPage} />

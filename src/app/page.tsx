@@ -1,6 +1,5 @@
 import LogoAnimation from '@/components/common/LogoAnimation';
 import SearchInput from '@/components/search/SearchInput';
-import RecommendTerms from '@/components/posts/RecommendTerms';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import AdContainer from '@/components/common/AdContainer';
@@ -21,13 +20,10 @@ export default async function Home() {
         <div className='relative my-4 z-20'>
           <SearchInput />
         </div>
-        <div className='relative z-10'>
-          <RecommendTerms />
-        </div>
         <AdContainer
           slot="6880591392"
           format="rspv"
-          className="w-full mt-10 h-[100px]"
+          className="w-full mt-10 min-h-[160px]"
         />
       </div>
     </>

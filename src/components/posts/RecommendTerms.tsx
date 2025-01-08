@@ -5,6 +5,7 @@ import { RootState } from '@/store/store';
 import Link from 'next/link';
 import { TermData } from '@/types';
 import { useEffect, useRef, useState } from 'react';
+import { Rocket } from 'lucide-react';
 
 export default function RecommendTerms() {
   const { terms } = useSelector((state: RootState) => state.terms);
@@ -61,13 +62,16 @@ export default function RecommendTerms() {
 
   return (
     <div className='space-y-1.5'>
-      <h3 className='text-sub font-semibold'>{'최근 등록'}</h3>
-      <div ref={containerRef} className='flex justify-between gap-2 overflow-hidden'>
+      <div className='flex items-center gap-1.5 sm:gap-2'>
+        <Rocket className='size-4' />
+        <h3 className='text-base text-sub font-semibold'>{'최신 포스트'}</h3>
+      </div>
+      <div ref={containerRef} className='flex justify-between gap-2 overflow-hidden ml-5 sm:ml-6'>
         {visibleItems.map((term) => (
           <Link
             key={term.url}
             href={`${ term.url }`}
-            className='py-1.5 flex justify-center items-center text-sub rounded-lg border border-light hover:bg-extreme-light hover:text-main transition-colors text-xs sm:text-sm shrink-0'
+            className='py-1.5 flex justify-center items-center text-sub rounded-lg border border-light hover:border-primary hover:text-primary hover:font-semibold transition-colors text-xs sm:text-sm shrink-0'
             style={{ width: 'var(--item-width)' }}
           >
             {term.title?.ko}

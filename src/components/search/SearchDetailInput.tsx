@@ -1,20 +1,22 @@
 'use client';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 import { useState, useEffect, useRef } from 'react';
 import { Search, Filter, ChevronLeft } from 'lucide-react';
 import TooltipButton from '@/components/ui/TooltipButton';
 
 interface SearchDetailInputProps {
-  termsLength?: number;
   filter?: boolean;
   goBack?: boolean;
 }
 
-const SearchDetailInput = ({ termsLength, filter = true, goBack = true }: SearchDetailInputProps) => {
+const SearchDetailInput = ({ filter = true, goBack = true }: SearchDetailInputProps) => {
+  const { terms } = useSelector((state: RootState) => state.terms);
   const [searchTerm, setSearchTerm] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const placeholder = termsLength ? `${ termsLength }개의 데이터 용어 검색` : '검색어 입력해주세요';
+  const placeholder = terms.length ? `${ terms.length }개의 데이터 용어 검색` : '검색어 입력해주세요';
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
   useEffect(() => {
