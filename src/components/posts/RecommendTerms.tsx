@@ -62,16 +62,16 @@ export default function RecommendTerms() {
 
   return (
     <div className='space-y-1.5'>
-      <div className='flex items-center gap-1.5 sm:gap-2'>
+      <div className='flex items-center gap-0.5 sm:gap-1'>
         <Rocket className='size-4' />
         <h3 className='text-base text-sub font-semibold'>{'최신 포스트'}</h3>
       </div>
-      <div ref={containerRef} className='flex justify-between gap-2 overflow-hidden ml-5 sm:ml-6'>
+      <div ref={containerRef} className='flex justify-between gap-2 overflow-hidden'>
         {visibleItems.map((term) => (
           <Link
             key={term.url}
             href={`${ term.url }`}
-            className='py-1.5 flex justify-center items-center text-sub rounded-lg border border-light hover:border-primary hover:text-primary hover:font-semibold transition-colors text-xs sm:text-sm shrink-0'
+            className='py-1.5 flex justify-center items-center text-sub rounded-lg border border-light hover:border-primary hover:text-primary hover:font-semibold transition-colors text-xs sm:text-sm shrink-0 bg-background'
             style={{ width: 'var(--item-width)' }}
           >
             {term.title?.ko}
