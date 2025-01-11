@@ -74,7 +74,9 @@ export default function RecommendTerms() {
             className='py-1.5 flex justify-center items-center text-sub rounded-lg border border-light hover:border-primary hover:text-primary hover:font-semibold transition-colors text-xs sm:text-sm shrink-0 bg-background'
             style={{ width: 'var(--item-width)' }}
           >
-            {term.title?.ko}
+            {(term.title?.ko ?? '').length > 8
+              ? `${ term.title?.ko?.slice(0, 8) }...`
+              : term.title?.ko}
           </Link>
         ))}
       </div>
