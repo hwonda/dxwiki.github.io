@@ -84,7 +84,6 @@ export default function RelevanceSection({ analyst, engineer, scientist }: Relev
             subtitle="Data Analyst"
             score={analyst.score ?? 0}
             description={analyst.description ?? ''}
-            isHighest={analyst.score === maxScore && maxScore > 0}
           />
         )}
         {scientist && (
@@ -93,7 +92,6 @@ export default function RelevanceSection({ analyst, engineer, scientist }: Relev
             subtitle="Data Scientist"
             score={scientist.score ?? 0}
             description={scientist.description ?? ''}
-            isHighest={scientist.score === maxScore && maxScore > 0}
           />
         )}
         {engineer && (
@@ -102,7 +100,6 @@ export default function RelevanceSection({ analyst, engineer, scientist }: Relev
             subtitle="Data Engineer"
             score={engineer.score ?? 0}
             description={engineer.description ?? ''}
-            isHighest={engineer.score === maxScore && maxScore > 0}
           />
         )}
       </div>

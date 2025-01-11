@@ -6,7 +6,6 @@ interface CardComponentProps {
   title: string;
   subtitle: string;
   className?: string;
-  isHighest?: boolean;
 }
 
 const levelColors = {
@@ -23,7 +22,6 @@ const RelevanceCard = ({
   title,
   subtitle,
   className,
-  isHighest,
 }: CardComponentProps) => {
   let tag = '';
   let relevance = '';
@@ -60,8 +58,8 @@ const RelevanceCard = ({
 
   return (
     <div className={`group rounded-lg border overflow-hidden flex flex-col relative ${ className }
-      sm:hover:scale-105 transition-transform duration-300 backdrop-blur-xl bg-white/5
-      ${ isHighest ? `border-${ levelColors[score as keyof typeof levelColors] }` : 'border-gray1 hover:border-accent' }`}
+      transition-transform duration-300 backdrop-blur-xl bg-white/5
+      border-gray1`}
     >
       <div className="p-2.5 lg:p-4 flex flex-col gap-2 opacity-90 flex-1 relative z-10">
         <div className="flex justify-between items-center">
@@ -69,8 +67,9 @@ const RelevanceCard = ({
             {tag}{' | '}
             {subtitle}
           </span>
+          <span className={`text-${ levelColors[score as keyof typeof levelColors] } text-xs border border-${ levelColors[score as keyof typeof levelColors] } rounded-full px-1.5 py-0.5`}>{relevance}</span>
         </div>
-        <div className="w-full flex">
+        {/* <div className="w-full flex">
           {[1, 2, 3, 4, 5].map((level) => (
             <div key={level} className="flex-1 flex flex-col items-center">
               <span
@@ -89,7 +88,7 @@ const RelevanceCard = ({
               />
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="card-description text-sub sm:text-gray1 group-hover:text-sub text-sm font-semibold">{description}</div>
       </div>
     </div>
