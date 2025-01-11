@@ -56,11 +56,11 @@ export default function RelevanceSection({ analyst, engineer, scientist }: Relev
   // }, [isSmallScreen]);
 
   // 최고 점수 계산
-  const maxScore = Math.max(
-    analyst?.score ?? 0,
-    engineer?.score ?? 0,
-    scientist?.score ?? 0
-  );
+  // const maxScore = Math.max(
+  //   analyst?.score ?? 0,
+  //   engineer?.score ?? 0,
+  //   scientist?.score ?? 0
+  // );
 
   // if (nullRelevance) return null;
 
