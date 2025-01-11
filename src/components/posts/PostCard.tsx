@@ -80,7 +80,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
       <div className="flex flex-col">
         <div className='flex justify-between items-center'>
           <div className="flex items-center">
-            <span className="text-lg sm:text-2xl text-primary font-semibold group-hover:text-main">{term.title?.ko}</span>
+            <span className="text-lg md:text-2xl text-primary font-semibold group-hover:text-main">{term.title?.ko}</span>
             <div className="flex items-center sm:hidden min-h-[28px]">
               {sortType ? getSortData(sortType) : <span className={sortTagStyle}>{formatDate(term.metadata?.created_at || '')}</span>}
             </div>

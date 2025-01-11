@@ -1,23 +1,22 @@
 'use client';
 
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { useState, useEffect, useRef } from 'react';
-import { Search, Filter, ChevronLeft } from 'lucide-react';
-import TooltipButton from '@/components/ui/TooltipButton';
+import { Search, ChevronLeft } from 'lucide-react';
 
-interface SearchDetailInputProps {
-  filter?: boolean;
-  goBack?: boolean;
-}
-
-const SearchDetailInput = ({ filter = true, goBack = true }: SearchDetailInputProps) => {
+const SearchDetailInput = () => {
   const { terms } = useSelector((state: RootState) => state.terms);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isFilterActive, setIsFilterActive] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  // const [publishedDate, setPublishedDate] = useState('');
+  // const [modifiedDate, setModifiedDate] = useState('');
+  // const [difficulty, setDifficulty] = useState('');
+  // const [jobRelevance, setJobRelevance] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
+  const [activeModal, setActiveModal] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const placeholder = terms.length ? `${ terms.length }개의 데이터 용어 검색` : '검색어 입력해주세요';
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,22 +31,15 @@ const SearchDetailInput = ({ filter = true, goBack = true }: SearchDetailInputPr
   }, []);
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!(e.target as Element).closest('.filter-modal')) {
+        setActiveModal(null);
+      }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  useEffect(() => {
-    if (windowWidth >= 640) {
-      const timeoutId = setTimeout(() => {
-      }, 100);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [windowWidth]);
 
   const redirect = (e: React.KeyboardEvent<HTMLInputElement>, term: string) => {
     if (e.key === 'Enter') {
@@ -58,47 +50,159 @@ const SearchDetailInput = ({ filter = true, goBack = true }: SearchDetailInputPr
     }
   };
 
+  const handleFilterClick = (modalName: string) => {
+    const newActiveModal = activeModal === modalName ? null : modalName;
+    setActiveModal(newActiveModal);
+
+    if (modalName === 'searchQuery' && newActiveModal === null) {
+      inputRef.current?.blur();
+    }
+  };
+
   return (
-    <div className="relative w-full">
-      <div className="grid grid-cols-[36px_minmax(0,1fr)] p-4 border border-extreme-light rounded-2xl hover:bg-extreme-light items-center gap-2">
-        {goBack && (
-          <TooltipButton
-            isLink
+    <div className="relative w-full mt-2 mb-10">
+      <div className={`w-full flex items-center border border-light rounded-full bg-background ${ activeModal ? 'border-primary' : '' }`}>
+        <div className='ml-3'>
+          <Link
             href="/"
-            tooltip="홈으로"
-            className='p-2'
+            className='flex items-center justify-center size-11 rounded-full hover:bg-gray3'
           >
-            <ChevronLeft className='size-4' />
-          </TooltipButton>
-        )}
-        <div className="w-full px-3 flex items-center border border-light rounded-full focus-within:border-accent bg-background">
-          <Search className="text-main size-4" />
-          <input
-            type="text"
-            ref={inputRef}
-            value={searchTerm}
-            placeholder={placeholder}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => redirect(e, searchTerm)}
-            className="w-full p-2 mr-2 bg-background outline-none text-main rounded-md"
-          />
+            <ChevronLeft className='size-5' />
+          </Link>
         </div>
-        {filter && (
-          <TooltipButton
-            onClick={() => setIsFilterActive(!isFilterActive)}
-            tooltip="필터"
-            className='p-2'
+        <div className="w-full grid grid-cols-[4fr_1.5fr_1.5fr_2fr_2.5fr] items-center">
+          {/* 검색어 */}
+          <div
+            onClick={() => handleFilterClick('searchQuery')}
+            className='peer/search group flex flex-col py-3 px-4 rounded-full'
           >
-            <Filter className='size-4' />
-          </TooltipButton>
-        )}
-        {filter && (
-          <div className={`opacity-0 text-sub ${ isFilterActive ? 'opacity-100' : '' }`}>
-            {'필터:'}
+            <label htmlFor="searchQuery" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'searchQuery' ? 'text-primary' : '' }`}>
+              {'검색어'}
+            </label>
+            <input
+              id="searchQuery"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => redirect(e, searchQuery)}
+              placeholder={placeholder}
+              className="bg-transparent focus:outline-none placeholder:text-gray1 text-main"
+            />
           </div>
-        )}
+
+          {/* 난이도 */}
+          <div
+            onClick={() => handleFilterClick('difficulty')}
+            className={`peer/difficulty group flex flex-col py-3 px-6 rounded-full relative cursor-pointer
+              before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
+              ${ activeModal === 'difficulty' ? 'before:bg-primary' : '' }
+              ${ activeModal === 'searchQuery' ? 'before:bg-primary' : '' }
+              `}
+          >
+            <label htmlFor="difficulty" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'difficulty' ? 'text-primary' : '' }`}>
+              {'난이도'}
+            </label>
+            <span className='text-gray1 group-hover:cursor-pointer'>{'전체'}</span>
+            {activeModal === 'difficulty' && (
+              <div className="filter-modal absolute top-full left-0 mt-2 w-48 border border-primary bg-background shadow-lg rounded-lg p-4 z-10">
+                <h3 className="font-medium mb-2">{'난이도 선택'}</h3>
+                <div className="space-y-2">
+                  <div className="cursor-pointer p-2 rounded">{'초급'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'중급'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'고급'}</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 직무 연관도 */}
+          <div
+            onClick={() => handleFilterClick('jobRelevance')}
+            className={`peer/job group flex flex-col py-3 px-6 rounded-full relative cursor-pointer
+              before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
+              ${ activeModal === 'jobRelevance' ? 'before:bg-primary' : '' }
+              ${ activeModal === 'difficulty' ? 'before:bg-primary' : '' }
+              `}
+          >
+            <label htmlFor="jobRelevance" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'jobRelevance' ? 'text-primary' : '' }`}>
+              {'직무 연관도'}
+            </label>
+            <span className='text-gray1 group-hover:cursor-pointer'>{'전체'}</span>
+            {activeModal === 'jobRelevance' && (
+              <div className="filter-modal absolute top-full left-0 mt-2 w-48 border border-primary bg-background shadow-lg rounded-lg p-4 z-10">
+                <h3 className="font-medium mb-2">{'직무 연관도'}</h3>
+                <div className="space-y-2">
+                  <div className="cursor-pointer p-2 rounded">{'높음'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'중간'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'낮음'}</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 발행일 */}
+          <div
+            onClick={() => handleFilterClick('publishedDate')}
+            className={`peer/published group flex flex-col py-3 px-6 rounded-full relative cursor-pointer
+              before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
+              ${ activeModal === 'publishedDate' ? 'before:bg-primary' : '' }
+              ${ activeModal === 'jobRelevance' ? 'before:bg-primary' : '' }
+              `}
+          >
+            <label htmlFor="publishedDate" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'publishedDate' ? 'text-primary' : '' }`}>
+              {'발행일'}
+            </label>
+            <span className='text-gray1 group-hover:cursor-pointer'>{'전체 기간'}</span>
+            {activeModal === 'publishedDate' && (
+              <div className="filter-modal absolute top-full left-0 mt-2 w-48 border border-primary bg-background shadow-lg rounded-lg p-4 z-10">
+                <h3 className="font-medium mb-2">{'발행일 선택'}</h3>
+                <div className="space-y-2">
+                  <div className="cursor-pointer p-2 rounded">{'최근 1주일'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'최근 1개월'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'최근 3개월'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'전체 기간'}</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 수정일 */}
+          <div
+            onClick={() => handleFilterClick('modifiedDate')}
+            className={`group flex justify-between items-center py-3 pl-6 pr-3 rounded-full cursor-pointer relative
+              before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
+              ${ activeModal === 'modifiedDate' ? 'before:bg-primary' : '' }
+              ${ activeModal === 'publishedDate' ? 'before:bg-primary' : '' }
+              `}
+          >
+            <div className='flex flex-col group-hover:cursor-pointer'>
+              <label htmlFor="modifiedDate" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'modifiedDate' ? 'text-primary' : '' }`}>
+                {'수정일'}
+              </label>
+              <span className='text-gray1 group-hover:cursor-pointer'>{'전체 기간'}</span>
+            </div>
+            {activeModal === 'modifiedDate' && (
+              <div className="filter-modal absolute top-full left-0 mt-2 w-48 border border-primary bg-background shadow-lg rounded-lg p-4 z-10">
+                <h3 className="font-medium mb-2">{'수정일 선택'}</h3>
+                <div className="space-y-2">
+                  <div className="cursor-pointer p-2 rounded">{'최근 1주일'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'최근 1개월'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'최근 3개월'}</div>
+                  <div className="cursor-pointer p-2 rounded">{'전체 기간'}</div>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* 검색 버튼 */}
+          <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+            <button
+              className="flex items-center justify-center size-11 rounded-full hover:bg-[#03537f] bg-primary"
+            >
+              <Search className="text-white size-5" />
+            </button>
+          </div>
+        </div>
       </div>
-      {/* ... existing modal code ... */}
     </div>
   );
 };
