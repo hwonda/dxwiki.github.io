@@ -22,20 +22,12 @@ export default function RecommendTerms() {
 
       const containerWidth = containerRef.current.offsetWidth;
       const gap = 8;
-      const maxItems = Math.floor((containerWidth + gap) / (100 + gap));
+      const desiredItemWidth = 116; // 7글자와 padding을 포함한 너비
+      const maxItems = Math.floor((containerWidth + gap) / (desiredItemWidth + gap));
       const itemWidth = Math.floor((containerWidth - ((maxItems - 1) * gap)) / maxItems);
 
       setVisibleItems((prev) => {
-        const newItems = recentTerms
-          .slice(0, maxItems)
-          .sort((a, b) => {
-            const dateA = new Date(a.metadata?.created_at ?? '').getTime();
-            const dateB = new Date(b.metadata?.created_at ?? '').getTime();
-            if (dateA === dateB) {
-              return (b.id ?? 0) - (a.id ?? 0);
-            }
-            return 0;
-          });
+        const newItems = recentTerms.slice(0, maxItems);
 
         if (prev.length !== newItems.length) return newItems;
         const hasChanged = newItems.some((item, index) => item.url !== prev[index].url);

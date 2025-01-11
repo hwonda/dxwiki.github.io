@@ -60,7 +60,7 @@ const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
   };
 
   return (
-    <div className="relative w-full bg-background">
+    <div className="relative w-full">
       <div
         className={`flex flex-col ${
           isModalOpen ? 'border border-light rounded-[21px] bg-background focus-within:border-primary' : ''

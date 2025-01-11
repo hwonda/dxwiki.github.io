@@ -17,18 +17,22 @@ export default async function Home() {
           </Link>
         </div>
       </div>
-      <div className='relative w-full max-w-3xl sm:mx-10 md:mx-40 mx-auto'>
-        <div className='w-full absolute my-4 z-10'>
-          <SearchInput />
+      <div className='max-w-3xl sm:mx-10 md:mx-40 mx-auto'>
+        <div className='relative w-full'>
+          <div className='w-full absolute my-4 z-10'>
+            <SearchInput />
+          </div>
+          <div className='w-full absolute top-20'>
+            <RecommendTerms />
+          </div>
+          <div className='w-full absolute top-48'>
+            <AdContainer
+              slot="6880591392"
+              format="rspv"
+              className="w-full min-h-[160px]"
+            />
+          </div>
         </div>
-        <div className='w-full absolute top-20'>
-          <RecommendTerms />
-        </div>
-        <AdContainer
-          slot="6880591392"
-          format="rspv"
-          className="absolute w-full top-48 min-h-[160px]"
-        />
       </div>
     </>
   );
