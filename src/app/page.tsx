@@ -25,7 +25,7 @@ export default async function Home() {
           <div className='w-full absolute top-20'>
             <RecommendTerms />
           </div>
-          <div className='w-full absolute top-48'>
+          <div className='w-full absolute top-48 flex justify-center'>
             <AdContainer
               slot="6880591392"
               format="rspv"
