@@ -26,7 +26,7 @@ const ContactClient = ({ profile }: ContactClientProps) => {
         {profile.map((p: Profile) => (
           <div
             key={p.id}
-            className="shadow-lg border border-light rounded-md flex flex-col justify-center items-center text-center transition-transform hover:scale-105"
+            className="flex flex-col justify-center items-center text-center transition-transform"
           >
             <div className='size-24 sm:size-36 rounded-full flex items-center justify-center my-2 mb-4' style={{ backgroundImage: `url(${ p.thumbnail })`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
             <h2 className="text-xl font-semibold text-main">
