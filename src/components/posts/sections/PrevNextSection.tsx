@@ -30,10 +30,10 @@ const PrevNextSection = async ({ id, lastTermId }: Props) => {
             <ChevronLeft className='size-4 sm:size-5 text-primary' />
             <span className='text-xs sm:text-sm text-primary'>{'이전 포스트'}</span>
           </div>
-          <div className='flex items-center gap-1 mt-1 ml-2 text-sm sm:text-lg text-sub pb-1'>
-            <span className='font-bold text-sub group-hover:text-primary underline underline-offset-4 group-hover:decoration-primary'>
+          <div className='flex items-center gap-1 mt-1 ml-2 text-sm sm:text-base text-sub pb-1'>
+            <span className='font-semibold text-sub group-hover:text-primary underline underline-offset-4 group-hover:decoration-primary'>
               {prevTerm.title?.ko}
-              <span className='break-all font-normal text-sub group-hover:text-primary'>{'('}{prevTerm.title?.en}{')'}</span>
+              <span className='font-semibold break-all text-sub group-hover:text-primary'>{'('}{prevTerm.title?.en}{')'}</span>
             </span>
           </div>
         </Link>
@@ -44,10 +44,10 @@ const PrevNextSection = async ({ id, lastTermId }: Props) => {
             <span className='text-xs sm:text-sm text-primary'>{'다음 포스트'}</span>
             <ChevronRight className='size-4 sm:size-5 text-primary' />
           </div>
-          <div className='flex justify-end items-center gap-1 mt-1 mr-1.5 text-primary text-sm sm:text-lg pb-1'>
-            <span className='font-bold text-sub group-hover:text-primary underline underline-offset-4 group-hover:decoration-primary'>
+          <div className='flex justify-end items-center gap-1 mt-1 mr-1.5 text-primary text-sm sm:text-base pb-1'>
+            <span className='font-semibold text-sub group-hover:text-primary underline underline-offset-4 group-hover:decoration-primary'>
               {nextTerm.title?.ko}
-              <span className='break-all font-normal text-sub group-hover:text-primary'>{'('}{nextTerm.title?.en}{')'}</span>
+              <span className='font-semibold break-all text-sub group-hover:text-primary'>{'('}{nextTerm.title?.en}{')'}</span>
             </span>
           </div>
         </Link>
