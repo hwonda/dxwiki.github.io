@@ -89,7 +89,7 @@ const RelevanceCard = ({
             </div>
           ))}
         </div> */}
-        <div className="card-description text-sub sm:text-gray1 group-hover:text-sub text-sm font-semibold">{description}</div>
+        <div className="card-description text-sub text-sm font-semibold">{description}</div>
       </div>
     </div>
   );
