@@ -58,7 +58,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
     return (
       <Link
         href={term.url ?? ''}
-        className="group h-full flex flex-col gap-0 justify-between p-2.5 border border-secondary rounded-lg
+        className="group h-full flex flex-col gap-0 justify-between p-2.5 border border-light hover:border-primary rounded-lg
         dark:hover:bg-secondary hover:no-underline duration-300 shadow-sm hover:shadow-xl"
       >
         <div className="flex flex-col">
@@ -74,7 +74,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
   return (
     <Link
       href={term.url ?? 'not-found'}
-      className="group h-full flex flex-col gap-0 sm:gap-2.5 justify-between p-2.5 sm:p-4 border border-secondary rounded-lg
+      className="group h-full flex flex-col gap-0 sm:gap-2.5 justify-between p-2.5 sm:p-4 border border-light hover:border-primary rounded-lg
       dark:hover:bg-secondary hover:no-underline duration-300 shadow-sm hover:shadow-xl"
     >
       <div className="flex flex-col">
@@ -87,7 +87,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
           </div>
           <ChevronRight className="size-5 text-sub group-hover:text-sub block sm:hidden" />
         </div>
-        <span className="hidden sm:block text-primary truncate">{term.title?.en}</span>
+        <span className="hidden sm:block text-sub text-sm truncate">{'('}{term.title?.en}{')'}</span>
         <span className="text-sub line-clamp-1 sm:line-clamp-2 sm:mt-2 text-sm sm:text-base">
           {term.description?.short}
         </span>
