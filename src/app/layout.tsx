@@ -78,7 +78,6 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           <ThemeProvider>
             <Header />
             <main className='mt-16 max-w-6xl min-h-[calc(100vh_-150px)] mx-auto px-4 py-3 md:px-6 lg:px-8'>{children}</main>
-            <div className='w-full h-20 flex justify-center items-center text-gray1 text-sm'>{'© 2024 dxwiki All rights reserved.'}</div>
           </ThemeProvider>
         </ReduxProvider>
       </body>

@@ -7,6 +7,7 @@ import ReferencesSection from './sections/ReferencesSection';
 import RecommendationSection from './sections/RecommendationSection';
 import { TermData } from '@/types';
 import AdContainer from '@/components/common/AdContainer';
+import Footer from '@/components/common/Footer';
 interface Props {
   term: TermData
   slug: string
@@ -35,6 +36,7 @@ const PostDetail = async ({ term, slug, lastTermId }: Props) => {
         format="rspv"
         className="w-full h-[160px]"
       />
+      <Footer />
     </PostDetailClient>
   );
 };

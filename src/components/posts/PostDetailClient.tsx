@@ -39,7 +39,7 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
         </div>
         <div className='hidden md:flex flex-col ml-4'>
           <div className='w-full h-[135px]' />
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-20'>
             {adSlots.map((slot) => (
               <AdContainer
                 key={slot}
