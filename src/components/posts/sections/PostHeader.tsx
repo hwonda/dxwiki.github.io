@@ -21,29 +21,29 @@ const PostHeader = ({ term, onShare }: PostHeaderProps) => {
     <div className='animate-intro sm:ml-5'>
       <div className='mt-10 sm:mt-32'>
         <div className="flex">
-          <div className="flex flex-wrap items-center text-3xl font-bold mb-0">
+          <span className="flex flex-wrap items-center text-3xl font-bold mb-0">
             <span className='text-main'>{term.title?.ko}</span>
-            <div className="flex">
-              {
-                term.title?.en && (
-                  <span className='text-main break-all'>{'('}{term.title.en}{')'}</span>
-                )
-              }
-            </div>
+            {
+              term.title?.en && (
+                <span className='text-main break-all'>{'('}{term.title.en}{')'}
+                  <button
+                    onClick={handleShareClick}
+                  >
+                    <Share2 className='block md:hidden size-5 ml-1 text-gray1 hover:text-primary' />
+                  </button>
+
+                </span>
+              )
+            }
+            <span className='inline-flex items-center' />
             <TooltipButton
               onClick={handleShareClick}
-              className='block md:hidden text-gray1 hover:text-primary ml-1.5 mt-1'
+              tooltip="공유하기"
+              className='hidden md:block text-gray1 hover:text-primary ml-1.5'
             >
               <Share2 className='size-6' />
             </TooltipButton>
-          </div>
-          <TooltipButton
-            onClick={handleShareClick}
-            tooltip="공유하기"
-            className='hidden md:block text-gray1 hover:text-primary ml-1.5 mb-1'
-          >
-            <Share2 className='size-6' />
-          </TooltipButton>
+          </span>
         </div>
       </div>
       <div className='flex justify-start gap-1 text-xs my-2'>

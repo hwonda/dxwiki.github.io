@@ -1,7 +1,14 @@
 import PostCard from '@/components/posts/PostCard';
+import PrevNextSection from '../sections/PrevNextSection';
 import { fetchTermsData } from '@/utils/termsData';
+import { TermData } from '@/types';
 
-const RecommendationSection = async () => {
+interface RecommendationSectionProps {
+  term: TermData
+  lastTermId: number
+}
+
+const RecommendationSection = async ({ term, lastTermId }: RecommendationSectionProps) => {
   const terms = await fetchTermsData();
 
   const recentTerms = [...terms]
@@ -11,12 +18,13 @@ const RecommendationSection = async () => {
   if(recentTerms.length < 6) return null;
 
   return (
-    <section className='w-full group-section flex flex-col gap-2'>
+    <section className='w-full group-section flex flex-col gap-4'>
       <h2 className='flex items-center'>
         <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-section-title transition-opacity">{'#'}</span>
         {'추천 포스트'}
       </h2>
-      <div className="flex justify-center">
+      {term.id && <PrevNextSection id={term.id} lastTermId={lastTermId} />}
+      <div className="flex justify-center mt-4">
         <div className="w-full grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {recentTerms.map((term) => (
             <div
