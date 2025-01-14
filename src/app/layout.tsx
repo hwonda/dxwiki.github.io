@@ -11,6 +11,8 @@ import Script from 'next/script';
 import ReduxProvider from '@/components/redux/ReduxProvider';
 import StoreInitializer from '@/components/redux/StoreInitializer';
 import { fetchTermsData } from '@/utils/termsData';
+import Footer from '@/components/common/Footer';
+
 interface RootLayoutProps {
   readonly children: React.ReactNode;
 }
@@ -78,6 +80,9 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           <ThemeProvider>
             <Header />
             <main className='mt-16 max-w-6xl min-h-[calc(100vh_-150px)] mx-auto px-4 py-3 md:px-6 lg:px-8'>{children}</main>
+            <div className='hidden sm:block'>
+              <Footer />
+            </div>
           </ThemeProvider>
         </ReduxProvider>
       </body>

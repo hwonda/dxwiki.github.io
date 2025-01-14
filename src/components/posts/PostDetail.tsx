@@ -36,7 +36,9 @@ const PostDetail = async ({ term, slug, lastTermId }: Props) => {
         format="rspv"
         className="w-full h-[160px]"
       />
-      <Footer />
+      <div className='block sm:hidden'>
+        <Footer />
+      </div>
     </PostDetailClient>
   );
 };

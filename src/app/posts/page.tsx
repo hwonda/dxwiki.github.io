@@ -21,7 +21,9 @@ export default async function PostsPage() {
       <div className='animate-introSecond mt-5 z-10'>
         <PostList termsData={terms} totalPages={totalPages} itemsPerPage={itemsPerPage} />
       </div>
-      <Footer />
+      <div className='block sm:hidden'>
+        <Footer />
+      </div>
     </div>
   );
 }
