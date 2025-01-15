@@ -6,7 +6,8 @@ import { MathJaxProvider } from './MathJaxProvider';
 
 // 마크다운 파싱 함수
 function parseMarkdownSegment(segment: string) {
-  let html = segment.replace(/<br\s*\/?>/gi, '\n\n'); // <br> 처리
+  let html = segment.replace(/<br\s*\/?>/gi, '<br><br>'); // <br> 처리
+  // let html = segment;
 
   // 리스트 처리
   html = html.replace(/(?:^|\n)\d+\.\s(.+?)(?=\n|$)/g, '<li class="list-decimal">$1</li>');
@@ -24,7 +25,7 @@ function parseMarkdownSegment(segment: string) {
   // 문단 처리
   html = html
     .split('\n\n')
-    .map((paragraph) => (paragraph.trim() ? `<span class="markdown">${ paragraph.trim() }</span>` : ''))
+    .map((paragraph) => (paragraph.trim() ? `${ paragraph.trim() }` : ''))
     .join('');
 
   return html;

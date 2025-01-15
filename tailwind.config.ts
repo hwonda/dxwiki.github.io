@@ -156,7 +156,11 @@ const config: Config = {
               lineHeight: '1.7',
             },
             '.markdown-math-inline': {
-              margin: '0 0.5rem',
+              marginLeft: '0.25rem',
+              display: 'inline-block',
+            },
+            'mjx-container[jax="CHTML"][display="true"]': {
+              margin: '0.75rem 0 !important',
             },
           },
         },
