@@ -14,9 +14,6 @@ const DescriptionSection = ({ description }: DescriptionSectionProps) => {
         {'개념'}
       </h2>
       <MathJaxProvider>
-        {/* <MarkdownContent
-          content={' $$\\frac{1}{\\sqrt{x^2 + 1}}$$ $$\\begin{array}{cc} a & b \\\\ c & d \\end{array}$$ $$\\frac{1}{\\sqrt{x^2 + 1}}$$ $$\\begin{array}{cc} a & b \\\\ c & d \\end{array}$$ $$ W = \mathcal{N}(mean,\ std^2) $$ '}
-        /> */}
         <MarkdownContent content={description} />
       </MathJaxProvider>
     </section>

@@ -127,10 +127,10 @@ const config: Config = {
               marginBottom: '0',
             },
             '.prose code': {
-              padding: '0.2rem 0.3rem',
+              padding: '0.25rem 0.4rem',
               borderRadius: '0.25rem',
               color: 'var(--primary)',
-              backgroundColor: 'var(--extreme-light)',
+              backgroundColor: 'var(--gray4)',
               fontFamily: 'var(--font-pretendard)',
             },
             '.prose code::before': {
@@ -149,18 +149,14 @@ const config: Config = {
               margin: '0.2rem 0',
               paddingLeft: '0.2rem',
             },
-            '.markdown': {
-              display: 'inline-block',
-              marginTop: '0',
-              marginBottom: '0.75rem',
-              lineHeight: '1.7',
+            '.markdown-math-block': {
+              color: 'var(--text) !important',
             },
             '.markdown-math-inline': {
-              marginLeft: '0.25rem',
-              display: 'inline-block',
+              color: 'var(--text) !important',
             },
-            'mjx-container[jax="CHTML"][display="true"]': {
-              margin: '0.75rem 0 !important',
+            '.br-gap': {
+              marginBottom: '0.75rem',
             },
           },
         },
@@ -173,20 +169,11 @@ const config: Config = {
     'text-level-3',
     'text-level-4',
     'text-level-5',
-    'bg-level-1',
-    'bg-level-2',
-    'bg-level-3',
-    'bg-level-4',
-    'bg-level-5',
     'border-level-1',
     'border-level-2',
     'border-level-3',
     'border-level-4',
     'border-level-5',
-    'bg-gradient-to-r from-level-1 to-level-2',
-    'bg-gradient-to-r from-level-2 to-level-3',
-    'bg-gradient-to-r from-level-3 to-level-4',
-    'bg-gradient-to-r from-level-4 to-level-5',
   ],
 
 };

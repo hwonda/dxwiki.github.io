@@ -6,15 +6,16 @@ import { MathJaxProvider } from './MathJaxProvider';
 
 // 마크다운 파싱 함수
 function parseMarkdownSegment(segment: string) {
-  let html = segment.replace(/<br\s*\/?>/gi, '<br><br>'); // <br> 처리
-  // let html = segment;
+  let html = segment;
 
-  // 리스트 처리
-  html = html.replace(/(?:^|\n)\d+\.\s(.+?)(?=\n|$)/g, '<li class="list-decimal">$1</li>');
-  html = html.replace(/(<li class="list-decimal">.+?<\/li>(?:\s<li class="list-decimal">.+?<\/li>)*)/g, '<ol class="list">$1</ol>');
+  // 리스트 처리 (br 처리 전에 먼저 실행)
+  html = html.replace(/(?:^|\n|<br>)\s*(\d+)\.\s*(.+?)(?=\n|<br>|$)/g, '<li class="list-decimal">$2</li>');
+  html = html.replace(/(<li class="list-decimal">.+?<\/li>(?:\s*<li class="list-decimal">.+?<\/li>)*)/g, '<ol class="list">$1</ol>');
+  html = html.replace(/(?:^|\n|<br>)\s*-\s*(.+?)(?=\n|<br>|$)/g, '<li class="list-disc">$1</li>');
+  html = html.replace(/(<li class="list-disc">.+?<\/li>(?:\s*<li class="list-disc">.+?<\/li>)*)/g, '<ul class="list">$1</ul>');
 
-  html = html.replace(/(?:^|\n)-\s(.+?)(?=\n|$)/g, '<li class="list-disc">$1</li>');
-  html = html.replace(/(<li class="list-disc">.+?<\/li>(?:\s<li class="list-disc">.+?<\/li>)*)/g, '<ul class="list">$1</ul>');
+  // br 처리는 리스트 처리 후에 실행
+  html = html.replace(/<br\s*\/?>/gi, '<br><div class="br-gap"></div>');
 
   // Bold / Italic / Inline code / 링크
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -23,11 +24,10 @@ function parseMarkdownSegment(segment: string) {
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
   // 문단 처리
-  html = html
-    .split('\n\n')
-    .map((paragraph) => (paragraph.trim() ? `${ paragraph.trim() }` : ''))
-    .join('');
-
+  // html = html
+  //   .split('\n\n')
+  //   .map((paragraph) => (paragraph.trim() ? `${ paragraph.trim() }` : ''))
+  //   .join('');
   return html;
 }
 
@@ -47,6 +47,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
 
   return (
     <div>
+      {/* 수식 처리 */}
       {segments.map((segment, i) => {
         const isMathBlock = segment.startsWith('$$') && segment.endsWith('$$');
         const isMathInline = segment.startsWith('$') && segment.endsWith('$');
