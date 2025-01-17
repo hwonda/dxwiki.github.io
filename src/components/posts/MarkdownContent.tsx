@@ -64,7 +64,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
 
         // 일반 텍스트 처리
         const html = parseMarkdownSegment(segment);
-        return <span key={i} dangerouslySetInnerHTML={{ __html: html }} />;
+        return <span key={i} dangerouslySetInnerHTML={{ __html: html }} className="break-all" />;
       })}
     </div>
   );
