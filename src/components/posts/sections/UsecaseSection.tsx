@@ -24,8 +24,10 @@ const UsecaseSection = ({ usecase }: UsecaseSectionProps) => {
           </span>
         ))}
       </div>
-      <MarkdownContent content={usecase.example ?? ''} />
-      <MarkdownContent content={usecase.description ?? ''} />
+      <div className='flex flex-col gap-3'>
+        <MarkdownContent content={usecase.example ?? ''} />
+        <MarkdownContent content={usecase.description ?? ''} />
+      </div>
     </section>
   );
 };
