@@ -14,7 +14,12 @@ interface Props {
   slug: string;
 }
 
-const adSlots = ['5547328424', '2422471637', '7215138470', '7150455642'];
+const adSlots = [
+  '8925962934',
+  '7612881260',
+  '1384151310',
+  '9071069648',
+];
 
 const PostDetailClient = ({ title, children, term, slug }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -24,13 +29,13 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
   }, []);
 
   return (
-    <div className='prose block md:grid md:grid-cols-[1fr_5fr]'>
+    <div className='prose block md:grid md:grid-cols-[minmax(0,176px)_5fr]'>
       <TableOfContents
         title={title}
         term={term}
         slug={slug}
       />
-      <div className='md:grid md:grid-cols-[minmax(0,768px)_minmax(0,1fr)]'>
+      <div className='md:grid md:grid-cols-[minmax(0,720px)_minmax(0,1fr)]'>
         <div className='text-justify'>
           <PostHeader term={term} onShare={handleShare} />
           <div className='animate-introSecond sm:ml-5'>
@@ -38,13 +43,13 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
           </div>
         </div>
         <div className='hidden md:flex flex-col ml-4'>
-          <div className='w-full h-[135px]' />
+          <div className='w-full h-[128px]' />
           <div className='flex flex-col gap-12'>
             {adSlots.map((slot) => (
               <AdContainer
                 key={slot}
                 slot={slot}
-                format="mcrspv"
+                format="auto"
                 className="w-[122px] min-h-[600px]"
               />
             ))}

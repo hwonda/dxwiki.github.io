@@ -30,10 +30,17 @@ const PostDetail = async ({ term, slug, lastTermId }: Props) => {
       />
       <UsecaseSection usecase={term.usecase ?? { industries: [], example: '', description: '' }} />
       <ReferencesSection references={term.references ?? { tutorials: [], books: [], academic: [], opensource: [] }} />
+      <div className='block sm:hidden'>
+        <AdContainer
+          slot="3999001512"
+          format="auto"
+          className=" w-full h-[160px]"
+        />
+      </div>
       <RecommendationSection term={term} lastTermId={lastTermId} />
       <AdContainer
-        slot="6880591392"
-        format="rspv"
+        slot="4153784886"
+        format="auto"
         className="w-full h-[160px]"
       />
       <div className='block sm:hidden'>

@@ -27,8 +27,8 @@ export default async function Home() {
           </div>
           <div className='w-full absolute top-48'>
             <AdContainer
-              slot="6880591392"
-              format="rspv"
+              slot="1575723008"
+              format="auto"
               className="w-full min-h-[160px]"
             />
           </div>

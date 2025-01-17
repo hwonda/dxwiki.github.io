@@ -110,8 +110,8 @@ const PostList = ({ termsData, itemsPerPage }: PaginationProps) => {
         setCurrentPage={setCurrentPage}
       />
       <AdContainer
-        slot="5709016505"
-        format="mcrspv"
+        slot="6636477998"
+        format="auto"
         className="w-full min-h-[60px] sm:min-h-[160px]"
       />
     </>
