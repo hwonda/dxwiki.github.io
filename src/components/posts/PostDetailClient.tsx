@@ -50,6 +50,7 @@ const PostDetailClient = ({ title, children, term, slug }: Props) => {
                 key={slot}
                 slot={slot}
                 format="auto"
+                containerClassName="flex justify-end"
                 className="w-[122px] min-h-[600px]"
               />
             ))}

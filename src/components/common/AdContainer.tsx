@@ -14,23 +14,24 @@ interface AdContainerProps {
   slot: string;
   format: string;
   className?: string;
+  containerClassName?: string;
 }
 
-const AdContainer = ({ slot, format, className }: AdContainerProps) => {
+const AdContainer = ({ slot, format, className, containerClassName }: AdContainerProps) => {
   useEffect(() => {
     if(process.env.NODE_ENV !== 'production') return;
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
   return (
-    <div className="googleAd-container flex justify-end">
+    <div className={`googleAd-container ${ containerClassName ?? '' }`}>
       <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         strategy="afterInteractive"
       />
       <ins
-        className={`adsbygoogle block ${ className }`}
+        className={`adsbygoogle block ${ className ?? '' }`}
         data-ad-client="ca-pub-1278038564950020"
         data-ad-slot={slot}
         data-auto-format={format}
