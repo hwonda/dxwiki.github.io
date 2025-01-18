@@ -1,6 +1,6 @@
 import { fetchTermsData } from '@/utils/termsData';
 import PostList from '@/components/posts/PostList';
-import SearchDetailInput from '@/components/search/SearchDetailInput';
+import { SearchDetailInput } from '@/components/search/SearchDetailInput';
 import Footer from '@/components/common/Footer';
 
 export const metadata = {

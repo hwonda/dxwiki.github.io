@@ -8,7 +8,7 @@ interface SliderProps {
   onRangeChange: (newRange: [number, number])=> void;
 }
 
-export default function Slider({ displayLevels, range, onRangeChange }: SliderProps) {
+const TextSlider = ({ displayLevels, range, onRangeChange }: SliderProps) => {
   const [selectingStart, setSelectingStart] = useState<number | null>(null);
 
   const isFullRangeSelected = range[0] === 0 && range[1] === displayLevels.length - 1;
@@ -63,4 +63,6 @@ export default function Slider({ displayLevels, range, onRangeChange }: SliderPr
       </div>
     </div>
   );
-}
+};
+
+export default TextSlider;
