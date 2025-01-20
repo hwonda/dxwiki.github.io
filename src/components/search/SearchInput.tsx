@@ -1,10 +1,12 @@
 'use client';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
+import { setSearchQuery } from '@/store/searchSlice';
 import { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import SearchTip from '@/components/search/SearchTip';
+import { useRouter } from 'next/navigation';
 
 interface SearchInputProps {
   suggestions?: string[];
@@ -12,14 +14,21 @@ interface SearchInputProps {
 }
 
 const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
+  const dispatch = useDispatch();
   const { terms } = useSelector((state: RootState) => state.terms);
+  const { searchQuery } = useSelector((state: RootState) => state.search);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const placeholder = terms.length ? `${ terms.length }개의 데이터 용어 검색` : '검색어 입력해주세요';
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(setSearchQuery(''));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredSuggestions = suggestions?.filter((suggestion) =>
-    suggestion.toLowerCase().includes(searchTerm.toLowerCase())
+    suggestion.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
@@ -47,16 +56,14 @@ const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
 
   const redirect = (e: React.KeyboardEvent<HTMLInputElement>, term: string) => {
     if (e.key === 'Enter') {
-      window.location.href = `/posts?q=${ term
-        .trim()
-        .split(' ')
-        .join('+') }`;
+      dispatch(setSearchQuery(term));
+      router.push(`/posts?q=${ term.trim().split(' ').join('+') }`);
     }
   };
 
   const handleClickX = () => {
     inputRef.current?.focus();
-    setSearchTerm('');
+    dispatch(setSearchQuery(''));
   };
 
   return (
@@ -76,32 +83,32 @@ const SearchInput = ({ suggestions, tip = true }: SearchInputProps) => {
           <input
             type="text"
             ref={inputRef}
-            value={searchTerm}
+            value={searchQuery}
             placeholder={placeholder}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
             onFocus={() => setIsModalOpen(true)}
             onBlur={handleBlur}
-            onKeyDown={(e) => redirect(e, searchTerm)}
+            onKeyDown={(e) => redirect(e, searchQuery)}
             className="w-full p-2 mr-2 outline-none text-main bg-background"
           />
-          {searchTerm && (
+          {searchQuery && (
             <X
               className="text-main size-5 cursor-pointer hover:text-primary rounded-full shrink-0"
-              onClick={() => handleClickX()}
+              onClick={handleClickX}
             />
           )}
         </div>
 
         {isModalOpen && (
           <div className="w-full overflow-y-auto suggestions-modal">
-            {searchTerm ? (
+            {searchQuery ? (
               filteredSuggestions && filteredSuggestions.length > 0 ? (
                 filteredSuggestions.map((suggestion, index) => (
                   <div
                     key={index}
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
-                      setSearchTerm(suggestion);
+                      dispatch(setSearchQuery(suggestion));
                       setIsModalOpen(false);
                     }}
                   >

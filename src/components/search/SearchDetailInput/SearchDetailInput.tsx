@@ -17,6 +17,7 @@ import {
   setSelectedQuickSelect,
   setSelectedModifiedQuickSelect,
 } from '@/store/searchSlice';
+import { useRouter } from 'next/navigation';
 
 const levels = ['기초', '초급', '중급', '고급', '전문'];
 const relevanceLevels = ['희박', '낮음', '보통', '높음', '밀접'];
@@ -28,6 +29,7 @@ interface ComplexRange {
 }
 
 const SearchDetailInput = () => {
+  const router = useRouter();
   const { terms } = useSelector((state: RootState) => state.terms);
   const {
     searchQuery,
@@ -75,7 +77,7 @@ const SearchDetailInput = () => {
 
   const redirect = (e: React.KeyboardEvent<HTMLInputElement>, term: string) => {
     if (e.key === 'Enter') {
-      window.location.href = `/posts?q=${ term.trim().split(' ').join('+') }`;
+      router.push(`/posts?q=${ term.trim().split(' ').join('+') }`);
     }
   };
 
