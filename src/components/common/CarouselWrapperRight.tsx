@@ -6,24 +6,27 @@ interface CarouselClientWrapperProps {
   children: React.ReactNode;
   itemCount: number;
   itemWidth: number;
-  speed?: number;
 }
 
-const CarouseltWrapper = ({ children, itemWidth, speed = 0.2 }: CarouselClientWrapperProps) => {
-  const revolveSpeed = speed;
+const revolveSpeed = 0.05;
+
+const CarouselWrapperRight = ({ children, itemWidth }: CarouselClientWrapperProps) => {
   const [time, setTime] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const childWidth = itemWidth + 24; // 24px는 좌우 마진
 
-  const [childrenArray, setChildrenArray] = useState(React.Children.toArray(children));
-  const itemCount = childrenArray.length;
+  const [childrenArray, setChildrenArray] = useState(() => {
+    const array = React.Children.toArray(children);
+    return [...array].reverse();
+  });
   const scrollPosition = time;
 
   const animate = useCallback(() => {
-    setTime((time) => time + revolveSpeed);
+    const speed = -revolveSpeed;
+    setTime((time) => time + speed);
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [revolveSpeed]);
+  }, []);
 
   useEffect(() => {
     animationFrameRef.current = requestAnimationFrame(animate);
@@ -35,15 +38,15 @@ const CarouseltWrapper = ({ children, itemWidth, speed = 0.2 }: CarouselClientWr
   }, [animate]);
 
   useEffect(() => {
-    if (scrollPosition && Math.abs(scrollPosition) % childWidth === 0) {
-      setChildrenArray((prev) => [...prev.slice(1), prev[0]]);
-      setTime((time) => time - childWidth);
+    if (Math.abs(scrollPosition) % childWidth < revolveSpeed) {
+      setChildrenArray((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
+      setTime((time) => time + childWidth);
     }
-  }, [scrollPosition, childWidth, itemCount]);
+  }, [scrollPosition, childWidth]);
 
   return (
     <div
-      className='relative overflow-hidden'
+      className="relative overflow-hidden"
       style={{
         WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
@@ -54,16 +57,13 @@ const CarouseltWrapper = ({ children, itemWidth, speed = 0.2 }: CarouselClientWr
       ref={containerRef}
     >
       <div
-        className='relative flex'
+        className="relative flex"
         style={{
           transform: `translateX(-${ scrollPosition }px)`,
         }}
       >
         {childrenArray.map((child, index) => (
-          <div
-            key={index}
-            className={`mx-3 w-[${ itemWidth }px] shrink-0`}
-          >
+          <div key={index} className={`mx-3 w-[${ itemWidth }px] shrink-0`}>
             {child}
           </div>
         ))}
@@ -72,4 +72,4 @@ const CarouseltWrapper = ({ children, itemWidth, speed = 0.2 }: CarouselClientWr
   );
 };
 
-export default CarouseltWrapper;
+export default CarouselWrapperRight;
