@@ -304,7 +304,7 @@ const SearchDetailInput = () => {
               {activeModal === 'complex' && (
                 <div className="filter-modal absolute top-full left-0 mt-2 min-w-72 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-4 z-10">
                   <div className="flex flex-col justify-between gap-2">
-                    <div className="flex flex-col">
+                    <div className="flex justify-between items-center">
                       <span className="text-sm font-medium">{'난이도'}</span>
                       <div className="flex justify-end items-center gap-2">
                         <ButtonWrap
@@ -315,42 +315,31 @@ const SearchDetailInput = () => {
                       </div>
                     </div>
                     <span className="mt-1 text-sm font-medium">{'직무 연관도'}</span>
-                    <div className="flex justify-end items-center gap-2">
-                      <span className="text-sm w-6">{'DS'}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm w-9 flex justify-center">{'DS'}</span>
                       <ButtonWrap
                         displayLevels={relevanceLevels}
                         range={complexRange.DS}
                         onRangeChange={(newRange) => handleComplexRangeChange('DS', newRange)}
                       />
                     </div>
-                    <div className="flex justify-end items-center gap-2">
-                      <span className="text-sm w-6">{'DE'}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm w-9 flex justify-center">{'DE'}</span>
                       <ButtonWrap
                         displayLevels={relevanceLevels}
                         range={complexRange.DE}
                         onRangeChange={(newRange) => handleComplexRangeChange('DE', newRange)}
                       />
                     </div>
-                    <div className="flex justify-end items-center gap-2">
-                      <span className="text-sm w-6">{'DA'}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm w-9 flex justify-center">{'DA'}</span>
                       <ButtonWrap
                         displayLevels={relevanceLevels}
                         range={complexRange.DA}
                         onRangeChange={(newRange) => handleComplexRangeChange('DA', newRange)}
                       />
                     </div>
-                    <div className="flex justify-center gap-2 mt-1.5">
-                      <button
-                        onClick={() => {
-                          handleComplexRangeChange('level', []);
-                          handleComplexRangeChange('DS', []);
-                          handleComplexRangeChange('DE', []);
-                          handleComplexRangeChange('DA', []);
-                        }}
-                        className="px-2 py-1 text-sm border border-gray1 text-gray1 rounded-full hover:bg-gray4 transition-colors"
-                      >
-                        {'전체 해제'}
-                      </button>
+                    <div className="flex justify-end mt-1.5">
                       <button
                         onClick={() => {
                           handleComplexRangeChange('level', [0,1,2,3,4]);
@@ -358,7 +347,7 @@ const SearchDetailInput = () => {
                           handleComplexRangeChange('DE', [0,1,2,3,4]);
                           handleComplexRangeChange('DA', [0,1,2,3,4]);
                         }}
-                        className="px-2 py-1 text-sm bg-accent text-gray5 rounded-full hover:bg-primary transition-colors"
+                        className="px-2 py-1 text-sm text-gray0 rounded-full border border-gray2 hover:text-primary hover:bg-background-secondary hover:border-primary transition-colors"
                       >
                         {'전체 선택'}
                       </button>
