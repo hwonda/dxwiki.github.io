@@ -222,5 +222,7 @@ env.local
 secret_key.json
 service-account.json
 
-# feed
+# static files
 /public/feed.xml
+/public/robots.txt
+/public/sitemap.xml

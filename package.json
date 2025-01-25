@@ -16,7 +16,7 @@
     "lint:fix": "eslint --fix ./src",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "feed": "ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateFeed.ts"
+    "static": "ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateFeed.ts && ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateSitemap.ts && ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateRobots.ts"
   },
   "dependencies": {
     "next": "14.2.13",
