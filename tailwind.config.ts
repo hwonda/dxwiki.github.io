@@ -158,6 +158,16 @@ const config: Config = {
             '.br-gap': {
               marginBottom: '0.75rem',
             },
+            '.prose .MJX-TEX': {
+              paddingRight: '0.05rem !important',
+            },
+            '.prose .MathJax': {
+              top: '0.1rem !important',
+              paddingRight: '0.05rem !important',
+            },
+            '.prose mjx-c.mjx-c30::before': {
+              paddingRight: '0.7rem !important',
+            },
           },
         },
       },
