@@ -1,6 +1,6 @@
 import LogoAnimation from '@/components/common/LogoAnimation';
 import SearchInput from '@/components/search/SearchInput';
-import RecommendTerms from '@/components/posts/RecommendTerms';
+import RecentTerms from '@/components/posts/RecentTerms';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import AdContainer from '@/components/common/AdContainer';
@@ -23,7 +23,7 @@ export default async function Home() {
             <SearchInput />
           </div>
           <div className='w-full absolute top-20'>
-            <RecommendTerms />
+            <RecentTerms />
           </div>
           <div className='w-full absolute top-48'>
             <AdContainer

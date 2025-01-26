@@ -7,13 +7,21 @@ import { TermData } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { Rocket } from 'lucide-react';
 
-export default function RecommendTerms() {
+export default function RecentTerms() {
   const { terms } = useSelector((state: RootState) => state.terms);
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleItems, setVisibleItems] = useState<TermData[]>([]);
 
   const recentTerms = [...terms]
-    .sort((a, b) => new Date(b.metadata?.created_at ?? '').getTime() - new Date(a.metadata?.created_at ?? '').getTime())
+    .sort((a, b) => {
+      const dateA = new Date(a.metadata?.created_at ?? '').getTime();
+      const dateB = new Date(b.metadata?.created_at ?? '').getTime();
+
+      if (dateB === dateA) {
+        return (b.id ?? 0) - (a.id ?? 0);
+      }
+      return dateB - dateA;
+    })
     .slice(0, 10);
 
   useEffect(() => {
