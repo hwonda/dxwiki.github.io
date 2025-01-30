@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ComplexRange {
-  level: number[];
-  DS: number[];
-  DE: number[];
-  DA: number[];
+  level: [number, number];
+  DS: [number, number];
+  DE: [number, number];
+  DA: [number, number];
 }
 
 interface SearchState {
@@ -24,10 +24,10 @@ const initialState: SearchState = {
   searchQuery: '',
   activeModal: null,
   complexRange: {
-    level: [0,1,2,3,4],
-    DS: [0,1,2,3,4],
-    DE: [0,1,2,3,4],
-    DA: [0,1,2,3,4],
+    level: [0, 4],
+    DS: [0, 4],
+    DE: [0, 4],
+    DA: [0, 4],
   },
   publishedDateRange: [null, null],
   modifiedDateRange: [null, null],
@@ -48,7 +48,7 @@ const searchSlice = createSlice({
     setActiveModal: (state, action: PayloadAction<string | null>) => {
       state.activeModal = action.payload;
     },
-    setComplexRange: (state, action: PayloadAction<{ type: keyof ComplexRange; newRange: number[] }>) => {
+    setComplexRange: (state, action: PayloadAction<{ type: keyof ComplexRange; newRange: [number, number] }>) => {
       const { type, newRange } = action.payload;
       state.complexRange[type] = newRange;
       state.hasInteractedComplex = true;

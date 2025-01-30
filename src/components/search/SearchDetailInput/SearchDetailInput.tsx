@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect, useRef } from 'react';
 import { Search, ChevronLeft } from 'lucide-react';
-import ButtonWrap from '@/components/ui/ButtonWrap';
+import Slider from '@/components/ui/Slider';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
@@ -22,10 +22,10 @@ import { useRouter } from 'next/navigation';
 const levels = ['기초', '초급', '중급', '고급', '전문'];
 const relevanceLevels = ['희박', '낮음', '보통', '높음', '밀접'];
 interface ComplexRange {
-  level: number[];
-  DS: number[];
-  DE: number[];
-  DA: number[];
+  level: [number, number];
+  DS: [number, number];
+  DE: [number, number];
+  DA: [number, number];
 }
 
 const SearchDetailInput = () => {
@@ -89,7 +89,7 @@ const SearchDetailInput = () => {
     }
   };
 
-  const handleComplexRangeChange = (type: keyof ComplexRange, newRange: number[]) => {
+  const handleComplexRangeChange = (type: keyof ComplexRange, newRange: [number, number]) => {
     dispatch(setComplexRange({ type, newRange }));
   };
 
@@ -155,11 +155,11 @@ const SearchDetailInput = () => {
   };
 
   const formatComplexRange = () => {
-    const allSelected = Object.values(complexRange).every((range) =>
-      range.length === 5 && [0, 1, 2, 3, 4].every((num) => range.includes(num))
+    const isDefault = Object.values(complexRange).every(
+      (range) => range[0] === 0 && range[1] === 4
     );
 
-    if (allSelected) return '전체';
+    if (isDefault) return '전체';
     return '복합적';
   };
 
@@ -205,8 +205,8 @@ const SearchDetailInput = () => {
     }
 
     // Add complex range if not all selected
-    const isAllSelected = (range: number[]) => {
-      return range.length === 5 && [0,1,2,3,4].every((n) => range.includes(n));
+    const isAllSelected = (range: [number, number]) => {
+      return range[0] === 0 && range[1] === 4;
     };
 
     if (!Object.values(complexRange).every(isAllSelected)) {
@@ -303,55 +303,45 @@ const SearchDetailInput = () => {
               </span>
               {activeModal === 'complex' && (
                 <div className="filter-modal absolute top-full left-0 mt-2 min-w-72 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-4 z-10">
-                  <div className="flex flex-col justify-between gap-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">{'난이도'}</span>
-                      <div className="flex justify-end items-center gap-2">
-                        <ButtonWrap
-                          displayLevels={levels}
-                          range={complexRange.level}
-                          onRangeChange={(newRange) => handleComplexRangeChange('level', newRange)}
-                        />
-                      </div>
-                    </div>
-                    <span className="mt-1 text-sm font-medium">{'직무 연관도'}</span>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm w-9 flex justify-center">{'DS'}</span>
-                      <ButtonWrap
-                        displayLevels={relevanceLevels}
-                        range={complexRange.DS}
-                        onRangeChange={(newRange) => handleComplexRangeChange('DS', newRange)}
-                      />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm w-9 flex justify-center">{'DE'}</span>
-                      <ButtonWrap
-                        displayLevels={relevanceLevels}
-                        range={complexRange.DE}
-                        onRangeChange={(newRange) => handleComplexRangeChange('DE', newRange)}
-                      />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm w-9 flex justify-center">{'DA'}</span>
-                      <ButtonWrap
-                        displayLevels={relevanceLevels}
-                        range={complexRange.DA}
-                        onRangeChange={(newRange) => handleComplexRangeChange('DA', newRange)}
-                      />
-                    </div>
-                    <div className="flex justify-end mt-1.5">
-                      <button
-                        onClick={() => {
-                          handleComplexRangeChange('level', [0,1,2,3,4]);
-                          handleComplexRangeChange('DS', [0,1,2,3,4]);
-                          handleComplexRangeChange('DE', [0,1,2,3,4]);
-                          handleComplexRangeChange('DA', [0,1,2,3,4]);
-                        }}
-                        className="px-2 py-1 text-sm text-gray0 rounded-full border border-gray2 hover:text-primary hover:bg-background-secondary hover:border-primary transition-colors"
-                      >
-                        {'전체 선택'}
-                      </button>
-                    </div>
+                  <div className="grid grid-cols-[60px_1fr] items-center pr-4">
+                    <span className="text-sm font-medium">{'난이도'}</span>
+                    <Slider
+                      displayLevels={levels}
+                      range={complexRange.level}
+                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('level', newRange)}
+                    />
+                    <span className="col-span-2 mt-1 text-sm font-medium">{'직무 연관도'}</span>
+                    <span className="text-sm w-9 flex justify-center">{'DS'}</span>
+                    <Slider
+                      displayLevels={relevanceLevels}
+                      range={complexRange.DS}
+                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DS', newRange)}
+                    />
+                    <span className="text-sm w-9 flex justify-center">{'DE'}</span>
+                    <Slider
+                      displayLevels={relevanceLevels}
+                      range={complexRange.DE}
+                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DE', newRange)}
+                    />
+                    <span className="text-sm w-9 flex justify-center">{'DA'}</span>
+                    <Slider
+                      displayLevels={relevanceLevels}
+                      range={complexRange.DA}
+                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DA', newRange)}
+                    />
+                  </div>
+                  <div className="flex justify-end mt-1.5">
+                    <button
+                      onClick={() => {
+                        handleComplexRangeChange('level', [0, 4]);
+                        handleComplexRangeChange('DS', [0, 4]);
+                        handleComplexRangeChange('DE', [0, 4]);
+                        handleComplexRangeChange('DA', [0, 4]);
+                      }}
+                      className="px-2 py-1 text-sm text-gray0 rounded-full border border-gray2 hover:text-primary hover:bg-background-secondary hover:border-primary transition-colors"
+                    >
+                      {'전체 선택'}
+                    </button>
                   </div>
                 </div>
               )}
