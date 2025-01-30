@@ -43,16 +43,20 @@ export const getSitemapURLs = async (): Promise<SitemapURL[]> => {
   const baseUrl = dikiMetadata.url;
   const postLists = await fetchTermsData();
 
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0] + 'T00:00:00+00:00';
+  };
+
   const urls: SitemapURL[] = [
     {
       loc: baseUrl,
-      lastmod: new Date().toISOString(),
+      lastmod: formatDate(new Date()),
       changefreq: 'always',
       priority: 1.00,
     },
     {
       loc: `${ baseUrl }/posts`,
-      lastmod: new Date().toISOString(),
+      lastmod: formatDate(new Date()),
       changefreq: 'always',
       priority: 0.80,
     },
@@ -62,7 +66,7 @@ export const getSitemapURLs = async (): Promise<SitemapURL[]> => {
 
       return {
         loc: `${ baseUrl }${ url }`,
-        lastmod: lastmod.toISOString(),
+        lastmod: formatDate(lastmod),
         changefreq: 'always',
         priority: 0.64,
       };
