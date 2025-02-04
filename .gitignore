@@ -225,4 +225,3 @@ service-account.json
 # static files
 /public/feed.xml
 /public/robots.txt
-/public/sitemap.xml
