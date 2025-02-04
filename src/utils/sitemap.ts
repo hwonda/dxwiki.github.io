@@ -8,10 +8,23 @@ interface SitemapURL {
   priority: number;
 }
 
+const encodeURL = (url: string): string => {
+  return url.replace(/[&<>"']/g, (char) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&apos;',
+    };
+    return entities[char];
+  });
+};
+
 const generateSitemapURL = ({ loc, lastmod, changefreq, priority }: SitemapURL): string => {
   return `
     <url>
-      <loc>${ loc }</loc>
+      <loc>${ encodeURL(loc) }</loc>
       <lastmod>${ lastmod }</lastmod>
       <changefreq>${ changefreq }</changefreq>
       <priority>${ priority }</priority>
