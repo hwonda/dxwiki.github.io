@@ -57,17 +57,24 @@ const Slider = ({ displayLevels, range, onRangeChange }: SliderProps) => {
     if (!bounds) return;
 
     const percent = Math.max(0, Math.min(100, (e.clientX - bounds.left) / bounds.width * 100));
-    const clickedValue = Math.round((percent / 100) * (displayLevels.length - 1));
+    const segmentWidth = 100 / (displayLevels.length - 1);
+    const levels = Array.from({ length: displayLevels.length }, (_, i) => i);
+    const closestLevel = levels.reduce((closest, level) => {
+      const levelPosition = level * segmentWidth;
+      const currentDiff = Math.abs(percent - levelPosition);
+      const closestDiff = Math.abs(percent - (closest * segmentWidth));
+      return currentDiff < closestDiff ? level : closest;
+    }, 0);
 
-    // 각 핸들과 클릭 위치 간의 거리 계산
-    const distanceToStart = Math.abs(clickedValue - range[0]);
-    const distanceToEnd = Math.abs(clickedValue - range[1]);
+    // 각 핸들과 클릭된 레벨 간의 거리 계산
+    const distanceToStart = Math.abs(closestLevel - range[0]);
+    const distanceToEnd = Math.abs(closestLevel - range[1]);
 
     const newRange: [number, number] = [...range];
     if (distanceToStart <= distanceToEnd) {
-      newRange[0] = clickedValue;
+      newRange[0] = closestLevel;
     } else {
-      newRange[1] = clickedValue;
+      newRange[1] = closestLevel;
     }
 
     onRangeChange(newRange);
