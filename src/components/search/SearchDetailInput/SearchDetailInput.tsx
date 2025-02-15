@@ -16,6 +16,7 @@ import {
   setModifiedDateRange,
   setSelectedQuickSelect,
   setSelectedModifiedQuickSelect,
+  setSelectedComplexQuickSelect,
 } from '@/store/searchSlice';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -42,6 +43,7 @@ const SearchDetailInput = () => {
     modifiedDateRange,
     selectedQuickSelect,
     selectedModifiedQuickSelect,
+    selectedComplexQuickSelect,
     hasInteractedPublished,
     hasInteractedModified,
     hasInteractedComplex,
@@ -96,6 +98,19 @@ const SearchDetailInput = () => {
 
   const handleComplexRangeChange = (type: keyof ComplexRange, newRange: [number, number]) => {
     dispatch(setComplexRange({ type, newRange }));
+
+    // 현재 변경된 range를 포함한 모든 range가 전체 범위(0-4)인지 확인
+    const updatedComplexRange = {
+      ...complexRange,
+      [type]: newRange,
+    };
+
+    const isAllRangesDefault = Object.values(updatedComplexRange).every(
+      (range) => range[0] === 0 && range[1] === 4
+    );
+
+    // 모든 range가 전체 범위면 'all', 아니면 null로 설정
+    dispatch(setSelectedComplexQuickSelect(isAllRangesDefault ? 'all' : null));
   };
 
   const handleDateChange = (dates: [Date | null, Date | null], type: 'published' | 'modified') => {
@@ -254,6 +269,14 @@ const SearchDetailInput = () => {
     router.push(searchUrl);
   };
 
+  const handleComplexAllSelect = () => {
+    handleComplexRangeChange('level', [0, 4]);
+    handleComplexRangeChange('DS', [0, 4]);
+    handleComplexRangeChange('DE', [0, 4]);
+    handleComplexRangeChange('DA', [0, 4]);
+    dispatch(setSelectedComplexQuickSelect('all'));
+  };
+
   return (
     <>
       {/* <div className='flex flex-col gap-1'>
@@ -265,6 +288,7 @@ const SearchDetailInput = () => {
         <div>{'complexRange: '}{JSON.stringify(complexRange)}</div>
         <div>{'publishedDateRange: '}{JSON.stringify(publishedDateRange)}</div>
         <div>{'modifiedDateRange: '}{JSON.stringify(modifiedDateRange)}</div>
+        <div>{'selectedComplexQuickSelect: '}{selectedComplexQuickSelect}</div>
       </div> */}
       <style>{datePickerCustomStyles}</style>
       <div className="relative w-full mt-2 mb-10">
@@ -349,13 +373,12 @@ const SearchDetailInput = () => {
                   </div>
                   <div className="flex justify-end mt-1.5">
                     <button
-                      onClick={() => {
-                        handleComplexRangeChange('level', [0, 4]);
-                        handleComplexRangeChange('DS', [0, 4]);
-                        handleComplexRangeChange('DE', [0, 4]);
-                        handleComplexRangeChange('DA', [0, 4]);
-                      }}
-                      className="px-2 py-1 text-sm text-gray0 rounded-full border border-gray2 hover:text-primary hover:bg-background-secondary hover:border-primary transition-colors"
+                      onClick={handleComplexAllSelect}
+                      className={`px-2 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
+                        selectedComplexQuickSelect === 'all'
+                          ? 'border-primary text-primary'
+                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
+                      }`}
                     >
                       {'전체 선택'}
                     </button>
