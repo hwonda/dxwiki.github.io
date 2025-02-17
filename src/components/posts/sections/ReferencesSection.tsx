@@ -102,7 +102,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
       <div className='grid lg:grid-cols-2 gap-4 sm:mt-[-4px]'>
         {references.tutorials && references.tutorials.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-1 mb-1.5'>{'Tutorials'}</strong>
+            <strong className='ml-1 mb-1.5'>{'튜토리얼'}</strong>
             {references.tutorials.map((tutorial, index) => (
               <Link
                 {...getLinkProps(tutorial.external_link ?? null)}
@@ -121,7 +121,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.books && references.books.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-1 mb-1.5'>{'Books'}</strong>
+            <strong className='ml-1 mb-1.5'>{'참고서적'}</strong>
             {references.books.map((book, index) => (
               <Link
                 {...getLinkProps(book.external_link ?? null)}
@@ -138,7 +138,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.academic && references.academic.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-1 mb-1.5'>{'Academic'}</strong>
+            <strong className='ml-1 mb-1.5'>{'연구논문'}</strong>
             {references.academic.map((paper, index) => (
               <Link
                 {...getLinkProps(paper.external_link ?? null)}
@@ -155,7 +155,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         )}
         {references.opensource && references.opensource.length > 0 && (
           <div className='flex flex-col'>
-            <strong className='ml-1 mb-1.5'>{'Open Source'}</strong>
+            <strong className='ml-1 mb-1.5'>{'오픈소스'}</strong>
             {references.opensource.map((project, index) => (
               <Link
                 {...getLinkProps(project.external_link ?? null)}
