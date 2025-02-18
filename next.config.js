@@ -14,6 +14,28 @@ const nextConfig = {
     )
     return config
   },
+  async headers() {
+    return [
+      {
+        source: "/sitemap.xml",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }
+        ],
+      },
+      {
+        source: "/robots.txt",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }
+        ],
+      },
+      {
+        source: "/feed.xml",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
