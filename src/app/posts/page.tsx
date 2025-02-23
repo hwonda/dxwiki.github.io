@@ -1,4 +1,3 @@
-import { fetchTermsData } from '@/utils/termsData';
 import { SearchDetailInput } from '@/components/search/SearchDetailInput';
 import { Suspense } from 'react';
 import PostList from '@/components/posts/PostList';
@@ -10,11 +9,6 @@ export const metadata = {
 };
 
 export default async function PostsPage() {
-  const terms = await fetchTermsData();
-
-  const itemsPerPage = 12;
-  const totalPages = Math.ceil(terms.length / itemsPerPage);
-
   return (
     <div className="relative">
       <Suspense fallback={<LoadingSpinner />}>
@@ -22,7 +16,7 @@ export default async function PostsPage() {
           <SearchDetailInput />
         </div>
         <div className='animate-introSecond mt-5 z-10'>
-          <PostList totalPages={totalPages} itemsPerPage={itemsPerPage} />
+          <PostList itemsPerPage={12} />
         </div>
       </Suspense>
       <div className='block sm:hidden'>

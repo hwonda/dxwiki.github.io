@@ -11,9 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { setCurrentPage, setSortType } from '@/store/pageSlice';
 import { searchTerms } from '@/utils/search';
-
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 interface PaginationProps {
-  totalPages: number;
   itemsPerPage: number;
 }
 
@@ -23,6 +22,11 @@ const PostList = ({ itemsPerPage }: PaginationProps) => {
   const searchParams = useSearchParams();
   const [termsData, setTermsData] = useState<TermData[]>([]);
   const dispatch = useDispatch();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     let filteredTerms = [...terms];
@@ -154,9 +158,15 @@ const PostList = ({ itemsPerPage }: PaginationProps) => {
     <>
       <div className="w-full flex justify-between items-center mb-5">
         <h1 className='flex items-center gap-2 text-sub'>
-          {'검색결과'}
-          <span className='text-primary font-bold'>{sortedTermsData.length}</span>
-          {'/ '}{terms.length}{' 개'}
+          {isClient ? (
+            <>
+              {'검색결과'}
+              <span className='text-primary font-bold'>{sortedTermsData.length}</span>
+              {'/ '}{terms.length}{' 개'}
+            </>
+          ) : (
+            <LoadingSpinner />
+          )}
         </h1>
         <SortButtons />
       </div>
