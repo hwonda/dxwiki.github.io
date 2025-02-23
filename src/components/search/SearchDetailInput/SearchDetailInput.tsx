@@ -41,9 +41,9 @@ const SearchDetailInput = () => {
     complexRange,
     publishedDateRange,
     modifiedDateRange,
-    selectedQuickSelect,
-    selectedModifiedQuickSelect,
-    selectedComplexQuickSelect,
+    // selectedQuickSelect,
+    // selectedModifiedQuickSelect,
+    // selectedComplexQuickSelect,
     hasInteractedPublished,
     hasInteractedModified,
     hasInteractedComplex,
@@ -139,40 +139,40 @@ const SearchDetailInput = () => {
     return `${ formatDate(range[0]) } - ${ formatDate(range[1]) }`;
   };
 
-  const handleQuickSelect = (type: 'all' | 'week' | 'month', dateType: 'published' | 'modified') => {
-    if (dateType === 'published') {
-      dispatch(setSelectedQuickSelect(type));
-    } else {
-      dispatch(setSelectedModifiedQuickSelect(type));
-    }
+  // const handleQuickSelect = (type: 'all' | 'week' | 'month', dateType: 'published' | 'modified') => {
+  //   if (dateType === 'published') {
+  //     dispatch(setSelectedQuickSelect(type));
+  //   } else {
+  //     dispatch(setSelectedModifiedQuickSelect(type));
+  //   }
 
-    const today = new Date();
-    const startDate = new Date();
+  //   const today = new Date();
+  //   const startDate = new Date();
 
-    switch (type) {
-      case 'week':
-        startDate.setDate(today.getDate() - 7);
-        break;
-      case 'month':
-        startDate.setMonth(today.getMonth() - 1);
-        break;
-      case 'all':
-        if (dateType === 'published') {
-          dispatch(setPublishedDateRange([null, null]));
-        } else {
-          dispatch(setModifiedDateRange([null, null]));
-        }
-        return;
-    }
+  //   switch (type) {
+  //     case 'week':
+  //       startDate.setDate(today.getDate() - 7);
+  //       break;
+  //     case 'month':
+  //       startDate.setMonth(today.getMonth() - 1);
+  //       break;
+  //     case 'all':
+  //       if (dateType === 'published') {
+  //         dispatch(setPublishedDateRange([null, null]));
+  //       } else {
+  //         dispatch(setModifiedDateRange([null, null]));
+  //       }
+  //       return;
+  //   }
 
-    const newRange: [Date, Date] = [startDate, today];
-    if (dateType === 'published') {
-      dispatch(setPublishedDateRange(newRange));
-    } else {
-      dispatch(setModifiedDateRange(newRange));
-    }
-    dispatch(setActiveModal(null));
-  };
+  //   const newRange: [Date, Date] = [startDate, today];
+  //   if (dateType === 'published') {
+  //     dispatch(setPublishedDateRange(newRange));
+  //   } else {
+  //     dispatch(setModifiedDateRange(newRange));
+  //   }
+  //   dispatch(setActiveModal(null));
+  // };
 
   const formatComplexRange = () => {
     const isDefault = Object.values(complexRange).every(
@@ -188,7 +188,7 @@ const SearchDetailInput = () => {
       border-color: var(--background) !important;
     }
     .react-datepicker__day:hover {
-      background-color: var(--gray2) !important;
+      background-color: var(--gray3) !important;
       color: var(--text) !important;
     }
     .react-datepicker__month-container {
@@ -199,14 +199,18 @@ const SearchDetailInput = () => {
     .react-datepicker__header {
       background-color: var(--background);
       border-bottom: 1px solid var(--background);
+      align-items: center;
     }
-    .react-datepicker__current-month,
+    .react-datepicker__current-month{
+      margin-top: -1px !important;
+      color: var(--text-secondary);
+    }
     .react-datepicker__day-name,
     .react-datepicker__day {
       color: var(--text);
     }
     .react-datepicker__day--outside-month {
-      color: var(--gray2) !important;
+      color: var(--gray3) !important;
     }
     .react-datepicker__day--selected,
     .react-datepicker__day--in-range {
@@ -217,6 +221,9 @@ const SearchDetailInput = () => {
     }
     .react-datepicker__day--keyboard-selected {
       background-color: var(--background);
+    }
+    .react-datepicker__day--today {
+      color: var(--primary) !important;
     }
   `;
 
@@ -269,13 +276,13 @@ const SearchDetailInput = () => {
     router.push(searchUrl);
   };
 
-  const handleComplexAllSelect = () => {
-    handleComplexRangeChange('level', [0, 4]);
-    handleComplexRangeChange('DS', [0, 4]);
-    handleComplexRangeChange('DE', [0, 4]);
-    handleComplexRangeChange('DA', [0, 4]);
-    dispatch(setSelectedComplexQuickSelect('all'));
-  };
+  // const handleComplexAllSelect = () => {
+  //   handleComplexRangeChange('level', [0, 4]);
+  //   handleComplexRangeChange('DS', [0, 4]);
+  //   handleComplexRangeChange('DE', [0, 4]);
+  //   handleComplexRangeChange('DA', [0, 4]);
+  //   dispatch(setSelectedComplexQuickSelect('all'));
+  // };
 
   return (
     <>
@@ -371,7 +378,7 @@ const SearchDetailInput = () => {
                       onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DE', newRange)}
                     />
                   </div>
-                  <div className="flex justify-end mt-1.5">
+                  {/* <div className="flex justify-end mt-1.5">
                     <button
                       onClick={handleComplexAllSelect}
                       className={`px-2 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
@@ -382,7 +389,7 @@ const SearchDetailInput = () => {
                     >
                       {'전체 선택'}
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -408,7 +415,20 @@ const SearchDetailInput = () => {
               {activeModal === 'publishedDate' && (
                 <div className="filter-modal absolute top-full left-0 mt-2 w-64 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-3.5 z-10">
                   <div className="text-sm font-medium mb-2.5">{'발행일'}</div>
-                  <div className="grid grid-cols-3 gap-1">
+                  {/* <div className="h-px bg-gray3 mt-3 mb-1" /> */}
+                  <div className="flex justify-center">
+                    <DatePicker
+                      selected={publishedDateRange[0]}
+                      onChange={(dates) => handleDateChange(dates as [Date | null, Date | null], 'published')}
+                      startDate={publishedDateRange[0]}
+                      endDate={publishedDateRange[1]}
+                      selectsRange
+                      calendarClassName="dark:bg-background"
+                      locale={ko}
+                      inline
+                    />
+                  </div>
+                  {/* <div className="grid grid-cols-3 gap-1">
                     <button
                       onClick={() => handleQuickSelect('all', 'published')}
                       className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
@@ -439,20 +459,7 @@ const SearchDetailInput = () => {
                     >
                       {'최근 1달'}
                     </button>
-                  </div>
-                  <div className="h-px bg-gray3 mt-3 mb-1" />
-                  <div className="flex justify-center">
-                    <DatePicker
-                      selected={publishedDateRange[0]}
-                      onChange={(dates) => handleDateChange(dates as [Date | null, Date | null], 'published')}
-                      startDate={publishedDateRange[0]}
-                      endDate={publishedDateRange[1]}
-                      selectsRange
-                      calendarClassName="dark:bg-background"
-                      locale={ko}
-                      inline
-                    />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -480,7 +487,7 @@ const SearchDetailInput = () => {
               {activeModal === 'modifiedDate' && (
                 <div className="filter-modal absolute top-full right-0 mt-2 w-64 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-3.5 z-10">
                   <div className="text-sm font-medium mb-2.5">{'수정일'}</div>
-                  <div className="grid grid-cols-3 gap-1">
+                  {/* <div className="grid grid-cols-3 gap-1">
                     <button
                       onClick={() => handleQuickSelect('all', 'modified')}
                       className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
@@ -511,8 +518,8 @@ const SearchDetailInput = () => {
                     >
                       {'최근 1달'}
                     </button>
-                  </div>
-                  <div className="h-px bg-gray3 mt-3 mb-1" />
+                  </div> */}
+                  {/* <div className="h-px bg-gray3 mt-3 mb-1" /> */}
                   <div className="flex justify-center">
                     <DatePicker
                       selected={modifiedDateRange[0]}
