@@ -16,6 +16,7 @@ lunr.Pipeline.registerFunction(koTokenizer, 'koTokenizer');
 const SEARCH_FIELDS = {
   titleEn: { boost: 10, path: (term: TermData) => term.title?.en },
   titleKo: { boost: 10, path: (term: TermData) => term.title?.ko },
+  titleEtc: { boost: 8, path: (term: TermData) => term.title?.etc?.join(' ') },
   tags: { boost: 7, path: (term: TermData) => term.tags?.map((tag) => tag.name).join(' ') },
   descriptionShort: { boost: 3, path: (term: TermData) => term.description?.short },
   descriptionFull: { boost: 1, path: (term: TermData) => term.description?.full },
