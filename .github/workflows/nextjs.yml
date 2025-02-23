@@ -86,12 +86,12 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Generate sitemap.xml, robots.txt, feed.xml
-        run: npm run static
       - name: Clean cache before build
         run: rm -rf .next/cache
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Generate sitemap.xml, robots.txt, feed.xml
+        run: npm run static
       - name: Prevent Jekyll processing
         run: touch out/.nojekyll
       - name: Upload artifact
