@@ -30,10 +30,10 @@ const ButtonWrap = ({ displayLevels, range, onRangeChange }: ButtonWrapProps) =>
         <button
           key={level}
           onClick={() => handleClick(index)}
-          className={`px-2 py-0.5 text-xs rounded-full border border-gray2 transition-colors hover:bg-background-secondary ${
+          className={`px-2 py-0.5 text-xs rounded-full border border-gray3 transition-colors hover:bg-background-secondary ${
             range.includes(index)
               ? 'border-primary text-primary'
-              : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
+              : 'border-gray3 text-gray0 hover:text-primary hover:border-primary'
           }`}
         >
           {level}
