@@ -19,13 +19,16 @@
     "static": "ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateFeed.ts && ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateSitemap.ts && ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/generateRobots.ts"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "dayjs": "^1.11.13",
+    "lunr": "^2.3.9",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "lucide-react": "^0.436.0",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@reduxjs/toolkit": "^2.5.0",
     "@stylistic/eslint-plugin": "^2.6.4",
     "@stylistic/eslint-plugin-js": "^2.6.4",
     "@tailwindcss/typography": "^0.5.15",
@@ -38,7 +41,6 @@
     "@typescript-eslint/parser": "^8.0.1",
     "better-react-mathjax": "^2.0.4-beta1",
     "date-fns": "^4.1.0",
-    "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
@@ -47,8 +49,6 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "firebase-admin": "^12.6.0",
-    "lucide-react": "^0.436.0",
-    "lunr": "^2.3.9",
     "next-themes": "^0.3.0",
     "postcss": "^8",
     "react-datepicker": "^7.6.0",
