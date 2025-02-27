@@ -3,7 +3,7 @@ import { fontNanum, fontCoding, fontNoto } from '@/libs/fonts';
 import './globals.css';
 import ThemeProvider from '@/layouts/ThemeProvider';
 import Header from '@/components/common/Header';
-import GoogleVerification from '@/components/meta/GoogleVerification';
+import SiteVerification from '@/components/meta/SiteVerification';
 import GoogleAdSense from '@/components/meta/GoogleAdSense';
 import GoogleAnalytics from '@/components/meta/GoogleAnalytics';
 import { dikiMetadata } from '@/constants';
@@ -58,7 +58,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <GoogleVerification />
+        <SiteVerification />
         <GoogleAdSense />
         <GoogleAnalytics />
         <link rel="canonical" href="https://dxwiki.github.io" />
