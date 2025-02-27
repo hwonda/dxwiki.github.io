@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { writeFileSync } from 'fs';
 import { fetchTermsData } from '@/utils/termsData';
 import { dikiMetadata } from '@/constants';
 import { TermData } from '@/types';
@@ -18,15 +18,15 @@ const generateItemXML = (post: TermData, metadata: typeof dikiMetadata): string 
   const description = (post.description?.short ?? '') + (post.description?.full ?? '');
 
   return `
-    <item>
-      <title>${ sanitizeText(post.title?.ko ?? '') } ${ sanitizeText(post.title?.en ?? '') }${ sanitizeText(post.title?.etc?.[0] ?? '') }</title>
-      <description>${ sanitizeText(description) }</description>
-      <link>${ metadata.url }${ post.url }</link>
-      <guid isPermaLink="true">${ metadata.url }${ post.url }</guid>
-      ${ (post.usecase?.industries ?? []).map((category) => `<category>${ sanitizeText(category) }</category>`).join('') }
-      <author>${ sanitizeText(post.metadata?.authors?.join(', ') ?? '') }</author>
-      <pubDate>${ formatToRFC822(new Date(post.metadata?.updated_at ?? post.metadata?.created_at ?? '')) }</pubDate>
-    </item>
+        <item>
+          <title>${ sanitizeText(post.title?.ko ?? '') } ${ sanitizeText(post.title?.en ?? '') }${ sanitizeText(post.title?.etc?.[0] ?? '') }</title>
+          <description>${ sanitizeText(description) }</description>
+          <link>${ metadata.url }${ post.url }</link>
+          <guid isPermaLink="true">${ metadata.url }${ post.url }</guid>
+          ${ (post.usecase?.industries ?? []).map((category) => `<category>${ sanitizeText(category) }</category>`).join('') }
+          <author>${ sanitizeText(post.metadata?.authors?.join(', ') ?? '') }</author>
+          <pubDate>${ formatToRFC822(new Date(post.metadata?.updated_at ?? post.metadata?.created_at ?? '')) }</pubDate>
+        </item>
   `;
 };
 
@@ -49,7 +49,8 @@ const generateFeedXML = (posts: TermData[], metadata: typeof dikiMetadata): stri
   try {
     const postLists = await fetchTermsData();
     const xml = generateFeedXML(postLists, dikiMetadata);
-    await fs.writeFile('out/feed.xml', xml);
+    writeFileSync('out/feed.xml', xml, 'utf-8');
+    writeFileSync('public/feed.xml', xml, 'utf-8');
     console.log('RSS feed generated');
   } catch (error) {
     console.error('Error generating feed:', error);
