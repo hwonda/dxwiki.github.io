@@ -9,7 +9,7 @@ const GoogleVerification = () => {
       />
       <meta
         name="naver-site-verification"
-        content="eec719b4c5e6a60878bda345c712c22a66aa76da"
+        content="4f2d5a06c90b5260ce153023faef37a2b617c431"
       />
     </>
   );
