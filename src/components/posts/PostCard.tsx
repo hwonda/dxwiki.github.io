@@ -61,7 +61,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
       <Link
         href={term.url ?? ''}
         className="group h-full flex flex-col gap-0 justify-between p-2.5 border border-light hover:border-primary rounded-lg
-        dark:hover:bg-secondary hover:no-underline duration-300 shadow-sm hover:shadow-xl"
+        hover:bg-gray5 hover:no-underline duration-300 shadow-sm hover:shadow-xl"
       >
         <div className="flex flex-col">
           <div className='flex justify-between items-center'>
@@ -77,7 +77,7 @@ const PostCard = ({ term, size = 'flex', sortType }: PostCardProps) => {
     <Link
       href={term.url ?? 'not-found'}
       className="group h-full flex flex-col gap-0 sm:gap-2.5 justify-between p-2.5 sm:p-4 border border-light hover:border-primary rounded-lg
-      dark:hover:bg-secondary hover:no-underline duration-300 shadow-sm hover:shadow-xl"
+      hover:bg-gray5 hover:no-underline duration-300 shadow-sm hover:shadow-xl"
     >
       <div className="flex flex-col">
         <div className='flex justify-between items-center'>

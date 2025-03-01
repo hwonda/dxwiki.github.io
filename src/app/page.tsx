@@ -11,7 +11,7 @@ export default async function Home() {
       <div className="relative min-h-[calc(100vh_-600px)] flex flex-col justify-end items-end sm:mx-10 md:mx-40 overflow-hidden">
         <LogoAnimation fontSize='10vw' />
         <div className='flex gap-1.5'>
-          <Link href='/posts' className='flex items-center border-0 no-underline text-gray1 font-normal hover:text-accent hover:font-semibold'>
+          <Link href='/posts' className='flex items-center border-0 no-underline text-gray1 font-normal hover:text-primary hover:font-semibold'>
             {'더보기'}
             <ChevronRight className='size-3.5' />
           </Link>

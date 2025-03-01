@@ -25,7 +25,7 @@ const PostHeader = ({ term, onShare }: PostHeaderProps) => {
             <span className='text-main'>{term.title?.ko}</span>
             {
               term.title?.en && (
-                <span className='text-main break-all'>{'('}{term.title.en}{')'}
+                <span className='text-main break-all mb-0.5'>{'('}{term.title.en}{')'}
                   <button
                     onClick={handleShareClick}
                   >
