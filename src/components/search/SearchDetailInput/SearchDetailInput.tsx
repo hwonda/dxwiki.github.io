@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect, useRef } from 'react';
 import { Search, ChevronLeft } from 'lucide-react';
-import Slider from '@/components/ui/Slider';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
   setActiveModal,
@@ -14,16 +12,12 @@ import {
   setComplexRange,
   setPublishedDateRange,
   setModifiedDateRange,
-  setSelectedQuickSelect,
-  setSelectedModifiedQuickSelect,
-  setSelectedComplexQuickSelect,
 } from '@/store/searchSlice';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-import { ko } from 'date-fns/locale';
-
-const levels = ['기초', '초급', '중급', '고급', '전문'];
-const relevanceLevels = ['희박', '낮음', '보통', '높음', '밀접'];
+import ComplexityFilter from './ComplexityFilter';
+import PublishedDateFilter from './PublishedDateFilter';
+import ModifiedDateFilter from './ModifiedDateFilter';
 interface ComplexRange {
   level: [number, number];
   DS: [number, number];
@@ -41,9 +35,6 @@ const SearchDetailInput = () => {
     complexRange,
     publishedDateRange,
     modifiedDateRange,
-    // selectedQuickSelect,
-    // selectedModifiedQuickSelect,
-    // selectedComplexQuickSelect,
     hasInteractedPublished,
     hasInteractedModified,
     hasInteractedComplex,
@@ -100,26 +91,17 @@ const SearchDetailInput = () => {
     dispatch(setComplexRange({ type, newRange }));
 
     // 현재 변경된 range를 포함한 모든 range가 전체 범위(0-4)인지 확인
-    const updatedComplexRange = {
-      ...complexRange,
-      [type]: newRange,
-    };
-
-    const isAllRangesDefault = Object.values(updatedComplexRange).every(
-      (range) => range[0] === 0 && range[1] === 4
-    );
-
-    // 모든 range가 전체 범위면 'all', 아니면 null로 설정
-    dispatch(setSelectedComplexQuickSelect(isAllRangesDefault ? 'all' : null));
+    // const updatedComplexRange = {
+    //   ...complexRange,
+    //   [type]: newRange,
+    // };
   };
 
   const handleDateChange = (dates: [Date | null, Date | null], type: 'published' | 'modified') => {
     if (type === 'published') {
       dispatch(setPublishedDateRange(dates));
-      dispatch(setSelectedQuickSelect(null));
     } else {
       dispatch(setModifiedDateRange(dates));
-      dispatch(setSelectedModifiedQuickSelect(null));
     }
   };
 
@@ -138,41 +120,6 @@ const SearchDetailInput = () => {
     }
     return `${ formatDate(range[0]) } - ${ formatDate(range[1]) }`;
   };
-
-  // const handleQuickSelect = (type: 'all' | 'week' | 'month', dateType: 'published' | 'modified') => {
-  //   if (dateType === 'published') {
-  //     dispatch(setSelectedQuickSelect(type));
-  //   } else {
-  //     dispatch(setSelectedModifiedQuickSelect(type));
-  //   }
-
-  //   const today = new Date();
-  //   const startDate = new Date();
-
-  //   switch (type) {
-  //     case 'week':
-  //       startDate.setDate(today.getDate() - 7);
-  //       break;
-  //     case 'month':
-  //       startDate.setMonth(today.getMonth() - 1);
-  //       break;
-  //     case 'all':
-  //       if (dateType === 'published') {
-  //         dispatch(setPublishedDateRange([null, null]));
-  //       } else {
-  //         dispatch(setModifiedDateRange([null, null]));
-  //       }
-  //       return;
-  //   }
-
-  //   const newRange: [Date, Date] = [startDate, today];
-  //   if (dateType === 'published') {
-  //     dispatch(setPublishedDateRange(newRange));
-  //   } else {
-  //     dispatch(setModifiedDateRange(newRange));
-  //   }
-  //   dispatch(setActiveModal(null));
-  // };
 
   const formatComplexRange = () => {
     const isDefault = Object.values(complexRange).every(
@@ -276,14 +223,6 @@ const SearchDetailInput = () => {
     router.push(searchUrl);
   };
 
-  // const handleComplexAllSelect = () => {
-  //   handleComplexRangeChange('level', [0, 4]);
-  //   handleComplexRangeChange('DS', [0, 4]);
-  //   handleComplexRangeChange('DE', [0, 4]);
-  //   handleComplexRangeChange('DA', [0, 4]);
-  //   dispatch(setSelectedComplexQuickSelect('all'));
-  // };
-
   return (
     <>
       {/* <div className='flex flex-col gap-1'>
@@ -308,7 +247,7 @@ const SearchDetailInput = () => {
               <ChevronLeft className='size-5' />
             </Link>
           </div>
-          <div className="w-full grid grid-cols-[3.5fr_1.6fr_2fr_2.5fr] items-center">
+          <div className="w-full grid grid-cols-[3fr_1fr] lg:grid-cols-[3.5fr_1.6fr_2fr_2.5fr] items-center">
             {/* 검색어 */}
             <div
               onClick={() => handleFilterClick('searchQuery')}
@@ -329,212 +268,35 @@ const SearchDetailInput = () => {
             </div>
 
             {/* 난이도 / 연관도 */}
-            <div
-              onClick={() => handleFilterClick('complex')}
-              className={`peer/complex group hidden lg:flex flex-col py-3 px-6 rounded-full relative cursor-pointer
-                before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
-                ${ activeModal === 'complex' ? 'before:bg-primary' : '' }
-                ${ activeModal === 'searchQuery' ? 'before:bg-primary' : '' }
-                `}
-            >
-              <label htmlFor="complex" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'complex' ? 'text-primary' : '' }`}>
-                {'난이도 / 직무 연관도'}
-              </label>
-              <span className={`${ hasInteractedComplex ? 'text-main' : 'text-gray1' } group-hover:cursor-pointer text-sm`}>
-                {formatComplexRange()}
-              </span>
-              {activeModal === 'complex' && (
-                <div className="filter-modal absolute top-full left-0 mt-2 min-w-72 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-4 z-10">
-                  <div className="flex flex-col pr-4">
-                    <span className="text-sm font-medium">{'난이도'}</span>
-                    <div className='flex justify-end mt-[-6px]'>
-                      <div className='w-[178px]'>
-                        <Slider
-                          displayLevels={levels}
-                          range={complexRange.level}
-                          onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('level', newRange)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-[60px_1fr] items-center pr-4">
-                    <span className="col-span-2 text-sm font-medium">{'직무 연관도'}</span>
-                    <span className="text-sm flex justify-center mt-1 ml-[-6px]">{'DA'}</span>
-                    <Slider
-                      displayLevels={relevanceLevels}
-                      range={complexRange.DA}
-                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DA', newRange)}
-                    />
-                    <span className="text-sm flex justify-center mt-1 ml-[-6px]">{'DS'}</span>
-                    <Slider
-                      displayLevels={relevanceLevels}
-                      range={complexRange.DS}
-                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DS', newRange)}
-                    />
-                    <span className="text-sm flex justify-center mt-1 ml-[-6px]">{'DE'}</span>
-                    <Slider
-                      displayLevels={relevanceLevels}
-                      range={complexRange.DE}
-                      onRangeChange={(newRange: [number, number]) => handleComplexRangeChange('DE', newRange)}
-                    />
-                  </div>
-                  {/* <div className="flex justify-end mt-1.5">
-                    <button
-                      onClick={handleComplexAllSelect}
-                      className={`px-2 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        selectedComplexQuickSelect === 'all'
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'전체 선택'}
-                    </button>
-                  </div> */}
-                </div>
-              )}
-            </div>
+            <ComplexityFilter
+              activeModal={activeModal}
+              handleFilterClick={handleFilterClick}
+              complexRange={complexRange}
+              hasInteractedComplex={hasInteractedComplex}
+              handleComplexRangeChange={handleComplexRangeChange}
+              formatComplexRange={formatComplexRange}
+            />
 
             {/* 발행일 */}
-            <div
-              onClick={() => handleFilterClick('publishedDate')}
-              className={`peer/published group hidden lg:flex flex-col py-3 px-6 rounded-full relative cursor-pointer
-                before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
-                ${ activeModal === 'publishedDate' ? 'before:bg-primary' : '' }
-                ${ activeModal === 'complex' ? 'before:bg-primary' : '' }
-                `}
-            >
-              <label htmlFor="publishedDate" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'publishedDate' ? 'text-primary' : '' }`}>
-                {'발행일'}
-              </label>
-              <span className={`${
-                hasInteractedPublished ? 'text-main' : 'text-gray1'
-              } group-hover:cursor-pointer text-sm truncate`}
-              >
-                {formatDateRange(publishedDateRange)}
-              </span>
-              {activeModal === 'publishedDate' && (
-                <div className="filter-modal absolute top-full left-0 mt-2 w-64 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-3.5 z-10">
-                  <div className="text-sm font-medium mb-2.5">{'발행일'}</div>
-                  {/* <div className="h-px bg-gray3 mt-3 mb-1" /> */}
-                  <div className="flex justify-center">
-                    <DatePicker
-                      selected={publishedDateRange[0]}
-                      onChange={(dates) => handleDateChange(dates as [Date | null, Date | null], 'published')}
-                      startDate={publishedDateRange[0]}
-                      endDate={publishedDateRange[1]}
-                      selectsRange
-                      calendarClassName="dark:bg-background"
-                      locale={ko}
-                      inline
-                    />
-                  </div>
-                  {/* <div className="grid grid-cols-3 gap-1">
-                    <button
-                      onClick={() => handleQuickSelect('all', 'published')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        (selectedQuickSelect === 'all' && !publishedDateRange[0])
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'전체 기간'}
-                    </button>
-                    <button
-                      onClick={() => handleQuickSelect('week', 'published')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        selectedQuickSelect === 'week'
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'최근 1주'}
-                    </button>
-                    <button
-                      onClick={() => handleQuickSelect('month', 'published')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        selectedQuickSelect === 'month'
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'최근 1달'}
-                    </button>
-                  </div> */}
-                </div>
-              )}
-            </div>
+            <PublishedDateFilter
+              activeModal={activeModal}
+              handleFilterClick={handleFilterClick}
+              publishedDateRange={publishedDateRange}
+              hasInteractedPublished={hasInteractedPublished}
+              handleDateChange={handleDateChange}
+              formatDateRange={formatDateRange}
+            />
 
             {/* 수정일 */}
-            <div
-              onClick={() => handleFilterClick('modifiedDate')}
-              className={`group hidden lg:flex justify-between items-center py-3 pl-6 pr-3 rounded-full cursor-pointer relative
-                before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-8 before:w-px before:bg-gray2
-                ${ activeModal === 'modifiedDate' ? 'before:bg-primary' : '' }
-                ${ activeModal === 'publishedDate' ? 'before:bg-primary' : '' }
-                `}
-            >
-              <div className='flex flex-col group-hover:cursor-pointer'>
-                <label htmlFor="modifiedDate" className={`text-xs text-main group-hover:cursor-pointer group-hover:text-primary ${ activeModal === 'modifiedDate' ? 'text-primary' : '' }`}>
-                  {'수정일'}
-                </label>
-                <span className={`${
-                  hasInteractedModified ? 'text-main' : 'text-gray1'
-                } group-hover:cursor-pointer text-sm truncate`}
-                >
-                  {formatDateRange(modifiedDateRange)}
-                </span>
-              </div>
-              {activeModal === 'modifiedDate' && (
-                <div className="filter-modal absolute top-full right-0 mt-2 w-64 border border-primary bg-background shadow-lg dark:shadow-gray5 rounded-lg p-3.5 z-10">
-                  <div className="text-sm font-medium mb-2.5">{'수정일'}</div>
-                  {/* <div className="grid grid-cols-3 gap-1">
-                    <button
-                      onClick={() => handleQuickSelect('all', 'modified')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        (selectedModifiedQuickSelect === 'all' && !modifiedDateRange[0])
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'전체 기간'}
-                    </button>
-                    <button
-                      onClick={() => handleQuickSelect('week', 'modified')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        selectedModifiedQuickSelect === 'week'
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'최근 1주'}
-                    </button>
-                    <button
-                      onClick={() => handleQuickSelect('month', 'modified')}
-                      className={`px-1 py-0.5 text-sm rounded-full border transition-colors hover:bg-background-secondary ${
-                        selectedModifiedQuickSelect === 'month'
-                          ? 'border-primary text-primary'
-                          : 'border-gray2 text-gray0 hover:text-primary hover:border-primary'
-                      }`}
-                    >
-                      {'최근 1달'}
-                    </button>
-                  </div> */}
-                  {/* <div className="h-px bg-gray3 mt-3 mb-1" /> */}
-                  <div className="flex justify-center">
-                    <DatePicker
-                      selected={modifiedDateRange[0]}
-                      onChange={(dates) => handleDateChange(dates as [Date | null, Date | null], 'modified')}
-                      startDate={modifiedDateRange[0]}
-                      endDate={modifiedDateRange[1]}
-                      selectsRange
-                      calendarClassName="dark:bg-background"
-                      locale={ko}
-                      inline
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+            <ModifiedDateFilter
+              activeModal={activeModal}
+              handleFilterClick={handleFilterClick}
+              modifiedDateRange={modifiedDateRange}
+              hasInteractedModified={hasInteractedModified}
+              handleDateChange={handleDateChange}
+              formatDateRange={formatDateRange}
+            />
+
             {/* 검색 버튼 */}
             <div className='absolute right-3 top-1/2 -translate-y-1/2'>
               <button

@@ -13,9 +13,6 @@ interface SearchState {
   complexRange: ComplexRange;
   publishedDateRange: [Date | null, Date | null];
   modifiedDateRange: [Date | null, Date | null];
-  selectedQuickSelect: 'all' | 'week' | 'month' | null;
-  selectedModifiedQuickSelect: 'all' | 'week' | 'month' | null;
-  selectedComplexQuickSelect: 'all' | null;
   hasInteractedPublished: boolean;
   hasInteractedModified: boolean;
   hasInteractedComplex: boolean;
@@ -32,9 +29,6 @@ const initialState: SearchState = {
   },
   publishedDateRange: [null, null],
   modifiedDateRange: [null, null],
-  selectedQuickSelect: 'all',
-  selectedModifiedQuickSelect: 'all',
-  selectedComplexQuickSelect: 'all',
   hasInteractedPublished: false,
   hasInteractedModified: false,
   hasInteractedComplex: false,
@@ -66,15 +60,6 @@ const searchSlice = createSlice({
       state.modifiedDateRange = action.payload;
       state.hasInteractedModified = true;
     },
-    setSelectedQuickSelect: (state, action: PayloadAction<'all' | 'week' | 'month' | null>) => {
-      state.selectedQuickSelect = action.payload;
-    },
-    setSelectedModifiedQuickSelect: (state, action: PayloadAction<'all' | 'week' | 'month' | null>) => {
-      state.selectedModifiedQuickSelect = action.payload;
-    },
-    setSelectedComplexQuickSelect: (state, action: PayloadAction<'all' | null>) => {
-      state.selectedComplexQuickSelect = action.payload;
-    },
   },
 });
 
@@ -85,9 +70,6 @@ export const {
   setComplexRange,
   setPublishedDateRange,
   setModifiedDateRange,
-  setSelectedQuickSelect,
-  setSelectedModifiedQuickSelect,
-  setSelectedComplexQuickSelect,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;
