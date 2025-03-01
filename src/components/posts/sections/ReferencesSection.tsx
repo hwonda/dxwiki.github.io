@@ -1,15 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { References } from '@/types';
 import React from 'react';
+import ReferencesGrid from './ReferencesGrid';
 import { ChevronDown } from 'lucide-react';
-
 interface ReferencesSectionProps {
   references: References;
 }
 
-const ReferencesSection = ({ references }: ReferencesSectionProps) => {
+// 아코디언 확장 상태 관리
+const useAccordionState = () => {
   const [expandedItems, setExpandedItems] = React.useState<Record<string, Record<number, boolean>>>({
     tutorials: {},
     books: {},
@@ -27,14 +27,33 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     }));
   };
 
+  return { expandedItems, toggleExpand };
+};
+
+const ReferencesSection = ({ references }: ReferencesSectionProps) => {
+  const { expandedItems, toggleExpand } = useAccordionState();
+  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // 빈 데이터 처리
   const isEmpty
-   = references.tutorials?.length === 0
-   && references.books?.length === 0
-   && references.academic?.length === 0
-   && references.opensource?.length === 0;
+    = !references.tutorials?.length
+    && !references.books?.length
+    && !references.academic?.length
+    && !references.opensource?.length;
 
   if (isEmpty) return null;
 
+  // 아코디언 전용 링크 프로퍼티 설정
   const getLinkProps = (external_link: string | undefined) => {
     if (!external_link || external_link === '#') {
       return {
@@ -50,19 +69,15 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     };
   };
 
-  type Tutorial = NonNullable<typeof references.tutorials>[number];
-  type Book = NonNullable<typeof references.books>[number];
-  type Academic = NonNullable<typeof references.academic>[number];
-  type OpenSource = NonNullable<typeof references.opensource>[number];
-
-  const formatTutorialDetails = (tutorial: Tutorial) => {
+  // 상세 정보 포맷팅 함수들
+  const formatTutorialDetails = (tutorial: NonNullable<References['tutorials']>[number]) => {
     return tutorial.platform ? [tutorial.platform] : [];
   };
 
-  const formatBookDetails = (book: Book) => {
+  const formatBookDetails = (book: NonNullable<References['books']>[number]) => {
     const parts = [];
 
-    if (book.authors && book.authors.length > 0) {
+    if (book.authors?.length) {
       parts.push(book.authors.join(', '));
     }
 
@@ -70,24 +85,24 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     if (book.year) parenthesisParts.push(book.year);
     if (book.publisher) parenthesisParts.push(book.publisher);
 
-    if (parenthesisParts.length > 0) {
+    if (parenthesisParts.length) {
       parts.push(`(${ parenthesisParts.join(', ') })`);
     }
 
     return [parts.join(' '), book.isbn ? `ISBN: ${ book.isbn }` : null].filter(Boolean);
   };
 
-  const formatAcademicDetails = (paper: Academic) => {
+  const formatAcademicDetails = (paper: NonNullable<References['academic']>[number]) => {
     const parts = [];
 
     const authorYear = [];
-    if (paper.authors && paper.authors.length > 0) {
+    if (paper.authors?.length) {
       authorYear.push(paper.authors.join(', '));
     }
     if (paper.year) {
       authorYear.push(`(${ paper.year })`);
     }
-    if (authorYear.length > 0) {
+    if (authorYear.length) {
       parts.push(authorYear.join(' '));
     }
 
@@ -98,7 +113,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     return parts;
   };
 
-  const formatOpenSourceDetails = (project: OpenSource) => {
+  const formatOpenSourceDetails = (project: NonNullable<References['opensource']>[number]) => {
     const parts = [];
 
     if (project.description) {
@@ -111,8 +126,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     return parts;
   };
 
-  // Generic component for reference items with proper typing
-  const ReferenceList = <T extends Tutorial | Book | Academic | OpenSource>({
+  const ReferenceList = <T,>({
     title,
     items,
     section,
@@ -127,7 +141,7 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
     formatDetails: (item: T)=> (string | null)[];
     getExternalLink: (item: T)=> string | undefined;
   }) => {
-    if (!items || items.length === 0) return null;
+    if (!items?.length) return null;
 
     return (
       <div className='flex flex-col'>
@@ -136,14 +150,18 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
           <div key={index} className={`ml-1 overflow-hidden ${ index === 0 ? 'border-t border-light' : '' }`}>
             <div
               onClick={() => toggleExpand(section, index)}
-              className={`group flex justify-between items-center border-b border-light px-3 py-2.5 lg:px-4 lg:py-2 cursor-pointer ${ expandedItems[section][index] ? 'border-x' : '' }`}
+              className={`group flex justify-between items-center border-b border-light px-3 py-2.5 cursor-pointer ${
+                expandedItems[section][index] ? 'border-x bg-gray5' : ''
+              }`}
             >
-              <span className={`text-main text-sm group-hover:text-primary ${ expandedItems[section][index] ? 'text-primary' : 'line-clamp-1' }`}>
+              <span className={`text-main text-sm group-hover:text-primary ${ expandedItems[section][index] ? 'text-primary -ml-px' : 'line-clamp-1' }`}>
                 {getTitle(item)}
               </span>
               <span className='size-5'>
                 <ChevronDown
-                  className={`size-5 transition-transform group-hover:text-primary ${ expandedItems[section][index] ? 'rotate-180' : '' }`}
+                  className={`size-5 transition-transform group-hover:text-primary ${
+                    expandedItems[section][index] ? 'rotate-180' : ''
+                  }`}
                 />
               </span>
             </div>
@@ -152,19 +170,29 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
                 expandedItems[section][index] ? 'max-h-80 border-b border-x border-light' : 'max-h-0'
               }`}
             >
-              <Link
+              <a
                 {...getLinkProps(getExternalLink(item))}
-                className={`block px-3 py-2.5 lg:px-4 lg:py-2 hover:bg-background-secondary no-underline ${ !getExternalLink(item) ? 'cursor-default' : '' }`}
+                className={`block px-3 py-2.5 hover:bg-background-secondary no-underline ${
+                  !getExternalLink(item) ? 'cursor-default' : ''
+                }`}
               >
+                <span className="flex justify-between">
+                  <span className="text-xs text-gray2 font-medium mb-1 block">
+                    {section === 'tutorials' && '튜토리얼'}
+                    {section === 'books' && '참고서적'}
+                    {section === 'academic' && '연구논문'}
+                    {section === 'opensource' && '오픈소스'}
+                  </span>
+                  {getExternalLink(item) && (
+                    <span className='flex justify-center text-xs text-primary font-normal'>
+                      {'바로가기 →'}
+                    </span>
+                  )}
+                </span>
                 {formatDetails(item).map((detail, i) => (
                   detail && <span key={i} className='text-sm font-medium block'>{detail}</span>
                 ))}
-                {getExternalLink(item) && (
-                  <span className='text-sm text-primary'>
-                    {'바로가기 →'}
-                  </span>
-                )}
-              </Link>
+              </a>
             </div>
           </div>
         ))}
@@ -178,40 +206,17 @@ const ReferencesSection = ({ references }: ReferencesSectionProps) => {
         <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-section-title transition-opacity">{'#'}</span>
         {'참고 자료'}
       </h2>
-      <div className='grid lg:grid-cols-2 gap-4 sm:mt-[-4px]'>
-        <ReferenceList
-          title="튜토리얼"
-          items={references.tutorials}
-          section="tutorials"
-          getTitle={(item) => item.title || ''}
-          formatDetails={formatTutorialDetails}
-          getExternalLink={(item) => item.external_link}
-        />
-        <ReferenceList
-          title="참고서적"
-          items={references.books}
-          section="books"
-          getTitle={(item) => item.title || ''}
-          formatDetails={formatBookDetails}
-          getExternalLink={(item) => item.external_link}
-        />
-        <ReferenceList
-          title="연구논문"
-          items={references.academic}
-          section="academic"
-          getTitle={(item) => item.title || ''}
-          formatDetails={formatAcademicDetails}
-          getExternalLink={(item) => item.external_link}
-        />
-        <ReferenceList
-          title="오픈소스"
-          items={references.opensource}
-          section="opensource"
-          getTitle={(item) => item.name || ''}
-          formatDetails={formatOpenSourceDetails}
-          getExternalLink={(item) => item.external_link}
-        />
-      </div>
+
+      {isSmallScreen ? (
+        <div className='flex flex-col gap-4 sm:mt-[-4px]'>
+          <ReferenceList title="튜토리얼" items={references.tutorials} section="tutorials" getTitle={(item) => item.title || ''} formatDetails={formatTutorialDetails} getExternalLink={(item) => item.external_link} />
+          <ReferenceList title="참고서적" items={references.books} section="books" getTitle={(item) => item.title || ''} formatDetails={formatBookDetails} getExternalLink={(item) => item.external_link} />
+          <ReferenceList title="연구논문" items={references.academic} section="academic" getTitle={(item) => item.title || ''} formatDetails={formatAcademicDetails} getExternalLink={(item) => item.external_link} />
+          <ReferenceList title="오픈소스" items={references.opensource} section="opensource" getTitle={(item) => item.name || ''} formatDetails={formatOpenSourceDetails} getExternalLink={(item) => item.external_link} />
+        </div>
+      ) : (
+        <ReferencesGrid references={references} />
+      )}
     </section>
   );
 };
