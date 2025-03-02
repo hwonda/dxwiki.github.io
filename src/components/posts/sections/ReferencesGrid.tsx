@@ -180,10 +180,10 @@ const ReferencesGrid = ({ references }: ReferencesSectionProps) => {
 
   return (
     <section className="group-section break-all">
-      <h2>
+      {/* <h2>
         <span className="text-primary sm:ml-[-20px] mr-2.5 sm:opacity-0 group-section-title transition-opacity">{'#'}</span>
         {'참고 자료'}
-      </h2>
+      </h2> */}
       <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-px bg-light border border-light auto-rows-auto">
         {gridItems.map((item) => {
           const tooltipId = `${ item.type }-${ item.id }`;
@@ -218,7 +218,7 @@ const ReferencesGrid = ({ references }: ReferencesSectionProps) => {
               {activeTooltip === tooltipId && item.details && (
                 <div
                   className="animate-slideDown absolute top-full mt-2 left-0 border border-primary
-                  bg-gray5 text-main text-xs p-2 rounded
+                  bg-gray5 text-main text-xs p-2 rounded shadow-lg
                   z-50 before:content-[''] before:absolute before:top-[-4px] before:left-[15px]
                   before:size-0 before:border-x-4 before:border-x-transparent before:border-b-4
                   before:border-b-primary"
@@ -229,7 +229,7 @@ const ReferencesGrid = ({ references }: ReferencesSectionProps) => {
                   }}
                 >
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-xs font-medium text-primary">{item.type}</span>
+                    <span className="text-xs font-medium text-gray2">{item.type}</span>
                     <p className="whitespace-pre-line text-[13px] break-words">{item.details}</p>
                   </div>
                 </div>
