@@ -14,7 +14,8 @@ export default function StoreInitializer({ terms }: { terms: TermData[] }) {
       dispatch(setTerms(terms));
       initialized.current = true;
     }
-  }, [dispatch, terms]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }

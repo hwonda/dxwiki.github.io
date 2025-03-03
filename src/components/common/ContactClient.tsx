@@ -2,19 +2,14 @@
 
 'use client';
 
-import Link from 'next/link';
 import { Profile } from '@/types';
-import { TermData } from '@/types';
 import { Mail } from 'lucide-react';
 import TooltipButton from '@/components/ui/TooltipButton';
-import CarouselWrapper from '@/components/common/CarouselWrapper';
-import CarouselWrapperRight from '@/components/common/CarouselWrapperRight';
 interface ContactClientProps {
   profile: Profile[];
-  terms: TermData[];
 }
 
-const ContactClient = ({ profile, terms }: ContactClientProps) => {
+const ContactClient = ({ profile }: ContactClientProps) => {
   return (
     <div className="relative" >
       {/* <div
