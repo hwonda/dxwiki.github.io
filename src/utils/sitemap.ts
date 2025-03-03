@@ -18,7 +18,7 @@ const escapeXML = (str: string): string => {
 };
 
 const encodeURL = (url: string): string => {
-  return url.replace(/[&<>"*]/g, (char) => {
+  return url.replace(/[&<>"'*]/g, (char) => {
     const entities: Record<string, string> = {
       '&': '&amp;',
       '<': '&lt;',
@@ -27,7 +27,7 @@ const encodeURL = (url: string): string => {
       '\'': '&apos;',
     };
 
-    return entities[char];
+    return entities[char] || char;
   });
 };
 
@@ -43,27 +43,30 @@ const generateSitemapURL = ({ loc, lastmod, changefreq, priority }: SitemapURL):
 };
 
 const generateSitemapByEscapeXML = ({ urls }: { urls: SitemapURL[] }): string => {
-  return '<?xml version="1.0" encoding="UTF-8"?>' + escapeXML(`
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-    ${ urls.map(generateSitemapURL).join('') }
-  </urlset>`);
-};
-
-const generateSitemapByEncodeURL = ({ loc, lastmod, changefreq, priority }: SitemapURL): string => {
-  return `
-    <url>
-      <loc>${ encodeURL(loc) }</loc>
-      <lastmod>${ lastmod }</lastmod>
-      <changefreq>${ changefreq }</changefreq>
-      <priority>${ priority }</priority>
-    </url>
-  `;
+    ${ urls.map(({ loc, lastmod, changefreq, priority }) => `
+      <url>
+        <loc>${ escapeXML(loc) }</loc>
+        <lastmod>${ lastmod }</lastmod>
+        <changefreq>${ changefreq }</changefreq>
+        <priority>${ priority }</priority>
+      </url>
+    `).join('') }
+  </urlset>`;
 };
 
 const generateSitemapByEncodeXML = ({ urls }: { urls: SitemapURL[] }): string => {
   return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-    ${ urls.map(generateSitemapByEncodeURL).join('') }
+    ${ urls.map(({ loc, lastmod, changefreq, priority }) => `
+      <url>
+        <loc>${ encodeURL(loc) }</loc>
+        <lastmod>${ lastmod }</lastmod>
+        <changefreq>${ changefreq }</changefreq>
+        <priority>${ priority }</priority>
+      </url>
+    `).join('') }
   </urlset>`;
 };
 
