@@ -111,6 +111,20 @@ jobs:
               cat "$sitemap"
             done
           fi
+
+          echo "=== Contents of sitemap-encode.xml ==="
+          if [ -f "./out/sitemap-encode.xml" ]; then
+            cat "./out/sitemap-encode.xml"
+          else
+            echo "sitemap-encode.xml not found"
+          fi
+
+          echo "=== Contents of sitemap-escape.xml ==="
+          if [ -f "./out/sitemap-escape.xml" ]; then
+            cat "./out/sitemap-escape.xml"
+          else
+            echo "sitemap-escape.xml not found"
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
