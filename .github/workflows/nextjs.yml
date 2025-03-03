@@ -94,6 +94,23 @@ jobs:
         run: npm run static
       - name: Prevent Jekyll processing
         run: touch out/.nojekyll
+      - name: List out directory contents
+        run: |
+          echo "=== Listing out directory contents ==="
+          ls -la ./out
+          echo "=== Listing sitemap and robots files ==="
+          find ./out -name "sitemap*.xml" -o -name "robots.txt" -o -name "feed.xml"
+          echo "=== Contents of sitemap.xml ==="
+          if [ -f "./out/sitemap.xml" ]; then
+            cat ./out/sitemap.xml
+          else
+            echo "sitemap.xml not found"
+            # Try to find any sitemap files and display their contents
+            for sitemap in $(find ./out -name "sitemap*.xml"); do
+              echo "=== Contents of $sitemap ==="
+              cat "$sitemap"
+            done
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
