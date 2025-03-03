@@ -8,6 +8,29 @@ interface SitemapURL {
   priority: number;
 }
 
+const escapeXML = (str: string): string => {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+};
+
+const encodeURL = (url: string): string => {
+  return url.replace(/[&<>"*]/g, (char) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&apos;',
+    };
+
+    return entities[char];
+  });
+};
+
 const generateSitemapURL = ({ loc, lastmod, changefreq, priority }: SitemapURL): string => {
   return `
     <url>
@@ -17,6 +40,31 @@ const generateSitemapURL = ({ loc, lastmod, changefreq, priority }: SitemapURL):
       <priority>${ priority }</priority>
     </url>
   `;
+};
+
+const generateSitemapByEscapeXML = ({ urls }: { urls: SitemapURL[] }): string => {
+  return escapeXML(`<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    ${ urls.map(generateSitemapURL).join('') }
+  </urlset>`);
+};
+
+const generateSitemapByEncodeURL = ({ loc, lastmod, changefreq, priority }: SitemapURL): string => {
+  return `
+    <url>
+      <loc>${ encodeURL(loc) }</loc>
+      <lastmod>${ lastmod }</lastmod>
+      <changefreq>${ changefreq }</changefreq>
+      <priority>${ priority }</priority>
+    </url>
+  `;
+};
+
+const generateSitemapByEncodeXML = ({ urls }: { urls: SitemapURL[] }): string => {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    ${ urls.map(generateSitemapByEncodeURL).join('') }
+  </urlset>`;
 };
 
 const generateSitemapXML = (urls: SitemapURL[]): string => {
@@ -63,4 +111,4 @@ export const getSitemapURLs = async (): Promise<SitemapURL[]> => {
   return urls;
 };
 
-export { generateSitemapXML };
+export { generateSitemapXML, generateSitemapByEscapeXML, generateSitemapByEncodeXML };
