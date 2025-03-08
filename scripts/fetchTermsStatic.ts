@@ -29,8 +29,7 @@ async function fetchAndSaveTerms() {
     });
 
     // 데이터 디렉토리가 없으면 생성
-    // const dataDir = path.join(process.cwd(), 'public', 'data');
-    const dataDir = path.join(process.cwd(), 'out', 'data');
+    const dataDir = path.join(process.cwd(), 'public', 'data');
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
@@ -41,7 +40,7 @@ async function fetchAndSaveTerms() {
       JSON.stringify(termsData, null, 2)
     );
 
-    console.log(`Successfully saved ${ termsData.length } terms to out/data/terms.json`);
+    console.log(`Successfully saved ${ termsData.length } terms to public/data/terms.json`);
   } catch (error) {
     console.error('Error fetching terms:', error);
     process.exit(1);

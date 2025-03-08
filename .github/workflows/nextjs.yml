@@ -88,6 +88,8 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Clean cache before build
         run: rm -rf .next/cache
+      - name: Fetch static data
+        run: npm run fetch-static-data
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Generate sitemap.xml, robots.txt, feed.xml
