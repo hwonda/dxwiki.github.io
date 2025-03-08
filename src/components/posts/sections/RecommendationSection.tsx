@@ -1,6 +1,6 @@
 import PostCard from '@/components/posts/PostCard';
 import PrevNextSection from '../sections/PrevNextSection';
-import { fetchTermsData } from '@/utils/termsData';
+import { fetchTermsData } from '@/utils/fetchData';
 import { TermData } from '@/types';
 import { searchTerms } from '@/utils/search';
 

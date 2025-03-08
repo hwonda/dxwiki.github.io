@@ -1,5 +1,5 @@
 import { dikiMetadata } from '@/constants';
-import { fetchTermsData } from '@/utils/termsData';
+import { fetchTermsData } from '@/utils/fetchData';
 
 interface SitemapURL {
   loc: string;

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "rimraf .next",
-    "build": "next build",
+    "build": "npm run fetch-static-data && next build",
     "preexport": "rimraf out",
     "export": "next export",
     "touch": "touch out/.nojekyll",
@@ -16,6 +16,7 @@
     "lint:fix": "eslint --fix ./src",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
+    "fetch-static-data": "ts-node --project tsconfig.node.json ./scripts/fetchTermsStatic.ts && ts-node --project tsconfig.node.json ./scripts/fetchProfilesStatic.ts",
     "static": "ts-node --project tsconfig.node.json ./scripts/generateFeed.ts && ts-node --project tsconfig.node.json ./scripts/generateSitemap.ts && ts-node --project tsconfig.node.json ./scripts/generateRobots.ts"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import { fetchTermsData } from '@/utils/termsData';
+import { fetchTermsData } from '@/utils/fetchData';
 import { dikiMetadata } from '@/constants';
 import { TermData } from '@/types';
 

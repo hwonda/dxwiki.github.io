@@ -1,4 +1,4 @@
-import { getTermDataByID } from '@/utils/termsData';
+import { getTermDataByID } from '@/utils/fetchData';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 

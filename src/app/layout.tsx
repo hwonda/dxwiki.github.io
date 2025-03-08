@@ -10,7 +10,7 @@ import { dikiMetadata } from '@/constants';
 import Script from 'next/script';
 import ReduxProvider from '@/components/redux/ReduxProvider';
 import StoreInitializer from '@/components/redux/StoreInitializer';
-import { fetchTermsData } from '@/utils/termsData';
+import { fetchTermsData } from '@/utils/fetchData';
 import Footer from '@/components/common/Footer';
 
 interface RootLayoutProps {

@@ -1,4 +1,4 @@
-import { getProfileData } from '@/utils/profilesData';
+import { fetchProfilesData } from '@/utils/fetchData';
 import ContactClient from '@/components/common/ContactClient';
 import Footer from '@/components/common/Footer';
 import { dikiMetadata } from '@/constants';
@@ -38,7 +38,7 @@ export function generateStaticParams() {
 }
 
 const ContactPage = async () => {
-  const profile = await getProfileData();
+  const profile = await fetchProfilesData();
   return (
     <>
       <ContactClient profile={profile} />
