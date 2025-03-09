@@ -49,7 +49,7 @@ const generateFeedXML = (posts: TermData[], metadata: typeof dikiMetadata): stri
   try {
     const postLists = await fetchTermsData();
     const xml = generateFeedXML(postLists, dikiMetadata);
-    writeFileSync('out/feed.xml', xml, 'utf-8');
+    // writeFileSync('out/feed.xml', xml, 'utf-8');
     writeFileSync('public/feed.xml', xml, 'utf-8');
     console.log('RSS feed generated');
   } catch (error) {
