@@ -21,8 +21,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.HWON_TOKEN }}
         with:
           source-directory: "output"
-          destination-github-username: "your-github-name"
-          destination-repository-name: "your-project-name"
+          destination-github-username: "hwonda"
+          destination-repository-name: "dxwiki.github.io"
           user-email: ${{ secrets.HWON_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
