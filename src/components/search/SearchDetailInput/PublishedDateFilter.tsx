@@ -6,11 +6,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PublishedDateFilterProps {
   activeModal: string | null | undefined;
-  handleFilterClick: (modalName: string)=> void;
-  publishedDateRange: [Date | null | undefined, Date | null | undefined];
+  handleFilterClick: (modalName: string | null)=> void;
+  publishedDateRange: [string | null, string | null];
   hasInteractedPublished: boolean;
-  handleDateChange: (dates: [Date | null | undefined, Date | null | undefined], type: 'published' | 'modified')=> void;
-  formatDateRange: (range: [Date | null | undefined, Date | null | undefined])=> string;
+  handleDateChange: (dates: [Date | null, Date | null], type: 'published' | 'modified')=> void;
+  formatDateRange: (range: [string | null, string | null])=> string;
 }
 
 const PublishedDateFilter = ({
@@ -23,12 +23,20 @@ const PublishedDateFilter = ({
 }: PublishedDateFilterProps) => {
   const [isMonthYearPickerVisible, setIsMonthYearPickerVisible] = useState(false);
 
+  // 문자열을 Date 객체로 변환하는 함수
+  const getDateFromString = (dateString: string | null): Date | null => {
+    return dateString ? new Date(dateString) : null;
+  };
+
+  // 컴포넌트 내에서 사용할 Date 객체
+  const startDate = getDateFromString(publishedDateRange[0]);
+  const endDate = getDateFromString(publishedDateRange[1]);
+
   const handleMonthYearChange = (dates: [Date | null, Date | null]) => {
     if (!dates[0]) return;
 
     if (!dates[1]) {
       const startDate = new Date(dates[0].getFullYear(), dates[0].getMonth(), 1);
-      // const endDate = new Date(dates[0].getFullYear(), dates[0].getMonth() + 1, 0);
       handleDateChange([startDate, null], 'published');
       return;
     }
@@ -38,6 +46,7 @@ const PublishedDateFilter = ({
 
     handleDateChange([startDate, endDate], 'published');
     setIsMonthYearPickerVisible(false);
+    handleFilterClick(null);
   };
 
   // 월/년 선택 모드로 전환할 때 날짜 초기화하는 함수 추가
@@ -47,6 +56,23 @@ const PublishedDateFilter = ({
       handleDateChange([null, null], 'published');
     }
     setIsMonthYearPickerVisible(!isMonthYearPickerVisible);
+  };
+
+  const handleDatePickerChange = (dates: [Date | null, Date | null]) => {
+    event?.stopPropagation();
+
+    if (isMonthYearPickerVisible) {
+      handleMonthYearChange(dates);
+    } else {
+      handleDateChange([
+        dates[0] || null,
+        dates[1] || null,
+      ], 'published');
+
+      if (dates[0] && dates[1]) {
+        handleFilterClick(null);
+      }
+    }
   };
 
   return (
@@ -73,19 +99,10 @@ const PublishedDateFilter = ({
           <div className="text-sm font-medium mb-2.5">{publishedDateRange[1]?.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</div> */}
           <div className="flex justify-center">
             <DatePicker
-              selected={publishedDateRange[0]}
-              onChange={(dates: [Date | null, Date | null]) => {
-                if (isMonthYearPickerVisible) {
-                  handleMonthYearChange(dates);
-                } else {
-                  handleDateChange([
-                    dates[0] || undefined,
-                    dates[1] || undefined,
-                  ], 'published');
-                }
-              }}
-              startDate={publishedDateRange[0]}
-              endDate={publishedDateRange[1]}
+              selected={startDate}
+              onChange={handleDatePickerChange}
+              startDate={startDate}
+              endDate={endDate}
               selectsRange={true}
               calendarClassName="dark:bg-background"
               locale={ko}

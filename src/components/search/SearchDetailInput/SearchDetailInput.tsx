@@ -83,8 +83,14 @@ const SearchDetailInput = () => {
     }
   };
 
-  const handleFilterClick = (modalName: string) => {
-    dispatch(setActiveModal(modalName));
+  const handleFilterClick = (modalName: string | null) => {
+    if( modalName === null ) {
+      requestAnimationFrame(() => {
+        dispatch(setActiveModal(null));
+      });
+    } else {
+      dispatch(setActiveModal(modalName));
+    }
 
     if (modalName === 'searchQuery' && activeModal === modalName) {
       inputRef.current?.blur();
@@ -101,16 +107,25 @@ const SearchDetailInput = () => {
     // };
   };
 
-  const handleDateChange = (dates: [Date | null | undefined, Date | null | undefined], type: 'published' | 'modified') => {
+  const handleDateChange = (dates: [Date | null, Date | null], type: 'published' | 'modified') => {
+    // Date 객체를 ISO 문자열로 변환
+    const serializedDates: [string | null, string | null] = [
+      dates[0] ? dates[0].toISOString() : null,
+      dates[1] ? dates[1].toISOString() : null,
+    ];
+
     if (type === 'published') {
-      dispatch(setPublishedDateRange(dates as [Date | null, Date | null]));
+      dispatch(setPublishedDateRange(serializedDates));
     } else {
-      dispatch(setModifiedDateRange(dates as [Date | null, Date | null]));
+      dispatch(setModifiedDateRange(serializedDates));
     }
   };
 
-  const formatDateRange = (range: [Date | null | undefined, Date | null | undefined]) => {
+  const formatDateRange = (range: [string | null, string | null]) => {
     if (!range[0]) return '전체 기간';
+
+    // 문자열을 Date 객체로 변환
+    const startDate = new Date(range[0]);
 
     const formatDate = (date: Date) => {
       const year = date.getFullYear().toString();
@@ -119,10 +134,16 @@ const SearchDetailInput = () => {
       return `${ year }.${ month }.${ day }`;
     };
 
-    if (!range[1] || range[0].getTime() === range[1].getTime()) {
-      return formatDate(range[0]);
+    if (!range[1]) {
+      return formatDate(startDate);
     }
-    return `${ formatDate(range[0]) } - ${ formatDate(range[1]) }`;
+
+    const endDate = new Date(range[1]);
+    if (startDate.getTime() === endDate.getTime()) {
+      return formatDate(startDate);
+    }
+
+    return `${ formatDate(startDate) } - ${ formatDate(endDate) }`;
   };
 
   const formatComplexRange = () => {
@@ -134,75 +155,14 @@ const SearchDetailInput = () => {
     return '복합적';
   };
 
-  const datePickerCustomStyles = `
-    .react-datepicker {
-      border-color: var(--background) !important;
-    }
-    .react-datepicker__day:hover {
-      background-color: var(--accent) !important;
-      color: white !important;
-    }
-    .react-datepicker__month-container {
-        width: 240px !important;
-        background-color: var(--background);
-        // border-radius: 5px;
-    }
-    .react-datepicker__month-text {
-      height: 36px !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      color: var(--text) !important;
-    }
-    .react-datepicker__month-text:hover {
-      background-color: var(--background-secondary) !important;
-      color: var(--text) !important;
-    }
-    .react-datepicker__month-text--selected,
-    .react-datepicker__month-text--keyboard-selected{
-      background-color: var(--background-secondary);
-      color: var(--text) !important;
-    }
-    .react-datepicker__header {
-      background-color: var(--background);
-      border-bottom: 1px solid var(--background);
-      align-items: center;
-    }
-    .react-datepicker__current-month{
-      margin-top: -1px !important;
-      color: var(--text-secondary);
-    }
-    .react-datepicker__day-name,
-    .react-datepicker__day {
-      color: var(--text);
-    }
-    .react-datepicker__day--outside-month {
-      color: var(--gray3) !important;
-    }
-    .react-datepicker__day--selected,
-    .react-datepicker__day--in-range {
-      background-color: var(--background-secondary) !important;
-    }
-    .react-datepicker__day--in-selecting-range {
-      background-color: var(--background-secondary) !important;
-    }
-    .react-datepicker__day--keyboard-selected {
-      background-color: var(--background);
-    }
-    .react-datepicker__day--today {
-      color: var(--primary) !important;
-    }
-    .react-datepicker__month-text--in-range, .react-datepicker__month-text--in-selecting-range  {
-      background-color: var(--background-secondary) !important;
-    }
-    .react-datepicker__month-text--in-range:hover, .react-datepicker__month-text--in-selecting-range:hover {
-      background-color: var(--accent) !important;
-      color: white !important;
-    }
-    .react-datepicker__month-text--today {
-      background-color: var(--background);
-    }
-  `;
+  const formatDateParam = (dateString: string | null) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${ year }${ month }${ day }`;
+  };
 
   const buildSearchUrl = () => {
     const params = new URLSearchParams();
@@ -225,14 +185,6 @@ const SearchDetailInput = () => {
         params.append('f', complexParams);
       }
     }
-
-    const formatDateParam = (date: Date | null | undefined) => {
-      if (!date) return '';
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${ year }${ month }${ day }`;
-    };
 
     if (publishedDateRange[0] || publishedDateRange[1]) {
       const publishedParam = `${ formatDateParam(publishedDateRange[0]) }-${ formatDateParam(publishedDateRange[1]) }`;
@@ -266,7 +218,6 @@ const SearchDetailInput = () => {
         <div>{'modifiedDateRange: '}{JSON.stringify(modifiedDateRange)}</div>
         <div>{'selectedComplexQuickSelect: '}{selectedComplexQuickSelect}</div>
       </div> */}
-      <style>{datePickerCustomStyles}</style>
       <div className="relative w-full mt-2 mb-10">
         <div className={`w-full flex items-center border border-light rounded-full shadow-md dark:shadow-gray4 bg-background ${ activeModal ? 'border-primary' : '' }`}>
           <div className='ml-3'>
